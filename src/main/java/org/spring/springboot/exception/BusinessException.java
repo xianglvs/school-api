@@ -1,14 +1,14 @@
 package org.spring.springboot.exception;
 
 import org.spring.springboot.app.base.Error;
-import org.spring.springboot.app.base.Result;
+import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.Type;
 
 import java.util.List;
 
 public class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 1L;
-    Result result = new Result();
+    R result = new R();
 
     public BusinessException(Type type) {
         super(type.getMessage());
@@ -36,11 +36,11 @@ public class BusinessException extends RuntimeException {
         result.setMessages(messages);
     }
 
-    public Result getResult() {
+    public R getResult() {
         return result;
     }
 
-    public void setResult(Result result) {
+    public void setResult(R result) {
         this.result = result;
     }
 }
