@@ -21,10 +21,10 @@ public class UserLoginResVO implements Serializable {
     private String id;
 
     @ApiModelProperty(value = "机构id")
-    private String officeId;
+    private String sysOfficeId;
 
     @ApiModelProperty(value = "机构名")
-    private String officeName;
+    private String sysOfficeName;
 
     @ApiModelProperty(value = "区域ID")
     private String sysAreaId;
@@ -69,12 +69,12 @@ public class UserLoginResVO implements Serializable {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getOfficeId() {
-        return officeId;
+    public String getSysOfficeId() {
+        return sysOfficeId;
     }
 
-    public void setOfficeId(String officeId) {
-        this.officeId = officeId == null ? null : officeId.trim();
+    public void setSysOfficeId(String sysOfficeId) {
+        this.sysOfficeId = sysOfficeId == null ? null : sysOfficeId.trim();
     }
 
     public String getLoginName() {
@@ -157,12 +157,12 @@ public class UserLoginResVO implements Serializable {
         this.loginDate = loginDate;
     }
 
-    public String getOfficeName() {
-        return officeName;
+    public String getSysOfficeName() {
+        return sysOfficeName;
     }
 
-    public void setOfficeName(String officeName) {
-        this.officeName = officeName;
+    public void setSysOfficeName(String sysOfficeName) {
+        this.sysOfficeName = sysOfficeName == null ? null : sysOfficeName.trim();
     }
 
     public String getSysAreaId() {

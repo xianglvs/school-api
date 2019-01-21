@@ -44,7 +44,6 @@
     <result column="last_login_date" jdbcType="TIMESTAMP" property="lastLoginDate" />
     <result column="longitude" jdbcType="DOUBLE" property="longitude" />
     <result column="latitude" jdbcType="DOUBLE" property="latitude" />
-    <result column="login_flag" jdbcType="BIT" property="loginFlag" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />

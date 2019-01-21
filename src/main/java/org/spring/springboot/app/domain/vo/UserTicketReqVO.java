@@ -17,15 +17,15 @@ import java.io.Serializable;
  */
 @ApiModel(description = "参数")
 @Data
-public class UserTokenReqVO implements Serializable {
+public class UserTicketReqVO implements Serializable {
     private static final long serialVersionUID = -1L;
 
-    @ApiModelProperty(value = "当前签名", required = true)
-    @NotEmpty(message = "签名不能为空")
-    @Length(min = 10, max = 100, message = "签名长度不正确")
-    private String token;
+    @ApiModelProperty(value = "换取token凭证", required = true)
+    @NotEmpty(message = "凭证不能为空")
+    @Length(min = 10, max = 100, message = "凭证长度不正确")
+    private String ticket;
 
-    public void setToken(String token) {
-        this.token = token == null ? null : token.trim();
+    public void setTicket(String ticket) {
+        this.ticket = ticket == null ? null : ticket.trim();
     }
 }

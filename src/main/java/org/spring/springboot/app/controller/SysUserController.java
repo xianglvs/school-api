@@ -5,9 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.spring.springboot.app.base.ApiIndex;
-import org.spring.springboot.app.base.R;
-import org.spring.springboot.app.base.User;
+import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.*;
 import org.spring.springboot.app.service.SysUserService;
@@ -45,8 +43,8 @@ public class SysUserController {
     @PostMapping(value = "/token")
     @ResponseBody
     public R<UserTokenResVO> token(
-            @ApiParam(value = "参数") @RequestBody UserTokenReqVO userLoginReqVO) {
-        UserTokenResVO vo = sysUserService.token(userLoginReqVO.getTicket());
+            @ApiParam(value = "参数") @RequestBody UserTicketReqVO userTicketReqVO) {
+        UserTokenResVO vo = sysUserService.token(userTicketReqVO.getTicket());
         return new R(vo);
     }
 
@@ -54,16 +52,14 @@ public class SysUserController {
     @ApiOperation(value = "刷新token")
     @PutMapping(value = "/token")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
-    @Token
     public R<UserTokenResVO> token(
-            @ApiIgnore User user
+            @RequestBody UserTokenReqVO userTokenReqVO
     ) {
-        UserTokenResVO vo = sysUserService.refreshToken(user);
+        UserTokenResVO vo = sysUserService.refreshToken(userTokenReqVO.getToken());
         return new R(vo);
     }
 
     @ApiOperation(value = "查询用户信息列表")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @GetMapping(value = "/list")
     @Token
     public R<PageInfo<List<SysUserResVO>>> selectBySearch(

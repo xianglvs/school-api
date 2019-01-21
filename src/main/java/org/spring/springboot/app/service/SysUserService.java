@@ -107,7 +107,8 @@ public class SysUserService {
     }
 
 
-    public UserTokenResVO refreshToken(User user) {
+    public UserTokenResVO refreshToken(String token) {
+        User user = redisUtils.get(token);
         if (user == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "签名不存在")));
         }
@@ -121,13 +122,13 @@ public class SysUserService {
         if (sysUserPO.isDisableFlag()) {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户已被禁用")));
         }
-        String token = Uuid.getUUID();
+        String newToken = Uuid.getUUID();
         User userSession = new User();
         BeanUtils.copyProperties(sysUserPO, userSession);
         List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId());
         BeanUtils.copyProperties(menus, menus);
         UserTokenResVO userTokenResVO = new UserTokenResVO();
-        userTokenResVO.setToken(token);
+        userTokenResVO.setToken(newToken);
         long effective_millisecond = 60 * 60 * 1000;//60分钟
         long expire = System.currentTimeMillis() + effective_millisecond;
         userTokenResVO.setExpireTime(new Date(expire));
@@ -136,9 +137,10 @@ public class SysUserService {
         if (old != null && redisUtils.hasKey(old)) {
             redisUtils.delete(old);
         }
-        ThreadLocalUtil.put(Constants.TOKEN_PARAM_NAME, token);
+        ThreadLocalUtil.put(Constants.TOKEN_PARAM_NAME, newToken);
         ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, userSession);
-        redisUtils.set(token, userSession, effective_millisecond, TimeUnit.MILLISECONDS);
+        redisUtils.delete(token);
+        redisUtils.set(newToken, userSession, effective_millisecond, TimeUnit.MILLISECONDS);
         return userTokenResVO;
     }
 

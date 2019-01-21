@@ -69,9 +69,6 @@ public class SysUserResVO implements Serializable {
     @ApiModelProperty(value = "纬度")
     private Double latitude;
 
-    @ApiModelProperty(value = "是否允许登录")
-    private String loginFlag;
-
     @ApiModelProperty(value = "创建者", hidden = true)
     private String createBy;
 
@@ -237,14 +234,6 @@ public class SysUserResVO implements Serializable {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
-    }
-
-    public String getLoginFlag() {
-        return loginFlag;
-    }
-
-    public void setLoginFlag(String loginFlag) {
-        this.loginFlag = loginFlag;
     }
 
     public String getCreateBy() {
