@@ -38,6 +38,12 @@
             <version>1.3.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.9</version>
+        </dependency>
+
 
 
 
@@ -63,7 +69,6 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
         </dependency>
 
 
@@ -120,7 +125,11 @@
             <version>1.8</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+            <version>1.3.2.RELEASE</version>
+        </dependency>
 
         <dependency>
             <groupId>commons-logging</groupId>
@@ -225,17 +234,22 @@
     </build>
     <repositories>
         <repository>
-            <id>spring-milestone</id>
-            <url>http://repo.spring.io/libs-release</url>
+            <id>mvnrepository</id>
+            <name>mvnrepository</name>
+            <url>http://www.mvnrepository.com/</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
     <properties>
         <!-- MyBatis Generator start -->
         <jdbc.driverClass>com.mysql.jdbc.Driver</jdbc.driverClass>
-        <jdbc.url><![CDATA[ jdbc:mysql://192.168.99.100:3306/school?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;zeroDateTimeBehavior=convertToNull ]]></jdbc.url>
+        <jdbc.url><![CDATA[ jdbc:mysql://127.0.0.1:3306/school?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;zeroDateTimeBehavior=convertToNull ]]></jdbc.url>
         <jdbc.user>root</jdbc.user>
-        <jdbc.password>hl.data2017</jdbc.password>
+        <jdbc.password>root</jdbc.password>
         <mapper.plugin>tk.mybatis.mapper.generator.MapperPlugin</mapper.plugin>
         <mapper.Mapper>tk.mybatis.mapper.common.Mapper</mapper.Mapper>
         <!-- Java接口和实体类 -->

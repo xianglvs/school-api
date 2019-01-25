@@ -1,7 +1,7 @@
 package org.spring.springboot.exception;
 
 
-import org.spring.springboot.app.base.Result;
+import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.Error;
 import org.spring.springboot.app.base.Type;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -33,28 +33,28 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseBody
-    public Result jsonErrorHandler(HttpMessageNotReadableException e) {
+    public R jsonErrorHandler(HttpMessageNotReadableException e) {
         e.printStackTrace();
-        return new Result(Type.FORMAT_EXCEPTION);
+        return new R(Type.FORMAT_EXCEPTION);
     }
 
 
     @ExceptionHandler(value = ResourceAccessException.class)
     @ResponseBody
-    public Result resourceAccessException(ResourceAccessException ex) {
-        return new Result(Type.TIMEOUT);
+    public R resourceAccessException(ResourceAccessException ex) {
+        return new R(Type.TIMEOUT);
     }
 
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
     @ResponseBody
-    public Result httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
-        return new Result(Type.Content_TYPE_ERROR);
+    public R httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
+        return new R(Type.Content_TYPE_ERROR);
     }
 
 
     @ExceptionHandler(value = ConstraintViolationException.class)
     @ResponseBody
-    public Result constraintViolationExceptionHandler(
+    public R constraintViolationExceptionHandler(
             ConstraintViolationException e) {
         Set<? extends ConstraintViolation> constraintViolations = e.getConstraintViolations();
         List<Error> errors = new ArrayList<>();
@@ -62,45 +62,45 @@ public class GlobalExceptionHandler {
             Error error = new Error(v.getPropertyPath().toString(), v.getMessage());
             errors.add(error);
         }
-        Result r = new Result(Type.PARAM_VALIDATE_FAIL, errors);
+        R r = new R(Type.PARAM_VALIDATE_FAIL, errors);
         return r;
         //return ResponseEntity.badRequest().body(e.getConstraintViolations().stream().map(ConstraintViolation::getMessageTemplate).findFirst().orElse(e.getMessage()));
     }
 
     @ExceptionHandler(value = BindException.class)
     @ResponseBody
-    public Result bindExceptionHandler(BindException ex) {
+    public R bindExceptionHandler(BindException ex) {
         List<Error> errors = new ArrayList<>();
         for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
             Error error = new Error(fieldError.getField(), fieldError.getDefaultMessage());
             errors.add(error);
         }
-        Result r = new Result(Type.PARAM_VALIDATE_FAIL, errors);
+        R r = new R(Type.PARAM_VALIDATE_FAIL, errors);
         return r;
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseBody
-    public Result methodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public R methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         List<Error> errors = new ArrayList<>();
         for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
             Error error = new Error(fieldError.getField(), fieldError.getDefaultMessage());
             errors.add(error);
         }
-        Result r = new Result(Type.PARAM_VALIDATE_FAIL, errors);
+        R r = new R(Type.PARAM_VALIDATE_FAIL, errors);
         return r;
     }
 
     @ExceptionHandler(value = BusinessException.class)
     @ResponseBody
-    public Result bindExceptionHandler(BusinessException ex) {
+    public R bindExceptionHandler(BusinessException ex) {
         return ex.getResult();
     }
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public Result bindExceptionHandler(Exception ex) {
-        Result r = new Result(Type.EXCEPTION);
+    public R bindExceptionHandler(Exception ex) {
+        R r = new R(Type.EXCEPTION);
         ex.printStackTrace();
         return r;
     }

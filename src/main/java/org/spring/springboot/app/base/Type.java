@@ -8,7 +8,7 @@ package org.spring.springboot.app.base;
  */
 
 public enum Type {
-    SUCCESS(200000, "成功"),
+    SUCCESS(0, "成功"),
 
     PARAM_VALIDATE_FAIL(400001, "参数验证失败"), 
     EXIST_ERROR(400002, "信息已存在"),
