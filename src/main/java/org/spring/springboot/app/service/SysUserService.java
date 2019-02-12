@@ -100,6 +100,7 @@ public class SysUserService {
         if (old != null && redisUtils.hasKey(old)) {
             redisUtils.delete(old);
         }
+        redisUtils.delete(ticket);
         ThreadLocalUtil.put(Constants.TOKEN_PARAM_NAME, token);
         ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, userSession);
         redisUtils.set(token, userSession, effective_millisecond, TimeUnit.MILLISECONDS);

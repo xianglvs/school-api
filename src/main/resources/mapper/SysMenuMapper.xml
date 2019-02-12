@@ -21,26 +21,6 @@
     <result column="del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
 
-  <resultMap id="BaseResultMap1" type="org.spring.springboot.app.base.Menu">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
-    <result column="parent_ids" jdbcType="VARCHAR" property="parentIds" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="sort" jdbcType="DECIMAL" property="sort" />
-    <result column="href" jdbcType="VARCHAR" property="href" />
-    <result column="target" jdbcType="VARCHAR" property="target" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="hidden_flag" jdbcType="BIT" property="hiddenFlag" />
-    <result column="permission" jdbcType="VARCHAR" property="permission" />
-    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
-    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
-    <result column="disable_flag" jdbcType="BIT" property="disableFlag" />
-    <result column="del_flag" jdbcType="BIT" property="delFlag" />
-  </resultMap>
-
   <select id="selectMenuByUserId" resultMap="BaseResultMap">
     SELECT id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
     FROM sys_menu a
@@ -49,5 +29,17 @@
     INNER JOIN sys_user_role c ON
     b.sys_role_id = c.sys_role_id
     WHERE c.sys_user_id = #{sysUserId}
+  </select>
+  <select id="selectAllMenu" resultMap="BaseResultMap">
+    SELECT id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
+    FROM sys_menu a
+    WHERE
+    1=1
+    <if test="delFlag != null">
+    AND a.del_flag = #{delFlag}
+    </if>
+    <if test="disableFlag != null">
+    AND a.disable_flag = #{disableFlag}
+    </if>
   </select>
 </mapper>

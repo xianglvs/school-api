@@ -189,7 +189,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Class-Path>lib/dm7-connector-java-1.7.jar</Class-Path>
+                            <Class-Path>config/ lib/dm7-connector-java-1.7.jar</Class-Path>
                         </manifestEntries>
                         <manifest>
                             <addClasspath>true</addClasspath>

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.*;
+import org.spring.springboot.app.service.SysMenuService;
 import org.spring.springboot.app.service.SysUserService;
 import org.spring.springboot.util.IpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,7 @@ public class SysUserController {
 
     @ApiOperation(value = "查询用户信息列表")
     @GetMapping(value = "/list")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R<PageInfo<List<SysUserResVO>>> selectBySearch(
             @ApiParam(value = "查询参数") @ModelAttribute UserSearchVo vo) {
@@ -68,5 +70,8 @@ public class SysUserController {
         PageInfo pageInfo = new PageInfo(list);
         return new R(pageInfo);
     }
+
+    @Autowired
+    private SysMenuService sysMenuService;
 
 }

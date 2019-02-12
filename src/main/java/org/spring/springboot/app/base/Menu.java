@@ -1,31 +1,32 @@
 package org.spring.springboot.app.base;
 
-import springfox.documentation.annotations.ApiIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
-@ApiIgnore
+@ApiModel(description = "返回参数")
 public class Menu implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    @ApiModelProperty(value = "唯一编号")
     private String id;
-
+    @ApiModelProperty(value = "菜单父级")
     private String parentId;
-
+    @ApiModelProperty(value = "菜单所有父级以,号分割")
     private String parentIds;
-
+    @ApiModelProperty(value = "菜单名称")
     private String name;
-
+    @ApiModelProperty(value = "菜单排序")
     private Long sort;
-
+    @ApiModelProperty(value = "菜单访问地址")
     private String href;
-
+    @ApiModelProperty(value = "访问类型 1._blank 新页面打开 2._self 直接跳转")
     private String target;
-
+    @ApiModelProperty(value = "菜单图标")
     private String icon;
-
-    private String hiddenFlag;
-
+    @ApiModelProperty(value = "隐藏标志 0.否 1.是")
+    private Boolean hiddenFlag;
+    @ApiModelProperty(value = "权限标识")
     private String permission;
 
     public String getId() {
@@ -92,12 +93,12 @@ public class Menu implements Serializable {
         this.icon = icon == null ? null : icon.trim();
     }
 
-    public String getIsShow() {
+    public Boolean getHiddenFlag() {
         return hiddenFlag;
     }
 
-    public void setIsShow(String hiddenFlag) {
-        this.hiddenFlag = hiddenFlag == null ? null : hiddenFlag.trim();
+    public void setHiddenFlag(Boolean hiddenFlag) {
+        this.hiddenFlag = hiddenFlag;
     }
 
     public String getPermission() {
@@ -107,7 +108,6 @@ public class Menu implements Serializable {
     public void setPermission(String permission) {
         this.permission = permission == null ? null : permission.trim();
     }
-
 
 
 }
