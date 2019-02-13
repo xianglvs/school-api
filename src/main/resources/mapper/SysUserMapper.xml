@@ -12,6 +12,8 @@
     <result column="no" jdbcType="VARCHAR" property="no" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="weixin" jdbcType="VARCHAR" property="weixin" />
     <result column="sys_area_id" jdbcType="VARCHAR" property="sysAreaId" />
     <result column="sys_office_id" jdbcType="VARCHAR" property="sysOfficeId" />
     <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
@@ -38,6 +40,8 @@
     <result column="no" jdbcType="VARCHAR" property="no" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="weixin" jdbcType="VARCHAR" property="weixin" />
     <result column="sys_area_id" jdbcType="VARCHAR" property="sysAreaId" />
     <result column="sys_office_id" jdbcType="VARCHAR" property="sysOfficeId" />
     <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
@@ -54,7 +58,7 @@
   </resultMap>
 
   <select id="selectBySearch" parameterType="org.spring.springboot.app.domain.vo.UserSearchVo" resultMap="BaseResultMap1">
-    SELECT id, a.type, a.login_name, a.password, a.name, a.mobile, a.photo, a.no, a.email, a.phone, a.sys_area_id, a.login_ip, a.longitude, a.latitude, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks
+    SELECT id, a.type, a.login_name, a.password, a.name, a.mobile, a.qq, a.weixin, a.photo, a.no, a.email, a.phone, a.sys_area_id, a.login_ip, a.longitude, a.latitude, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks
     FROM sys_user a
     where a.del_flag = 0
     <if test="type != null and type!=''">

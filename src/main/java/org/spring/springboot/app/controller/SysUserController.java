@@ -8,13 +8,10 @@ import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.*;
-import org.spring.springboot.app.service.SysMenuService;
 import org.spring.springboot.app.service.SysUserService;
 import org.spring.springboot.util.IpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -71,7 +68,35 @@ public class SysUserController {
         return new R(pageInfo);
     }
 
-    @Autowired
-    private SysMenuService sysMenuService;
+    @ApiOperation(value = "查询单个用户信息")
+    @GetMapping(value = "/{userId}")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
+    public R<SysUserResVO> selectBySearch(
+            @PathVariable("userId") String userId) {
+        SysUserResVO vo = sysUserService.selectById(userId);
+        return new R(vo);
+    }
+
+    @ApiOperation(value = "创建用户")
+    @PostMapping(value = "")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
+    public R create(
+            @ApiParam(value = "添加参数") @Valid @RequestBody SysUserCreateReqVO sysUserCreateReqVO) {
+        sysUserService.create(sysUserCreateReqVO);
+        return new R();
+    }
+
+
+    @ApiOperation(value = "修改用户")
+    @PutMapping(value = "")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
+    public R update(
+            @ApiParam(value = "修改参数") @Valid @RequestBody SysUserUpdateReqVO sysUserCreateReqVO) {
+        sysUserService.update(sysUserCreateReqVO);
+        return new R();
+    }
 
 }

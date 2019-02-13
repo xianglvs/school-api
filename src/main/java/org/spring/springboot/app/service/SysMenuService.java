@@ -3,7 +3,9 @@ package org.spring.springboot.app.service;
 import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.base.Error;
 import org.spring.springboot.app.dao.SysMenuMapper;
+import org.spring.springboot.app.domain.po.SysMenuPO;
 import org.spring.springboot.exception.BusinessException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,13 @@ public class SysMenuService {
 
     @Autowired
     private RedisUtils redisUtils;
+
+    public Menu selectById(String menuId){
+        SysMenuPO menuPO = sysMenuMapper.selectByPrimaryKey(menuId);
+        Menu menu = new Menu();
+        BeanUtils.copyProperties(menuPO,menu);
+        return menu;
+    }
 
     public List<Menu> selectAll(Boolean delFlag, Boolean disableFlag) {
         List<Menu> list = sysMenuMapper.selectAllMenu(delFlag, disableFlag);

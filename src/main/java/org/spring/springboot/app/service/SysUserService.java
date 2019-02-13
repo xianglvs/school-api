@@ -1,6 +1,5 @@
 package org.spring.springboot.app.service;
 
-import org.apache.commons.collections.MapUtils;
 import org.spring.springboot.app.base.Error;
 import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.dao.SysMenuMapper;
@@ -34,6 +33,13 @@ public class SysUserService {
     public List<SysUserResVO> selectBySearch(UserSearchVo vo) {
         List<SysUserResVO> list = SysUserMapper.selectBySearch(vo);
         return list;
+    }
+
+    public SysUserResVO selectById(String userId) {
+        SysUserPO po = SysUserMapper.selectByPrimaryKey(userId);
+        SysUserResVO vo = new SysUserResVO();
+        BeanUtils.copyProperties(po, vo);
+        return vo;
     }
 
 
@@ -144,5 +150,30 @@ public class SysUserService {
         redisUtils.set(newToken, userSession, effective_millisecond, TimeUnit.MILLISECONDS);
         return userTokenResVO;
     }
+
+    public void create(SysUserCreateReqVO vo) {
+        SysUserPO po = new SysUserPO();
+        BeanUtils.copyProperties(vo, po);
+        Example example = new Example(SysUserPO.class);
+        example.and().andEqualTo("loginName", po.getLoginName());
+        List<SysUserPO> list = SysUserMapper.selectByExample(example);
+        if (!list.isEmpty()) {
+            new BusinessException(Type.EXIST_ERROR, ErrorTools.ErrorAsArrayList(new Error("loginName", "用户名已存在")));
+        }
+        po.preInsert();
+        SysUserMapper.insert(po);
+    }
+
+    public void update(SysUserUpdateReqVO vo) {
+        SysUserPO po = new SysUserPO();
+        BeanUtils.copyProperties(vo, po);
+        SysUserPO sysUserPO = SysUserMapper.selectByPrimaryKey(po.getId());
+        if(sysUserPO == null){
+            new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("id", "用户不存在")));
+        }
+        po.preUpdate();
+        SysUserMapper.updateByPrimaryKeySelective(po);
+    }
+
 
 }

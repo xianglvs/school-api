@@ -32,9 +32,9 @@ public class SysMenuController {
     }
 
     @ApiOperation(value = "查询用户菜单")
-    @GetMapping(value = "/{token}")
+    @GetMapping(value = "/user")
     public R<List<Menu>> selectByUser(
-            @PathVariable("token") String token
+            @ApiParam(value = "签名") @RequestParam(value = "token") String token
     ) {
         List<Menu> list = sysMenuService.selectByToken(token);
         return new R(list);
@@ -50,6 +50,16 @@ public class SysMenuController {
     ) {
         List<Menu> list = sysMenuService.selectAll(delFlag, disableFlag);
         return new R(list);
+    }
+
+    @ApiOperation(value = "查询单个菜单")
+    @GetMapping(value = "/{menuId}")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    public R<Menu> selectById(
+            @ApiParam(value = "菜单ID") @PathVariable("menuId") String menuId
+    ) {
+        Menu menu = sysMenuService.selectById(menuId);
+        return new R(menu);
     }
 
 }
