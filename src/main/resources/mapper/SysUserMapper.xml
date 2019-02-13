@@ -95,4 +95,15 @@
       ORDER BY a.create_date desc
     </if>
   </select>
+
+  <insert id="insertUserRole">
+    INSERT INTO sys_user_role
+    (sys_user_id, sys_role_id)
+    VALUES(#{userId}, #{roleId});
+  </insert>
+
+  <delete id="deleteUserRole">
+    DELETE FROM sys_user_role
+    WHERE sys_user_id=#{userId}
+  </delete>
 </mapper>

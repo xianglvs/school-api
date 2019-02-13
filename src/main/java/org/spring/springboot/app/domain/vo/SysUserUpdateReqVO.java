@@ -38,7 +38,7 @@ public class SysUserUpdateReqVO implements Serializable {
     private String sysOfficeId;
 
     @ApiModelProperty(value = "姓名")
-    @Length(min = 8, max = 50, message = "密码为8-50个字符之间")
+    @Length(min = 1, max = 50, message = "姓名为1-50个字符之间")
     private String name;
 
     @ApiModelProperty(value = "邮编")

@@ -1,5 +1,6 @@
 package org.spring.springboot.app.service;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.spring.springboot.app.base.Error;
 import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.dao.SysMenuMapper;
@@ -10,6 +11,7 @@ import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.util.Uuid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
@@ -158,21 +160,44 @@ public class SysUserService {
         example.and().andEqualTo("loginName", po.getLoginName());
         List<SysUserPO> list = SysUserMapper.selectByExample(example);
         if (!list.isEmpty()) {
-            new BusinessException(Type.EXIST_ERROR, ErrorTools.ErrorAsArrayList(new Error("loginName", "用户名已存在")));
+            throw new BusinessException(Type.EXIST_ERROR, ErrorTools.ErrorAsArrayList(new Error("loginName", "用户名已存在")));
         }
         po.preInsert();
-        SysUserMapper.insert(po);
+        try {
+            int i = SysUserMapper.insert(po);
+            if (i == 0) {
+                new BusinessException(Type.EXCEPTION_FAIL);
+            }
+        } catch (DataIntegrityViolationException e) {
+            throw new BusinessException(Type.NOT_FOUND_ERROR.getCode(), "区域ID或者机构ID不存在");
+        }
     }
 
     public void update(SysUserUpdateReqVO vo) {
         SysUserPO po = new SysUserPO();
         BeanUtils.copyProperties(vo, po);
         SysUserPO sysUserPO = SysUserMapper.selectByPrimaryKey(po.getId());
-        if(sysUserPO == null){
-            new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("id", "用户不存在")));
+        if (sysUserPO == null) {
+            throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("id", "用户不存在")));
         }
         po.preUpdate();
-        SysUserMapper.updateByPrimaryKeySelective(po);
+        try {
+            int i = SysUserMapper.updateByPrimaryKeySelective(po);
+            if (i == 0) {
+                throw new BusinessException(Type.EXCEPTION_FAIL);
+            }
+        } catch (DataIntegrityViolationException e) {
+            throw new BusinessException(Type.NOT_FOUND_ERROR.getCode(), "区域ID或者机构ID不存在");
+        }
+        SysUserMapper.deleteUserRole(po.getId());
+
+        vo.getRoles().forEach(roleId -> {
+            try {
+                SysUserMapper.insertUserRole(po.getId(), roleId);
+            } catch (DataIntegrityViolationException e) {
+                throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("roles", "角色不存在,角色ID为:" + roleId)));
+            }
+        });
     }
 
 

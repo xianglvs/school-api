@@ -3,24 +3,26 @@ package org.spring.springboot.app.domain.po;
 import lombok.Data;
 import org.spring.springboot.app.base.BaseEntity;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
 @Table(name = "sys_user")
 @Data
-public class SysUserPO extends BaseEntity{
+public class SysUserPO extends BaseEntity {
+
     /**
-     * 编号
+     * 唯一编号
      */
     @Id
     private String id;
-
     /**
      * 用户类型
 1.系统用户
 2.网站用户
      */
-    private Boolean type;
+    private Integer type;
 
     /**
      * 登录名

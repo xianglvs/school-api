@@ -23,9 +23,9 @@ public class SysMenuController {
     private SysMenuService sysMenuService;
 
     @ApiOperation(value = "缓存中查询用户菜单")
-    @GetMapping(value = "/cache/{token}")
+    @GetMapping(value = "/cache")
     public R<List<Menu>> selectBySessionUser(
-            @PathVariable("token") String token
+            @RequestParam("token") String token
     ) {
         List<Menu> list = sysMenuService.selectByCache(token);
         return new R(list);

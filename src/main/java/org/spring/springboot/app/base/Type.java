@@ -28,6 +28,7 @@ public enum Type {
     TIMEOUT(408001, "请求超时"),
 
     EXCEPTION(500000, "系统错误,请联系管理员"), 
+    EXCEPTION_FAIL(500001, "操作失败,请稍后在试"),
     FORMAT_EXCEPTION(500002, "参数格式不正确");
 
     private Integer code;

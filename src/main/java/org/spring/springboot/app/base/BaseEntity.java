@@ -132,6 +132,7 @@ public class BaseEntity implements Serializable {
         }
         this.updateDate = new Date();
         this.createDate = this.updateDate;
+        this.disableFlag = Boolean.FALSE;
         this.delFlag = Boolean.FALSE;
     }
 

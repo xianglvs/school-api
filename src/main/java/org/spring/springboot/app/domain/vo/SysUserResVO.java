@@ -53,6 +53,12 @@ public class SysUserResVO implements Serializable {
     @ApiModelProperty(value = "邮编")
     private String email;
 
+    @ApiModelProperty(value = "qq号")
+    private String qq;
+
+    @ApiModelProperty(value = "微信号")
+    private String weixin;
+
     @ApiModelProperty(value = "区域")
     private String sysAreaId;
 
