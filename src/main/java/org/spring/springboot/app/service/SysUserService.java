@@ -1,6 +1,5 @@
 package org.spring.springboot.app.service;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.spring.springboot.app.base.Error;
 import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.dao.SysMenuMapper;
@@ -32,7 +31,7 @@ public class SysUserService {
     private RedisUtils redisUtils;
 
 
-    public List<SysUserResVO> selectBySearch(UserSearchVo vo) {
+    public List<SysUserResVO> selectBySearch(UserSearchVO vo) {
         List<SysUserResVO> list = SysUserMapper.selectBySearch(vo);
         return list;
     }
@@ -189,8 +188,10 @@ public class SysUserService {
         } catch (DataIntegrityViolationException e) {
             throw new BusinessException(Type.NOT_FOUND_ERROR.getCode(), "区域ID或者机构ID不存在");
         }
+        if (vo.getRoles() == null || vo.getRoles().isEmpty()) {
+            return;
+        }
         SysUserMapper.deleteUserRole(po.getId());
-
         vo.getRoles().forEach(roleId -> {
             try {
                 SysUserMapper.insertUserRole(po.getId(), roleId);

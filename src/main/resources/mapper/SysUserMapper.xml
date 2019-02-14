@@ -57,7 +57,7 @@
     <result column="del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
 
-  <select id="selectBySearch" parameterType="org.spring.springboot.app.domain.vo.UserSearchVo" resultMap="BaseResultMap1">
+  <select id="selectBySearch" parameterType="org.spring.springboot.app.domain.vo.UserSearchVO" resultMap="BaseResultMap1">
     SELECT id, a.type, a.login_name, a.password, a.name, a.mobile, a.qq, a.weixin, a.photo, a.no, a.email, a.phone, a.sys_area_id, a.login_ip, a.longitude, a.latitude, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks
     FROM sys_user a
     where a.del_flag = 0

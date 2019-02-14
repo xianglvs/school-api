@@ -10,8 +10,10 @@ import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.*;
 import org.spring.springboot.app.service.SysUserService;
 import org.spring.springboot.util.IpUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -62,7 +64,7 @@ public class SysUserController {
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R<PageInfo<List<SysUserResVO>>> selectBySearch(
-            @ApiParam(value = "查询参数") @ModelAttribute UserSearchVo vo) {
+            @ApiParam(value = "查询参数") @ModelAttribute UserSearchVO vo) {
         List<SysUserResVO> list = sysUserService.selectBySearch(vo);
         PageInfo pageInfo = new PageInfo(list);
         return new R(pageInfo);
@@ -94,8 +96,22 @@ public class SysUserController {
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R update(
-            @ApiParam(value = "修改参数") @Valid @RequestBody SysUserUpdateReqVO sysUserCreateReqVO) {
-        sysUserService.update(sysUserCreateReqVO);
+            @ApiParam(value = "修改参数") @Valid @RequestBody SysUserUpdateReqVO sysUserUpdateReqVO) {
+        sysUserService.update(sysUserUpdateReqVO);
+        return new R();
+    }
+
+    @ApiOperation(value = "修改当前登录用户")
+    @PutMapping(value = "/current")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
+    public R updateCurrent(
+            @ApiIgnore User user,
+            @ApiParam(value = "修改参数") @Valid @RequestBody SysUserUpdateSessionReqVO sysUserUpdateSessionReqVO) {
+        sysUserUpdateSessionReqVO.setId(user.getId());
+        SysUserUpdateReqVO vo = new SysUserUpdateReqVO();
+        BeanUtils.copyProperties(sysUserUpdateSessionReqVO,vo);
+        sysUserService.update(vo);
         return new R();
     }
 

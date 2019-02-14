@@ -12,11 +12,10 @@ import java.util.List;
 
 @ApiModel(description = "修改参数")
 @Data
-public class SysUserUpdateReqVO implements Serializable {
+public class SysUserUpdateSessionReqVO implements Serializable {
     private static final long serialVersionUID = -1L;
 
-    @ApiModelProperty(value = "用户id")
-    @NotNull(message = "用户ID不能为空")
+    @ApiModelProperty(value = "用户id",hidden = true)
     private String id;
 
     @ApiModelProperty(value = "1.系统用户 2.网站用户",allowableValues = "1,2")
@@ -100,5 +99,4 @@ public class SysUserUpdateReqVO implements Serializable {
     public void setNo(String no) {
         this.no = no == null ? null : no.trim();
     }
-
 }

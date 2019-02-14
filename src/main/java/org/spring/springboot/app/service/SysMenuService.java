@@ -51,5 +51,8 @@ public class SysMenuService {
         return user.getMenus();
     }
 
+    public void insert(){
+    }
+
 
 }

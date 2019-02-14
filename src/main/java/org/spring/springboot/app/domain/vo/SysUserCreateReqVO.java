@@ -15,7 +15,7 @@ import java.util.List;
 public class SysUserCreateReqVO implements Serializable {
     private static final long serialVersionUID = -1L;
 
-    @ApiModelProperty(value = "1.系统用户 2.网站用户",allowableValues = "1,2")
+    @ApiModelProperty(value = "1.系统用户 2.网站用户", allowableValues = "1,2")
     @NotNull(message = "用户类型必须选择")
     private Integer type;
 
@@ -72,4 +72,47 @@ public class SysUserCreateReqVO implements Serializable {
     @ApiModelProperty(value = "备注信息")
     private String remarks;
 
+    public void setLoginName(String loginName) {
+        this.loginName = loginName == null ? null : loginName.trim();
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile == null ? null : mobile.trim();
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq == null ? null : qq.trim();
+    }
+
+    public void setWeixin(String weixin) {
+        this.weixin = weixin == null ? null : weixin.trim();
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo == null ? null : photo.trim();
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks == null ? null : remarks.trim();
+    }
+
+    public void setNo(String no) {
+        this.no = no == null ? null : no.trim();
+    }
 }

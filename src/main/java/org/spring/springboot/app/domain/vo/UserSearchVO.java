@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @ApiModel(description = "接收参数")
 @Data
-public class UserSearchVo implements Serializable {
+public class UserSearchVO implements Serializable {
     private static final long serialVersionUID = -1L;
 
     @ApiModelProperty(value = "登录名")
