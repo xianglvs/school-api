@@ -77,7 +77,7 @@ public class SysMenuController {
     }
 
     @ApiOperation(value = "修改菜单")
-    @PostMapping(value = "")
+    @PutMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R<Menu> update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysMenuUpdateReqVO vo

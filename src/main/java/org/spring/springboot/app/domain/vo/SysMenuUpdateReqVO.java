@@ -19,7 +19,6 @@ public class SysMenuUpdateReqVO {
     private String parentId;
 
     @ApiModelProperty(value = "名称")
-    @NotNull(message = "菜单名称不能为空")
     private String name;
 
     @ApiModelProperty(value = "排序")
