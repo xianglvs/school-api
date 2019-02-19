@@ -22,7 +22,7 @@
   </resultMap>
 
   <select id="selectMenuByUserId" resultMap="BaseResultMap">
-    SELECT id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
+    SELECT a.id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
     FROM sys_menu a
     INNER JOIN sys_role_menu b ON
     a.id = b.sys_menu_id
@@ -31,7 +31,7 @@
     WHERE c.sys_user_id = #{sysUserId}
   </select>
   <select id="selectAllMenu" resultMap="BaseResultMap">
-    SELECT id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
+    SELECT a.id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
     FROM sys_menu a
     WHERE
     1=1
@@ -40,6 +40,21 @@
     </if>
     <if test="disableFlag != null">
     AND a.disable_flag = #{disableFlag}
+    </if>
+  </select>
+
+
+  <select id="selectAllChildren" resultMap="BaseResultMap">
+    SELECT id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
+    FROM sys_menu a
+    WHERE
+    1=1
+    AND a.parent_ids like '%${id},%'
+    <if test="delFlag != null">
+      AND a.del_flag = #{delFlag}
+    </if>
+    <if test="disableFlag != null">
+      AND a.disable_flag = #{disableFlag}
     </if>
   </select>
 </mapper>

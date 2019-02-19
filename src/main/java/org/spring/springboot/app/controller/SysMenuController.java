@@ -8,10 +8,14 @@ import org.spring.springboot.app.base.ApiIndex;
 import org.spring.springboot.app.base.Menu;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
+import org.spring.springboot.app.domain.vo.SysMenuCreateReqVO;
+import org.spring.springboot.app.domain.vo.SysMenuUpdateReqVO;
+import org.spring.springboot.app.domain.vo.SysUserCreateReqVO;
 import org.spring.springboot.app.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(description = "菜单管理接口", tags = ApiIndex.MENU)
@@ -60,6 +64,26 @@ public class SysMenuController {
     ) {
         Menu menu = sysMenuService.selectById(menuId);
         return new R(menu);
+    }
+
+    @ApiOperation(value = "创建菜单")
+    @PostMapping(value = "")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    public R<Menu> insert(
+            @ApiParam(value = "添加参数") @Valid @RequestBody SysMenuCreateReqVO vo
+    ) {
+        sysMenuService.insert(vo);
+        return new R();
+    }
+
+    @ApiOperation(value = "修改菜单")
+    @PostMapping(value = "")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    public R<Menu> update(
+            @ApiParam(value = "修改参数") @Valid @RequestBody SysMenuUpdateReqVO vo
+    ) {
+        sysMenuService.update(vo);
+        return new R();
     }
 
 }

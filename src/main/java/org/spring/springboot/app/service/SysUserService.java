@@ -168,7 +168,10 @@ public class SysUserService {
                 new BusinessException(Type.EXCEPTION_FAIL);
             }
         } catch (DataIntegrityViolationException e) {
-            throw new BusinessException(Type.NOT_FOUND_ERROR.getCode(), "区域ID或者机构ID不存在");
+            throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(
+                    new Error("sysOfficeId", "机构或者区域不存在"),
+                    new Error("sysAreaId", "机构或者区域不存在")
+            ));
         }
     }
 
@@ -186,7 +189,10 @@ public class SysUserService {
                 throw new BusinessException(Type.EXCEPTION_FAIL);
             }
         } catch (DataIntegrityViolationException e) {
-            throw new BusinessException(Type.NOT_FOUND_ERROR.getCode(), "区域ID或者机构ID不存在");
+            throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(
+                    new Error("sysOfficeId", "机构或者区域不存在"),
+                    new Error("sysAreaId", "机构或者区域不存在")
+            ));
         }
         if (vo.getRoles() == null || vo.getRoles().isEmpty()) {
             return;

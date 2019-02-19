@@ -3,15 +3,19 @@ package org.spring.springboot.app.domain.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @ApiModel(description = "新增参数")
 @Data
-public class SysMenuCreateReqVO {
+public class SysMenuUpdateReqVO {
 
-    @ApiModelProperty(value = "父级编号,不设或者设为0为顶级父类")
+    @ApiModelProperty(value = "菜单id")
+    @NotNull(message = "菜单id不能为空")
+    private String id;
+
+    @ApiModelProperty(value = "父级编号,设为0为顶级父类")
     private String parentId;
 
     @ApiModelProperty(value = "名称")
@@ -39,14 +43,9 @@ public class SysMenuCreateReqVO {
     @ApiModelProperty(value = "备注信息")
     private String remarks;
 
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId == null && parentId.trim().length() == 0 ? "0" : parentId.trim();
-    }
-
     public String getParentId() {
-        if(parentId == null && parentId.trim().length() == 0){
-            parentId = "0";
+        if(StringUtils.isBlank(parentId)){
+            parentId = null;
         }
         return parentId;
     }
