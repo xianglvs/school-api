@@ -10,7 +10,6 @@ import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.SysMenuCreateReqVO;
 import org.spring.springboot.app.domain.vo.SysMenuUpdateReqVO;
-import org.spring.springboot.app.domain.vo.SysUserCreateReqVO;
 import org.spring.springboot.app.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
