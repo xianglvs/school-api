@@ -1,21 +1,17 @@
 package org.spring.springboot.app.domain.po;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.spring.springboot.app.base.BaseEntity;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "sys_menu")
 @Data
-public class SysMenuPO extends BaseEntity{
+@EqualsAndHashCode(callSuper = false)
+public class SysMenuPO extends BaseEntity {
 
-    /**
-     * 唯一编号
-     */
-    @Id
-    private String id;
     /**
      * 父级编号
      */

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.spring.springboot.util.Uuid;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,10 +17,11 @@ import java.util.Date;
  * Date: 2017-11-13
  * Time: 16:23
  */
-public class BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class BaseEntity implements Serializable{
 
+    private static final long serialVersionUID = -6829433111580900200L;
     @ApiModelProperty(value = "Id", hidden = true)
+    @Id
     private String id;
     @ApiModelProperty(value = "创建人", hidden = true)
     @Column(name = "create_by")

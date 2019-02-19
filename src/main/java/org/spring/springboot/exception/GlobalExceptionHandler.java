@@ -34,7 +34,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseBody
     public R jsonErrorHandler(HttpMessageNotReadableException e) {
-        e.printStackTrace();
         return new R(Type.FORMAT_EXCEPTION);
     }
 
@@ -100,8 +99,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public R bindExceptionHandler(Exception ex) {
-        R r = new R(Type.EXCEPTION);
         ex.printStackTrace();
+        R r = new R(Type.EXCEPTION);
         return r;
     }
 

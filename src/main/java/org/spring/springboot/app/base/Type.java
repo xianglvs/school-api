@@ -16,7 +16,7 @@ public enum Type {
     DATA_DEL_ERROR(400004, "信息已删除"), 
     NOT_FOUND_ERROR(400005, "信息未找到"),
     PARAM_LENGTH_ERROR(400006, "参数太长"),
-    Content_TYPE_ERROR(400007, "header信息中的Content-Type不正确,POST请求只支持Content-Type为application/json的请求,编码格式utf-8"),
+    Content_TYPE_ERROR(400007, "header信息中的Content-Type不正确,请确认该参数和API文档中的一致"),
 
     PERMISSIONS_VALIDATE_FAIL(401000, "没有权限访问此接口"), 
     ACCESS_TOKEN_VERFIY_FAIL(401005, "安全签名验证失败"),

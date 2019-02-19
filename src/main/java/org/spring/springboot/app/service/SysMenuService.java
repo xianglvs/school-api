@@ -64,7 +64,7 @@ public class SysMenuService {
             if (sysMenuPO == null) {
                 throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("parentId", "父级菜单不存在")));
             }
-            po.setParentId(sysMenuPO.getParentIds() + sysMenuPO.getId() + ",");
+            po.setParentIds(sysMenuPO.getParentIds() + sysMenuPO.getId() + ",");
         }
         po.preInsert();
         int i = sysMenuMapper.insert(po);

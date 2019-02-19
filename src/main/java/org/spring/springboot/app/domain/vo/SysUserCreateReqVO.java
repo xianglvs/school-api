@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
+
 @ApiModel(description = "新增参数")
 @Data
 public class SysUserCreateReqVO implements Serializable {
