@@ -41,7 +41,7 @@ public class SysMenuService {
         if (user == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "token不存在")));
         }
-        List<Menu> list = sysMenuMapper.selectMenuByUserId(user.getId());
+        List<Menu> list = sysMenuMapper.selectMenuByUserId(user.getId(), Boolean.FALSE, Boolean.FALSE);
         return list;
     }
 
