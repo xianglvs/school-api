@@ -95,7 +95,7 @@ public class SysUserService {
         String token = Uuid.getUUID();
         User userSession = new User();
         BeanUtils.copyProperties(sysUserPO, userSession);
-        List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId());
+        List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
         userSession.setMenus(menus);
         UserTokenResVO tokenResVO = new UserTokenResVO();
         tokenResVO.setToken(token);
@@ -133,7 +133,7 @@ public class SysUserService {
         String newToken = Uuid.getUUID();
         User userSession = new User();
         BeanUtils.copyProperties(sysUserPO, userSession);
-        List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId());
+        List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
         BeanUtils.copyProperties(menus, menus);
         UserTokenResVO userTokenResVO = new UserTokenResVO();
         userTokenResVO.setToken(newToken);
