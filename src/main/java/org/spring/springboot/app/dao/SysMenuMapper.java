@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface SysMenuMapper extends Mapper<SysMenuPO> {
-    List<Menu> selectMenuByUserId(@Param("sysUserId") String sysUserId);
+    List<Menu> selectMenuByUserId(@Param("sysUserId") String sysUserId, @Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);
 
     List<Menu> selectAllMenu(@Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);
 

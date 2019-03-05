@@ -90,7 +90,7 @@ public class SysMenuService {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("parentId", "父菜单不存在")));
         }
         //查询所有子菜单
-        List<SysMenuPO> children = sysMenuMapper.selectAllChildren(vo.getId(), Boolean.FALSE, vo.getHiddenFlag());
+        List<SysMenuPO> children = sysMenuMapper.selectAllChildren(vo.getId(), Boolean.FALSE, null);
         //更新子类的索引字段
         children.forEach(item -> {
             String parentIds = item.getParentIds();

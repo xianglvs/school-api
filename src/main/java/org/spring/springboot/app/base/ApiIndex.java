@@ -17,5 +17,9 @@ public class ApiIndex {
      * 菜单管理接口
      */
     public static final String MENU = "1.0.1";
+    /*
+     * 角色管理接口
+     */
+    public static final String ROLE = "1.0.2";
 
 }

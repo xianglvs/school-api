@@ -29,6 +29,12 @@
     INNER JOIN sys_user_role c ON
     b.sys_role_id = c.sys_role_id
     WHERE c.sys_user_id = #{sysUserId}
+    <if test="delFlag != null">
+      AND a.del_flag = #{delFlag}
+    </if>
+    <if test="disableFlag != null">
+      AND a.disable_flag = #{disableFlag}
+    </if>
   </select>
   <select id="selectAllMenu" resultMap="BaseResultMap">
     SELECT a.id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
