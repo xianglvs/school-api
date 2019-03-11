@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -39,6 +40,11 @@ public class SysRoleService {
 
     public List<SysRoleResVO> selectAll(Boolean delFlag, Boolean disableFlag) {
         List<SysRoleResVO> list = sysRoleMapper.selectAllRole(delFlag, disableFlag);
+        return list;
+    }
+
+    public List<SysRoleResVO> selectPage(SysRoleSearchReqVO vo) {
+        List<SysRoleResVO> list = sysRoleMapper.selectPageRole(vo);
         return list;
     }
 

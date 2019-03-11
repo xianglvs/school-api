@@ -3,6 +3,7 @@ package org.spring.springboot.app.domain.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.spring.springboot.app.base.Page;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -12,7 +13,7 @@ import java.io.Serializable;
 
 @ApiModel(description = "接收参数")
 @Data
-public class UserSearchVO implements Serializable {
+public class UserSearchVO extends Page implements Serializable {
     private static final long serialVersionUID = -1L;
 
     @ApiModelProperty(value = "登录名")
@@ -33,24 +34,4 @@ public class UserSearchVO implements Serializable {
     private String endCreateDate;
     @ApiModelProperty(value = "用户类型 1.系统用户 2.网站用户", allowableValues = "1,2")
     private String type;
-    @ApiModelProperty(value = "页数")
-    private Integer pageNum;
-    @ApiModelProperty(value = "每页行数")
-    private Integer pageSize;
-
-    public Integer getPageNum() {
-        if(pageNum == null){
-            pageNum = 1;
-        }
-        return pageNum;
-    }
-    public Integer getPageSize() {
-        if(pageSize == null){
-            pageSize = 20;
-        }
-        if(pageSize > 100){
-            pageSize = 100;
-        }
-        return pageSize;
-    }
 }

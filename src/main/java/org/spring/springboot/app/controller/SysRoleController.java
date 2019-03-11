@@ -48,6 +48,18 @@ public class SysRoleController {
         return new R(list);
     }
 
+
+    @ApiOperation(value = "分页查询角色")
+    @GetMapping(value = "/page")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
+    public R<List<SysRoleResVO>> selectPage(
+            @ApiParam(value = "查询参数") @ModelAttribute SysRoleSearchReqVO vo
+            ) {
+        List<SysRoleResVO> list = sysRoleService.selectPage(vo);
+        return new R(list);
+    }
+
     @ApiOperation(value = "查询单个角色")
     @GetMapping(value = "/{roleId}")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
