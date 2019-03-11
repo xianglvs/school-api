@@ -15,7 +15,7 @@ public class SysMenuUpdateReqVO {
     @NotNull(message = "菜单id不能为空")
     private String id;
 
-    @ApiModelProperty(value = "父级编号,设为0为顶级父类")
+    @ApiModelProperty(value = "父级id,设为0为顶级父类")
     private String parentId;
 
     @ApiModelProperty(value = "名称")
@@ -38,6 +38,9 @@ public class SysMenuUpdateReqVO {
 
     @ApiModelProperty(value = "权限标识")
     private String permission;
+
+    @ApiModelProperty(value = "禁用标志,1.false 否, 2.true 是")
+    private Boolean disableFlag;
 
     @ApiModelProperty(value = "备注信息")
     private String remarks;
@@ -63,13 +66,6 @@ public class SysMenuUpdateReqVO {
 
     public void setIcon(String icon) {
         this.icon = icon == null ? null : icon.trim();
-    }
-
-    public Boolean getHiddenFlag() {
-        if (hiddenFlag == null) {
-            return false;
-        }
-        return hiddenFlag;
     }
 
 }

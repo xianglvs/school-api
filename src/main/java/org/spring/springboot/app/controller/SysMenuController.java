@@ -25,7 +25,7 @@ public class SysMenuController {
     @Autowired
     private SysMenuService sysMenuService;
 
-    @ApiOperation(value = "缓存中查询用户菜单")
+    @ApiOperation(value = "缓存中查询登录用户菜单")
     @GetMapping(value = "/cache")
     public R<List<Menu>> selectBySessionUser(
             @RequestParam("token") String token
@@ -34,12 +34,38 @@ public class SysMenuController {
         return new R(list);
     }
 
-    @ApiOperation(value = "查询用户菜单")
+    @ApiOperation(value = "查询登录用户菜单")
     @GetMapping(value = "/user")
     public R<List<Menu>> selectByUser(
             @ApiParam(value = "签名") @RequestParam(value = "token") String token
     ) {
         List<Menu> list = sysMenuService.selectByToken(token);
+        return new R(list);
+    }
+
+    @ApiOperation(value = "查询角色菜单")
+    @GetMapping(value = "/role/{roleId}")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
+    public R<List<Menu>> selectByRole(
+            @ApiParam(value = "角色id") @PathVariable(value = "roleId") String roleId,
+            @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
+            @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag
+    ) {
+        List<Menu> list = sysMenuService.selectByRoleId(roleId, delFlag, disableFlag);
+        return new R(list);
+    }
+
+    @ApiOperation(value = "查询用户菜单")
+    @GetMapping(value = "/user/{userId}")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
+    public R<List<Menu>> selectByUser(
+            @ApiParam(value = "用户id") @PathVariable(value = "userId") String userId,
+            @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
+            @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag
+    ) {
+        List<Menu> list = sysMenuService.selectByUserId(userId, delFlag, disableFlag);
         return new R(list);
     }
 
@@ -58,6 +84,7 @@ public class SysMenuController {
     @ApiOperation(value = "查询单个菜单")
     @GetMapping(value = "/{menuId}")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
     public R<Menu> selectById(
             @ApiParam(value = "菜单ID") @PathVariable("menuId") String menuId
     ) {
@@ -68,6 +95,7 @@ public class SysMenuController {
     @ApiOperation(value = "创建菜单")
     @PostMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
     public R<Menu> insert(
             @ApiParam(value = "添加参数") @Valid @RequestBody SysMenuCreateReqVO vo
     ) {
@@ -78,6 +106,7 @@ public class SysMenuController {
     @ApiOperation(value = "修改菜单")
     @PutMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
     public R<Menu> update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysMenuUpdateReqVO vo
     ) {

@@ -31,6 +31,16 @@ public class SysMenuService {
         return menu;
     }
 
+    public List<Menu> selectByUserId(String userId, Boolean delFlag, Boolean disableFlag) {
+        List<Menu> list = sysMenuMapper.selectMenuByUserId(userId, delFlag, disableFlag);
+        return list;
+    }
+
+    public List<Menu> selectByRoleId(String roleId, Boolean delFlag, Boolean disableFlag) {
+        List<Menu> list = sysMenuMapper.selectMenuByRoleId(roleId, delFlag, disableFlag);
+        return list;
+    }
+
     public List<Menu> selectAll(Boolean delFlag, Boolean disableFlag) {
         List<Menu> list = sysMenuMapper.selectAllMenu(delFlag, disableFlag);
         return list;
@@ -41,7 +51,7 @@ public class SysMenuService {
         if (user == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "token不存在")));
         }
-        List<Menu> list = sysMenuMapper.selectMenuByUserId(user.getId());
+        List<Menu> list = sysMenuMapper.selectMenuByUserId(user.getId(), Boolean.FALSE, Boolean.FALSE);
         return list;
     }
 
@@ -73,6 +83,14 @@ public class SysMenuService {
         }
     }
 
+    private void updateMenu(SysMenuPO po) {
+        po.preUpdate();
+        int i = sysMenuMapper.updateByPrimaryKeySelective(po);
+        if (i == 0) {
+            throw new BusinessException(Type.EXCEPTION_FAIL);
+        }
+    }
+
     public void update(SysMenuUpdateReqVO vo) {
         SysMenuPO sysMenuPO = sysMenuMapper.selectByPrimaryKey(vo.getId());
         if (sysMenuPO == null) {
@@ -82,6 +100,7 @@ public class SysMenuService {
         BeanUtils.copyProperties(vo, po);
         //是否修改了父级,如果修改了父级则需要更新索引字段
         if (vo.getParentId() == null || vo.getParentId().equalsIgnoreCase(sysMenuPO.getParentId())) {
+            updateMenu(po);
             return;
         }
         //查询父类
@@ -90,7 +109,7 @@ public class SysMenuService {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("parentId", "父菜单不存在")));
         }
         //查询所有子菜单
-        List<SysMenuPO> children = sysMenuMapper.selectAllChildren(vo.getId(), Boolean.FALSE, vo.getHiddenFlag());
+        List<SysMenuPO> children = sysMenuMapper.selectAllChildren(vo.getId(), Boolean.FALSE, null);
         //更新子类的索引字段
         children.forEach(item -> {
             String parentIds = item.getParentIds();
@@ -102,11 +121,7 @@ public class SysMenuService {
         });
         po.setParentIds(parentPo.getParentIds() + parentPo.getId() + ",");
         //更新菜单
-        po.preUpdate();
-        int i = sysMenuMapper.updateByPrimaryKeySelective(po);
-        if (i == 0) {
-            throw new BusinessException(Type.EXCEPTION_FAIL);
-        }
+        updateMenu(po);
     }
 
 }

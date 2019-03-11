@@ -8,7 +8,7 @@ import java.io.Serializable;
 @ApiModel(description = "返回参数")
 public class Menu implements Serializable {
     private static final long serialVersionUID = 1L;
-    @ApiModelProperty(value = "唯一编号")
+    @ApiModelProperty(value = "菜单id")
     private String id;
     @ApiModelProperty(value = "菜单父级")
     private String parentId;

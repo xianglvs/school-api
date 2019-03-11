@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.spring.springboot.app.dao.SysRoleMapper">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.app.domain.po.SysRolePO">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="office_id" jdbcType="VARCHAR" property="officeId"/>
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
+        <result column="parent_ids" jdbcType="VARCHAR" property="parentIds"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="en_name" jdbcType="VARCHAR" property="enName"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="disable_flag" jdbcType="BIT" property="disableFlag"/>
+        <result column="del_flag" jdbcType="BIT" property="delFlag"/>
+    </resultMap>
+
+    <select id="selectAllRole" resultMap="BaseResultMap">
+        SELECT id, office_id, parent_id, parent_ids, name, en_name, create_by, create_date, update_by, update_date,
+        remarks, disable_flag, del_flag
+        FROM sys_role
+        WHERE 1=1
+        <if test="delFlag != null">
+            AND del_flag = #{delFlag}
+        </if>
+        <if test="disableFlag != null">
+            AND disable_flag = #{disableFlag}
+        </if>
+    </select>
+
+    <select id="selectRoleByUserId" resultMap="BaseResultMap">
+        SELECT id, office_id, parent_id, parent_ids, name, en_name, create_by, create_date, update_by, update_date,
+        remarks, disable_flag, del_flag
+        FROM sys_role a
+        INNER JOIN sys_user_role b
+        ON a.id = b.sys_role_id
+        WHERE 1=1
+        b.sys_user_id = #{userId}
+        <if test="delFlag != null">
+            AND a.del_flag = #{delFlag}
+        </if>
+        <if test="disableFlag != null">
+            AND a.disable_flag = #{disableFlag}
+        </if>
+    </select>
+
+    <select id="selectAllChildren" resultMap="BaseResultMap">
+        SELECT id, office_id, parent_id, parent_ids, name, en_name, create_by, create_date, update_by, update_date,
+        remarks, disable_flag, del_flag
+        FROM sys_role
+        WHERE
+        1=1
+        AND a.parent_ids like '%${id},%'
+        <if test="delFlag != null">
+            AND del_flag = #{delFlag}
+        </if>
+        <if test="disableFlag != null">
+            AND disable_flag = #{disableFlag}
+        </if>
+    </select>
+
+    <insert id="insertRoleMenu">
+        INSERT INTO sys_role_menu
+        (sys_role_id, sys_menu_id)
+        VALUES(#{roleId},#{menuId});
+    </insert>
+
+    <delete id="deleteRoleMenus">
+        DELETE FROM sys_role_menu
+        WHERE sys_role_id=#{roleId}
+    </delete>
+</mapper>

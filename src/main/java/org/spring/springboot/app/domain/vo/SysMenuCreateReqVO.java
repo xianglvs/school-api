@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class SysMenuCreateReqVO {
 
-    @ApiModelProperty(value = "父级编号,不设或者设为0为顶级父类")
+    @ApiModelProperty(value = "父级id,不设或者设为0为顶级父类")
     private String parentId;
 
     @ApiModelProperty(value = "名称")

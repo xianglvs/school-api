@@ -14,8 +14,13 @@ public class ApiIndex {
      */
     public static final String USER = "1.0.0";
     /*
+     * 角色管理接口
+     */
+    public static final String ROLE = "1.0.1";
+    /*
      * 菜单管理接口
      */
-    public static final String MENU = "1.0.1";
+    public static final String MENU = "1.0.2";
+
 
 }
