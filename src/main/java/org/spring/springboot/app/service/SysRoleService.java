@@ -1,18 +1,21 @@
 package org.spring.springboot.app.service;
 
 import org.spring.springboot.app.base.Error;
-import org.spring.springboot.app.base.*;
+import org.spring.springboot.app.base.ErrorTools;
+import org.spring.springboot.app.base.Type;
 import org.spring.springboot.app.dao.SysMenuMapper;
 import org.spring.springboot.app.dao.SysRoleMapper;
 import org.spring.springboot.app.domain.po.SysRolePO;
-import org.spring.springboot.app.domain.vo.*;
+import org.spring.springboot.app.domain.vo.SysOfficeInsertReqVO;
+import org.spring.springboot.app.domain.vo.SysRoleResVO;
+import org.spring.springboot.app.domain.vo.SysRoleSearchReqVO;
+import org.spring.springboot.app.domain.vo.SysRoleUpdateReqVO;
 import org.spring.springboot.exception.BusinessException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class SysRoleService {
         return list;
     }
 
-    public void insert(SysRoleCreateReqVO vo) {
+    public void insert(SysOfficeInsertReqVO vo) {
         SysRolePO po = new SysRolePO();
         BeanUtils.copyProperties(vo, po);
         String parentId = po.getParentId();

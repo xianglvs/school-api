@@ -1,5 +1,6 @@
 package org.spring.springboot.app.controller;
 
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -8,8 +9,10 @@ import org.spring.springboot.app.base.ApiIndex;
 import org.spring.springboot.app.base.Menu;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
-import org.spring.springboot.app.domain.vo.*;
-import org.spring.springboot.app.service.SysMenuService;
+import org.spring.springboot.app.domain.vo.SysOfficeInsertReqVO;
+import org.spring.springboot.app.domain.vo.SysRoleResVO;
+import org.spring.springboot.app.domain.vo.SysRoleSearchReqVO;
+import org.spring.springboot.app.domain.vo.SysRoleUpdateReqVO;
 import org.spring.springboot.app.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,11 +56,14 @@ public class SysRoleController {
     @GetMapping(value = "/page")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
-    public R<List<SysRoleResVO>> selectPage(
+    public R<PageInfo<SysRoleResVO>> selectPage(
             @ApiParam(value = "查询参数") @ModelAttribute SysRoleSearchReqVO vo
             ) {
+        R result = new R();
         List<SysRoleResVO> list = sysRoleService.selectPage(vo);
-        return new R(list);
+        PageInfo<SysRoleResVO> pageInfo = new PageInfo<>(list);
+        result.setData(pageInfo);
+        return result;
     }
 
     @ApiOperation(value = "查询单个角色")
@@ -74,7 +80,7 @@ public class SysRoleController {
     @PostMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R<Menu> insert(
-            @ApiParam(value = "添加参数") @Valid @RequestBody SysRoleCreateReqVO vo
+            @ApiParam(value = "添加参数") @Valid @RequestBody SysOfficeInsertReqVO vo
     ) {
         sysRoleService.insert(vo);
         return new R();

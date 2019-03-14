@@ -28,7 +28,7 @@
 
     <javaClientGenerator targetPackage="${targetMapperPackage}" targetProject="${targetJavaProject}" type="XMLMAPPER"/>
 
-    <table tableName="sys_role" domainObjectName="SysRole">
+    <table tableName="sys_office" domainObjectName="SysOffice">
     </table>
   </context>
 </generatorConfiguration>

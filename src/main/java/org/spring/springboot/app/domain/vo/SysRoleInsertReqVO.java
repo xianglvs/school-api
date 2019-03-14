@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
-import java.util.Date;
-
 @ApiModel(description = "参数")
 @Data
 public class SysRoleInsertReqVO {

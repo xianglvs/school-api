@@ -3,13 +3,6 @@ package org.spring.springboot.app.domain.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.spring.springboot.app.base.BaseEntity;
-import org.spring.springboot.app.base.Menu;
-
-import javax.persistence.Column;
-import javax.persistence.Table;
-import java.util.List;
 
 @ApiModel(description = "返回参数")
 @Data
