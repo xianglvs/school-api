@@ -6,7 +6,7 @@ import org.spring.springboot.app.base.Type;
 import org.spring.springboot.app.dao.SysMenuMapper;
 import org.spring.springboot.app.dao.SysRoleMapper;
 import org.spring.springboot.app.domain.po.SysRolePO;
-import org.spring.springboot.app.domain.vo.SysOfficeInsertReqVO;
+import org.spring.springboot.app.domain.vo.SysRoleInsertReqVO;
 import org.spring.springboot.app.domain.vo.SysRoleResVO;
 import org.spring.springboot.app.domain.vo.SysRoleSearchReqVO;
 import org.spring.springboot.app.domain.vo.SysRoleUpdateReqVO;
@@ -51,7 +51,7 @@ public class SysRoleService {
         return list;
     }
 
-    public void insert(SysOfficeInsertReqVO vo) {
+    public void insert(SysRoleInsertReqVO vo) {
         SysRolePO po = new SysRolePO();
         BeanUtils.copyProperties(vo, po);
         String parentId = po.getParentId();

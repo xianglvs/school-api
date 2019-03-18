@@ -15,6 +15,6 @@ public interface SysOfficeMapper extends Mapper<SysOfficePO> {
 
     List<SysOfficeResVO> selectOfficeByUserId(@Param("userId") String userId, @Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);
 
-    List<SysOfficeResVO> selectAllChildren(@Param("id") String id, @Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);
+    List<SysOfficePO> selectAllChildren(@Param("id") String id, @Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);
 
 }

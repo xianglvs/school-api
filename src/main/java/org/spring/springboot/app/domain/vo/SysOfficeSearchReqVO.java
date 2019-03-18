@@ -3,11 +3,11 @@ package org.spring.springboot.app.domain.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
+import org.spring.springboot.app.base.Page;
 
 @ApiModel(description = "新增参数")
 @Data
-public class SysOfficeSearchReqVO {
+public class SysOfficeSearchReqVO extends Page {
 
     /**
      * 父级编号

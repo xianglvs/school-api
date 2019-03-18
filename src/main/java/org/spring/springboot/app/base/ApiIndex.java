@@ -21,6 +21,10 @@ public class ApiIndex {
      * 菜单管理接口
      */
     public static final String MENU = "1.0.2";
+    /*
+     * 机构管理接口
+     */
+    public static final String OFFICE = "1.0.3";
 
 
 }

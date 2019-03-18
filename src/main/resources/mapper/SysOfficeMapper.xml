@@ -46,8 +46,23 @@
     <if test="name != null">
       AND name like '%${name}%'
     </if>
+    <if test="master != null">
+      AND master like '%${master}%'
+    </if>
+    <if test="address != null">
+      AND address like '%${address}%'
+    </if>
     <if test="parentId != null">
       AND parent_id = #{parentId}
+    </if>
+    <if test="phone != null">
+      AND phone = #{phone}
+    </if>
+    <if test="email != null">
+      AND email = #{email}
+    </if>
+    <if test="zipCode != null">
+      AND zip_code = #{zipCode}
     </if>
     <if test="sysAreaId != null">
       AND sys_area_id = #{sysAreaId}
