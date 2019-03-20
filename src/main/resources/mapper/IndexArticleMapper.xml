@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.spring.springboot.app.dao.IndexArticleMapper">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.app.domain.po.IndexArticlePO">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+        <result column="disable_flag" jdbcType="BIT" property="disableFlag"/>
+        <result column="del_flag" jdbcType="BIT" property="delFlag"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+
+    <insert id="insertIndexArticleCategory">
+        INSERT INTO index_article_category
+        (article_id, category_id)
+        VALUES(#{articleId}, #{categoryId});
+    </insert>
+
+    <delete id="deleteIndexArticleCategory">
+        DELETE FROM index_article_category
+        WHERE article_id=#{articleId}
+    </delete>
+
+    <select id="selectPage" resultMap="BaseResultMap">
+        SELECT
+            a.id,
+            a.title,
+            a.content,
+            a.description,
+            a.sort,
+            a.create_by,
+            a.create_date,
+            a.update_by,
+            a.update_date,
+            a.disable_flag,
+            a.del_flag
+        FROM
+            index_article a
+        LEFT JOIN index_article_category b ON
+            a.id = b.article_id
+        LEFT JOIN index_category c ON
+            b.category_id = c.id
+            AND c.del_flag = FALSE
+            AND c.disable_flag = FALSE
+        WHERE 1=1
+            <if test="title != null">
+                AND a.title like '%${title}%'
+            </if>
+            <if test="description != null">
+                AND a.description like '%${description}%'
+            </if>
+            <if test="categoryId != null">
+                AND c.category_id = #{categoryId}
+            </if>
+            <if test="delFlag != null">
+                AND a.del_flag = #{delFlag}
+            </if>
+            <if test="disableFlag != null">
+                AND a.disable_flag = #{disableFlag}
+            </if>
+    </select>
+</mapper>

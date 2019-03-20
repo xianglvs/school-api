@@ -4,7 +4,7 @@ import org.spring.springboot.app.base.Error;
 import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.dao.SysMenuMapper;
 import org.spring.springboot.app.domain.po.SysMenuPO;
-import org.spring.springboot.app.domain.vo.SysMenuCreateReqVO;
+import org.spring.springboot.app.domain.vo.SysMenuInsertReqVO;
 import org.spring.springboot.app.domain.vo.SysMenuUpdateReqVO;
 import org.spring.springboot.exception.BusinessException;
 import org.springframework.beans.BeanUtils;
@@ -63,7 +63,7 @@ public class SysMenuService {
         return user.getMenus();
     }
 
-    public void insert(SysMenuCreateReqVO vo) {
+    public void insert(SysMenuInsertReqVO vo) {
         SysMenuPO po = new SysMenuPO();
         BeanUtils.copyProperties(vo, po);
         String parentId = po.getParentId();

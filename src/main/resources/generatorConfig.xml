@@ -28,7 +28,7 @@
 
     <javaClientGenerator targetPackage="${targetMapperPackage}" targetProject="${targetJavaProject}" type="XMLMAPPER"/>
 
-    <table tableName="sys_office" domainObjectName="SysOffice">
+    <table tableName="index_article" domainObjectName="IndexArticle">
     </table>
   </context>
 </generatorConfiguration>

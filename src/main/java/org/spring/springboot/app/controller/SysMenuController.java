@@ -8,7 +8,7 @@ import org.spring.springboot.app.base.ApiIndex;
 import org.spring.springboot.app.base.Menu;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
-import org.spring.springboot.app.domain.vo.SysMenuCreateReqVO;
+import org.spring.springboot.app.domain.vo.SysMenuInsertReqVO;
 import org.spring.springboot.app.domain.vo.SysMenuUpdateReqVO;
 import org.spring.springboot.app.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +97,7 @@ public class SysMenuController {
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R<Menu> insert(
-            @ApiParam(value = "添加参数") @Valid @RequestBody SysMenuCreateReqVO vo
+            @ApiParam(value = "添加参数") @Valid @RequestBody SysMenuInsertReqVO vo
     ) {
         sysMenuService.insert(vo);
         return new R();

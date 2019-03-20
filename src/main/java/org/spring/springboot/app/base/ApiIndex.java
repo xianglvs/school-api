@@ -25,6 +25,10 @@ public class ApiIndex {
      * 机构管理接口
      */
     public static final String OFFICE = "1.0.3";
+    /*
+     * 文章管理接口
+     */
+    public static final String ARTICLE = "1.0.4";
 
 
 }
