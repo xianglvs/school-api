@@ -1,6 +1,5 @@
 package org.spring.springboot.app.controller;
 
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -8,7 +7,9 @@ import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.ApiIndex;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
-import org.spring.springboot.app.domain.vo.*;
+import org.spring.springboot.app.domain.vo.SysAreaInsertReqVO;
+import org.spring.springboot.app.domain.vo.SysAreaResVO;
+import org.spring.springboot.app.domain.vo.SysAreaUpdateReqVO;
 import org.spring.springboot.app.service.SysAreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
