@@ -64,4 +64,5 @@
                 AND a.disable_flag = #{disableFlag}
             </if>
     </select>
+
 </mapper>

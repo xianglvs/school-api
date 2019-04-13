@@ -29,6 +29,9 @@ public class ApiIndex {
      * 文章管理接口
      */
     public static final String ARTICLE = "1.0.4";
-
+    /*
+     * 区域管理接口
+     */
+    public static final String AREA = "1.0.5";
 
 }
