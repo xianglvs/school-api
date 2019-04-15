@@ -18,4 +18,8 @@ public interface SysMenuMapper extends Mapper<SysMenuPO> {
     List<Menu> selectAllMenu(@Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);
 
     List<SysMenuPO> selectAllChildren(@Param("id") String id, @Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);
+
+    int deleteById(@Param("id") String id);
+
+    int deleteRoleMenuByMenuId(@Param("id") String id);
 }

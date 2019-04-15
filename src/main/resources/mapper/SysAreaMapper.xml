@@ -74,4 +74,9 @@
             AND disable_flag = #{disableFlag}
             </if>
     </select>
+
+    <update id="deleteById">
+        UPDATE sys_area SET del_flag = true WHERE id = '${id}' OR parent_ids lIKE '%${id},%'
+    </update>
+
 </mapper>

@@ -78,4 +78,13 @@
       AND a.disable_flag = #{disableFlag}
     </if>
   </select>
+
+  <update id="deleteById">
+    UPDATE sys_menu SET del_flag = true WHERE id = '${id}' OR parent_ids lIKE '%${id},%'
+  </update>
+
+  <delete id="deleteRoleMenuByMenuId">
+    DELETE FROM sys_role_menu WHERE sys_menu_id #{id}
+  </delete>
+
 </mapper>

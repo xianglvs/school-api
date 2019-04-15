@@ -57,7 +57,7 @@ public class SysAreaService {
         }
     }
 
-    private void updateArea(SysAreaPO po) {
+    private void update(SysAreaPO po) {
         po.preUpdate();
         int i = sysAreaMapper.updateByPrimaryKeySelective(po);
         if (i == 0) {
@@ -66,15 +66,15 @@ public class SysAreaService {
     }
 
     public void update(SysAreaUpdateReqVO vo) {
-        SysAreaPO sysAreaPO = sysAreaMapper.selectByPrimaryKey(vo.getId());
-        if (sysAreaPO == null) {
+        SysAreaPO oldPO = sysAreaMapper.selectByPrimaryKey(vo.getId());
+        if (oldPO == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("id", "id不存在")));
         }
         SysAreaPO po = new SysAreaPO();
         BeanUtils.copyProperties(vo, po);
         //是否修改了父级,如果修改了父级则需要更新索引字段
-        if (vo.getParentId() == null || vo.getParentId().equalsIgnoreCase(sysAreaPO.getParentId())) {
-            updateArea(po);
+        if (vo.getParentId() == null || vo.getParentId().equalsIgnoreCase(oldPO.getParentId())) {
+            update(po);
             return;
         }
         //查询父类
@@ -87,7 +87,7 @@ public class SysAreaService {
         //更新子类的索引字段
         children.forEach(item -> {
             String parentIds = item.getParentIds();
-            item.setParentIds(parentIds.replace(sysAreaPO.getParentIds(), parentPo.getParentIds() + parentPo.getId() + ","));
+            item.setParentIds(parentIds.replace(oldPO.getParentIds(), parentPo.getParentIds() + parentPo.getId() + ","));
             int i = sysAreaMapper.updateByPrimaryKey(item);
             if (i == 0) {
                 throw new BusinessException(Type.EXCEPTION_FAIL);
@@ -95,11 +95,11 @@ public class SysAreaService {
         });
         po.setParentIds(parentPo.getParentIds() + parentPo.getId() + ",");
         //更新记录
-        po.preUpdate();
-        int i = sysAreaMapper.updateByPrimaryKeySelective(po);
-        if (i == 0) {
-            throw new BusinessException(Type.EXCEPTION_FAIL);
-        }
+        update(po);
+    }
+
+    public void deleteById(String id){
+        sysAreaMapper.deleteById(id);
     }
 
 }

@@ -93,4 +93,14 @@ public class SysOfficeController {
         return new R();
     }
 
+    @ApiOperation(value = "删除机构")
+    @DeleteMapping(value = "")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    public R delete(
+            @ApiParam(value = "机构id") @RequestParam(value = "id") String id
+    ) {
+        sysOfficeService.deleteById(id);
+        return new R();
+    }
+
 }

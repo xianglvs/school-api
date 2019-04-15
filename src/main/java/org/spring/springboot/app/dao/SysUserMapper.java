@@ -16,4 +16,6 @@ public interface SysUserMapper extends Mapper<SysUserPO> {
     int insertUserRole(@Param("userId") String userId, @Param("roleId") String roleId);
 
     int deleteUserRole(@Param("userId") String userId);
+
+    int deleteById(@Param("id") String id);
 }

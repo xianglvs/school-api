@@ -15,4 +15,7 @@ public interface IndexArticleMapper extends Mapper<IndexArticlePO> {
     int deleteIndexArticleCategory(@Param("articleId") String articleId);
 
     List<IndexArticleResVO> selectPage(IndexArticleSearchReqVO vo);
+
+    int deleteById(@Param("id") String id);
+
 }

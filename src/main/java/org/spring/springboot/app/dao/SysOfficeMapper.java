@@ -17,4 +17,6 @@ public interface SysOfficeMapper extends Mapper<SysOfficePO> {
 
     List<SysOfficePO> selectAllChildren(@Param("id") String id, @Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);
 
+    int deleteById(@Param("id") String id);
+
 }

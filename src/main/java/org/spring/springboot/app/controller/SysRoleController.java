@@ -96,4 +96,13 @@ public class SysRoleController {
         return new R();
     }
 
+    @ApiOperation(value = "删除角色")
+    @DeleteMapping(value = "")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    public R<Menu> delete(
+            @ApiParam(value = "角色id") @RequestParam(value = "id") String id
+    ) {
+        sysRoleService.deleteById(id);
+        return new R();
+    }
 }

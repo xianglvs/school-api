@@ -65,4 +65,8 @@
             </if>
     </select>
 
+    <update id="deleteById">
+        UPDATE index_article SET del_flag = true WHERE id = #{id}
+    </update>
+
 </mapper>

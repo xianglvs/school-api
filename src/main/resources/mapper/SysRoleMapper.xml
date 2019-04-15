@@ -90,6 +90,15 @@
         VALUES(#{roleId},#{menuId});
     </insert>
 
+    <update id="deleteById">
+        UPDATE sys_role SET del_flag = true WHERE id = '${id}' OR parent_ids lIKE '%${id},%'
+    </update>
+
+
+    <delete id="deleteUserRoleByUserId">
+        DELETE from sys_user_role  WHERE sys_role_id = #{id}
+    </delete>
+
     <delete id="deleteRoleMenus">
         DELETE FROM sys_role_menu
         WHERE sys_role_id=#{roleId}

@@ -65,4 +65,13 @@ public class SysAreaController {
         return new R();
     }
 
+    @ApiOperation(value = "删除区域")
+    @DeleteMapping(value = "")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    public R delete(
+            @ApiParam(value = "区域id") @RequestParam(value = "id") String id
+    ) {
+        service.deleteById(id);
+        return new R();
+    }
 }

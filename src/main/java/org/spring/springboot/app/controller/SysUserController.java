@@ -110,9 +110,18 @@ public class SysUserController {
             @ApiParam(value = "修改参数") @Valid @RequestBody SysUserUpdateSessionReqVO sysUserUpdateSessionReqVO) {
         sysUserUpdateSessionReqVO.setId(user.getId());
         SysUserUpdateReqVO vo = new SysUserUpdateReqVO();
-        BeanUtils.copyProperties(sysUserUpdateSessionReqVO,vo);
+        BeanUtils.copyProperties(sysUserUpdateSessionReqVO, vo);
         sysUserService.update(vo);
         return new R();
     }
 
+    @ApiOperation(value = "删除用户")
+    @DeleteMapping(value = "")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    public R delete(
+            @ApiParam(value = "用户id") @RequestParam(value = "id") String id
+    ) {
+        sysUserService.deleteById(id);
+        return new R();
+    }
 }

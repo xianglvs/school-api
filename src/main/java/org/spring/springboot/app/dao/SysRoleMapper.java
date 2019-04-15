@@ -21,4 +21,8 @@ public interface SysRoleMapper extends Mapper<SysRolePO> {
     int deleteRoleMenus(@Param("roleId") String roleId);
 
     int insertRoleMenu(@Param("roleId") String roleId, @Param("menuId") String menuId);
+
+    int deleteById(@Param("id") String id);
+
+    int deleteUserRoleByUserId(@Param("id") String id);
 }

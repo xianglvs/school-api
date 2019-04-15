@@ -96,7 +96,7 @@ public class SysMenuController {
     @PostMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
-    public R<Menu> insert(
+    public R insert(
             @ApiParam(value = "添加参数") @Valid @RequestBody SysMenuInsertReqVO vo
     ) {
         sysMenuService.insert(vo);
@@ -107,10 +107,20 @@ public class SysMenuController {
     @PutMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
-    public R<Menu> update(
+    public R update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysMenuUpdateReqVO vo
     ) {
         sysMenuService.update(vo);
+        return new R();
+    }
+
+    @ApiOperation(value = "删除菜单")
+    @DeleteMapping(value = "")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    public R delete(
+            @ApiParam(value = "菜单id") @RequestParam(value = "id") String id
+    ) {
+        sysMenuService.deleteById(id);
         return new R();
     }
 

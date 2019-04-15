@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface SysAreaMapper extends Mapper<SysAreaPO> {
 
-    List<SysAreaResVO> selectListByParent(@Param("parentId")String parentId);
+    List<SysAreaResVO> selectListByParent(@Param("parentId") String parentId);
 
     List<SysAreaPO> selectAllChildren(@Param("id") String id, @Param("delFlag") Boolean delFlag, @Param("disableFlag") String disableFlag);
+
+    void deleteById(@Param("id") String id);
 }

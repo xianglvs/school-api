@@ -80,4 +80,8 @@ public class IndexArticleService {
 
     }
 
+    public void deleteById(String id){
+        indexArticleMapper.deleteById(id);
+    }
+
 }

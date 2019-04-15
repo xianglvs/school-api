@@ -124,4 +124,8 @@ public class SysMenuService {
         updateMenu(po);
     }
 
+    public void deleteById(String id){
+        sysMenuMapper.deleteById(id);
+    }
+
 }

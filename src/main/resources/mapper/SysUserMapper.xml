@@ -106,4 +106,9 @@
     DELETE FROM sys_user_role
     WHERE sys_user_id=#{userId}
   </delete>
+
+  <update id="deleteById">
+    UPDATE sys_user SET del_flag = true WHERE id = #{id}
+  </update>
+
 </mapper>

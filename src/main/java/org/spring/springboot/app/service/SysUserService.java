@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class SysUserService {
 
     @Autowired
-    private SysUserMapper SysUserMapper;
+    private SysUserMapper sysUserMapper;
     @Autowired
     private SysMenuMapper sysMenuMapper;
     @Autowired
@@ -32,12 +32,12 @@ public class SysUserService {
 
 
     public List<SysUserResVO> selectBySearch(UserSearchVO vo) {
-        List<SysUserResVO> list = SysUserMapper.selectBySearch(vo);
+        List<SysUserResVO> list = sysUserMapper.selectBySearch(vo);
         return list;
     }
 
     public SysUserResVO selectById(String userId) {
-        SysUserPO po = SysUserMapper.selectByPrimaryKey(userId);
+        SysUserPO po = sysUserMapper.selectByPrimaryKey(userId);
         SysUserResVO vo = new SysUserResVO();
         BeanUtils.copyProperties(po, vo);
         return vo;
@@ -50,7 +50,7 @@ public class SysUserService {
         BeanUtils.copyProperties(userLoginReqVO, sysUserQuery);
         sysUserQuery.setLoginIp(null);
         example.and().andEqualTo(sysUserQuery);
-        SysUserPO sysUserPO = SysUserMapper.selectOneByExample(example);
+        SysUserPO sysUserPO = sysUserMapper.selectOneByExample(example);
         if (sysUserPO == null) {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("loginName", "用户不存在")));
         }
@@ -66,7 +66,7 @@ public class SysUserService {
         //修改登录时间和ip
         sysUserPO.preUpdate();
         sysUserPO.setLoginIp(userLoginReqVO.getLoginIp());
-        SysUserMapper.updateByPrimaryKeySelective(sysUserPO);
+        sysUserMapper.updateByPrimaryKeySelective(sysUserPO);
         UserLoginResVO vo = new UserLoginResVO();
         BeanUtils.copyProperties(sysUserPO, vo);
         vo.setTicket(Uuid.getUUID());
@@ -82,7 +82,7 @@ public class SysUserService {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("ticket", "凭证不正确,请重新申请")));
         }
         String userId = redisUtils.get(ticket);
-        SysUserPO sysUserPO = SysUserMapper.selectByPrimaryKey(userId);
+        SysUserPO sysUserPO = sysUserMapper.selectByPrimaryKey(userId);
         if (sysUserPO == null) {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户不存在")));
         }
@@ -120,7 +120,7 @@ public class SysUserService {
         if (user == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "签名不存在")));
         }
-        SysUserPO sysUserPO = SysUserMapper.selectByPrimaryKey(user.getId());
+        SysUserPO sysUserPO = sysUserMapper.selectByPrimaryKey(user.getId());
         if (sysUserPO == null) {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户不存在")));
         }
@@ -157,13 +157,13 @@ public class SysUserService {
         BeanUtils.copyProperties(vo, po);
         Example example = new Example(SysUserPO.class);
         example.and().andEqualTo("loginName", po.getLoginName());
-        List<SysUserPO> list = SysUserMapper.selectByExample(example);
+        List<SysUserPO> list = sysUserMapper.selectByExample(example);
         if (!list.isEmpty()) {
             throw new BusinessException(Type.EXIST_ERROR, ErrorTools.ErrorAsArrayList(new Error("loginName", "用户名已存在")));
         }
         po.preInsert();
         try {
-            int i = SysUserMapper.insert(po);
+            int i = sysUserMapper.insert(po);
             if (i == 0) {
                 new BusinessException(Type.EXCEPTION_FAIL);
             }
@@ -178,13 +178,13 @@ public class SysUserService {
     public void update(SysUserUpdateReqVO vo) {
         SysUserPO po = new SysUserPO();
         BeanUtils.copyProperties(vo, po);
-        SysUserPO sysUserPO = SysUserMapper.selectByPrimaryKey(po.getId());
+        SysUserPO sysUserPO = sysUserMapper.selectByPrimaryKey(po.getId());
         if (sysUserPO == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("id", "用户不存在")));
         }
         po.preUpdate();
         try {
-            int i = SysUserMapper.updateByPrimaryKeySelective(po);
+            int i = sysUserMapper.updateByPrimaryKeySelective(po);
             if (i == 0) {
                 throw new BusinessException(Type.EXCEPTION_FAIL);
             }
@@ -197,14 +197,18 @@ public class SysUserService {
         if (vo.getRoles() == null || vo.getRoles().isEmpty()) {
             return;
         }
-        SysUserMapper.deleteUserRole(po.getId());
+        sysUserMapper.deleteUserRole(po.getId());
         vo.getRoles().forEach(roleId -> {
             try {
-                SysUserMapper.insertUserRole(po.getId(), roleId);
+                sysUserMapper.insertUserRole(po.getId(), roleId);
             } catch (DataIntegrityViolationException e) {
                 throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("roles", "角色不存在,角色ID为:" + roleId)));
             }
         });
+    }
+
+    public void deleteById(String id){
+       sysUserMapper.deleteById(id);
     }
 
 

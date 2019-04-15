@@ -112,4 +112,8 @@ public class SysOfficeService {
         }
     }
 
+    public void deleteById(String id){
+        sysOfficeMapper.deleteById(id);
+    }
+
 }

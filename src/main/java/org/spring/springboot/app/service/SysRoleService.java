@@ -127,4 +127,8 @@ public class SysRoleService {
         }
     }
 
+    public void deleteById(String id) {
+        sysRoleMapper.deleteById(id);
+    }
+
 }
