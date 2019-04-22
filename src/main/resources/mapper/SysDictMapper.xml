@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.spring.springboot.app.dao.SysDictMapper">
+  <resultMap id="BaseResultMap" type="org.spring.springboot.app.domain.po.SysDictPO">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="sort" jdbcType="DECIMAL" property="sort" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="disable_flag" jdbcType="BIT" property="disableFlag" />
+    <result column="del_flag" jdbcType="BIT" property="delFlag" />
+  </resultMap>
+
+  <select id="selectPage" parameterType="org.spring.springboot.app.domain.vo.SysDictSearchVO" resultMap="BaseResultMap">
+      SELECT
+          id,
+          value,
+          label,
+          `type`,
+          description,
+          sort,
+          create_by,
+          create_date,
+          update_by,
+          update_date,
+          remarks,
+          disable_flag,
+          del_flag
+          FROM
+          sys_dict
+      WHERE 1=1
+        <if test="type != null">
+            AND type like '%${type}%'
+        </if>
+        <if test="description != null">
+            AND description like '%${description}%'
+        </if>
+        <if test="label != null">
+            AND label like '%${label}%'
+        </if>
+        <if test=" value != null">
+            AND a.value like '%${value}%'
+        </if>
+        <if test="disableFlag != null">
+            AND a.disable_flag = #{disableFlag}
+        </if>
+        <if test="delFlag != null">
+            AND a.del_flag = #{delFlag}
+        </if>
+    </select>
+     <update id="deleteById">
+        UPDATE sys_dict SET del_flag = true WHERE id = #{id}
+    </update>
+</mapper>

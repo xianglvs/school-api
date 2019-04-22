@@ -33,5 +33,10 @@ public class ApiIndex {
      * 区域管理接口
      */
     public static final String AREA = "1.0.5";
+    /*
+     * 字典管理接口
+     */
+    public static final String DICT = "1.0.6";
+
 
 }

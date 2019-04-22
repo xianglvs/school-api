@@ -3,10 +3,11 @@ package org.spring.springboot.app.domain.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.spring.springboot.app.base.Page;
 
 @ApiModel(description = "参数")
 @Data
-public class IndexArticleSearchReqVO {
+public class IndexArticleSearchReqVO extends Page {
 
     /**
      * 文章标题
