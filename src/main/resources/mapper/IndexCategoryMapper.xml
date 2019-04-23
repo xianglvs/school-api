@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.spring.springboot.app.dao.IndexCategoryMapper">
+  <resultMap id="BaseResultMap" type="org.spring.springboot.app.domain.po.IndexCategoryPO">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="parent_ids" jdbcType="VARCHAR" property="parentIds" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="disable_flag" jdbcType="BIT" property="disableFlag" />
+    <result column="del_flag" jdbcType="BIT" property="delFlag" />
+  </resultMap>
+
+   <select id="selectListByParent" resultMap="BaseResultMap">
+       SELECT
+           id,
+           title,
+           parent_id,
+           parent_ids,
+           sort,
+           create_by,
+           create_date,
+           update_by,
+           update_date,
+           disable_flag,
+           del_flag
+       FROM
+           index_category
+       WHERE
+           del_flag = false
+           AND parent_id = #{parentId}
+  </select>
+
+    <select id="selectAllChildren" resultMap="BaseResultMap">
+       SELECT
+           id,
+           title,
+           parent_id,
+           parent_ids,
+           sort,
+           create_by,
+           create_date,
+           update_by,
+           update_date,
+           disable_flag,
+           del_flag
+       FROM
+           index_category
+        ORDER BY
+            sort ASC
+        WHERE
+            1=1
+            AND parent_ids like '%${id},%'
+            <if test="delFlag != null">
+            AND del_flag = #{delFlag}
+            </if>
+            <if test="disableFlag != null">
+            AND disable_flag = #{disableFlag}
+            </if>
+    </select>
+
+    <update id="deleteById">
+        UPDATE index_category SET del_flag = true WHERE id = '${id}' OR parent_ids lIKE '%${id},%'
+    </update>
+
+</mapper>

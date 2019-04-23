@@ -37,6 +37,10 @@ public class ApiIndex {
      * 字典管理接口
      */
     public static final String DICT = "1.0.6";
+    /*
+     * 文章分类管理接口
+     */
+    public static final String CATEGORY = "1.0.7";
 
 
 }
