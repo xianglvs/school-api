@@ -46,7 +46,7 @@ public class IpUtil {
                 try {
                     inet = InetAddress.getLocalHost();
                 } catch (UnknownHostException e) {
-                    e.printStackTrace();
+                    log.error("get local host error", e);
                 }
                 ipAddress = inet.getHostAddress();
             }
