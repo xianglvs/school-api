@@ -1,6 +1,7 @@
 package org.spring.springboot.config;
 
-import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,8 +17,9 @@ import java.lang.reflect.Method;
  */
 @Aspect
 @Component
-@Slf4j
 public class DynamicDataSourceAspect {
+
+    private static final Log log = LogFactory.getLog(DynamicDataSourceAspect.class);
 
     @Before("@annotation(DS)")
     public void beforeSwitchDS(JoinPoint point) {
