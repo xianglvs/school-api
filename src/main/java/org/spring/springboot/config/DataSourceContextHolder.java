@@ -17,7 +17,7 @@ public class DataSourceContextHolder {
 
     // 设置数据源名
     public static void setDB(String dbType) {
-        log.info("切换到{"+dbType+"}数据源");
+        log.debug("切换到{"+dbType+"}数据源");
         contextHolder.set(dbType);
     }
 
