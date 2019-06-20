@@ -107,5 +107,5 @@
         <appender-ref ref="WARN"/>
     </root>
 
-    <logger name="org.spring.springboot.app" level="INFO"></logger>
+    <logger name="org.spring.springboot" level="DEBUG"></logger>
 </configuration>
