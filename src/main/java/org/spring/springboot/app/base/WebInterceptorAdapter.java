@@ -30,6 +30,7 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
     private RedisUtils redisUtils;
 
     private void tokenToUser(HttpServletRequest request) {
+        ThreadLocalUtil.clear();
         String accessToken = getToken(request);
         if (accessToken == null || accessToken.trim().length() == 0) {
             return;
@@ -41,8 +42,6 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
         if (user != null) {
             ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, user);
             ThreadLocalUtil.put(Constants.TOKEN_PARAM_NAME, accessToken);
-        }else{
-            ThreadLocalUtil.clear();
         }
     }
 
