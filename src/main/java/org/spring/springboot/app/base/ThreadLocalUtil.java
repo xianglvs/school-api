@@ -68,4 +68,27 @@ public class ThreadLocalUtil {
         map.put(key, value);
     }
 
+    /**
+     * 移除属性名的值.
+     *
+     * @param key   属性名称
+     */
+    public static void remove(String key) {
+        Map<String, Object> map = sThreadLocal.get();
+        if (map != null) {
+            map.remove(key);
+        }
+    }
+
+    /**
+     * 清空所有值.
+     *
+     */
+    public static void clear() {
+        Map<String, Object> map = sThreadLocal.get();
+        if (map != null) {
+            map.clear();
+        }
+    }
+
 }

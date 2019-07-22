@@ -12,7 +12,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return methodParameter.getParameterType().equals(User.class);
+        return methodParameter.getParameterType().equals(User.class) && ThreadLocalUtil.get(Constants.TOKEN_SESSION_NAME) != null;
     }
 
     @Override
