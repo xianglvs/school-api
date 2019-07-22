@@ -1,5 +1,7 @@
 package org.spring.springboot.app.service;
 
+import net.sf.jsqlparser.statement.create.table.Index;
+import org.spring.springboot.app.base.Constants;
 import org.spring.springboot.app.base.Error;
 import org.spring.springboot.app.base.ErrorTools;
 import org.spring.springboot.app.base.Type;
@@ -25,6 +27,11 @@ public class IndexCategoryService {
         IndexCategoryPO po = indexCategoryMapper.selectByPrimaryKey(id);
         IndexCategoryResVO vo = new IndexCategoryResVO();
         BeanUtils.copyProperties(po, vo);
+        return vo;
+    }
+
+    public List<IndexCategoryResVO> selectAll(Boolean delFlag, Boolean disableFlag) {
+        List<IndexCategoryResVO> vo = indexCategoryMapper.queryAll(disableFlag,delFlag);
         return vo;
     }
 
@@ -94,7 +101,7 @@ public class IndexCategoryService {
         update(po);
     }
 
-    public void deleteById(String id){
+    public void deleteById(String id) {
         indexCategoryMapper.deleteById(id);
     }
 

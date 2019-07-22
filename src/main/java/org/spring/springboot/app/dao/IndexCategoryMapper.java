@@ -11,7 +11,9 @@ public interface IndexCategoryMapper extends Mapper<IndexCategoryPO> {
 
     List<IndexCategoryResVO> selectListByParent(@Param("parentId") String parentId);
 
-    List<IndexCategoryPO> selectAllChildren(@Param("id") String id, @Param("delFlag") Boolean delFlag, @Param("disableFlag") String disableFlag);
+    List<IndexCategoryPO> selectAllChildren(@Param("id") String id, @Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);
+
+    List<IndexCategoryResVO> queryAll(@Param("disableFlag") Boolean disableFlag, @Param("delFlag") Boolean delFlag);
 
     void deleteById(@Param("id") String id);
 }

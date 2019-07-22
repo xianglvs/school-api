@@ -66,6 +66,33 @@
             </if>
     </select>
 
+    <select id="queryAll" resultMap="BaseResultMap">
+        SELECT
+           id,
+           title,
+           parent_id,
+           parent_ids,
+           sort,
+           create_by,
+           create_date,
+           update_by,
+           update_date,
+           disable_flag,
+           del_flag
+        FROM
+           index_category
+        WHERE
+            1=1
+            <if test="delFlag != null">
+            AND del_flag = #{delFlag}
+            </if>
+            <if test="disableFlag != null">
+            AND disable_flag = #{disableFlag}
+            </if>
+        ORDER BY
+            sort ASC
+    </select>
+
     <update id="deleteById">
         UPDATE index_category SET del_flag = true WHERE id = '${id}' OR parent_ids lIKE '%${id},%'
     </update>

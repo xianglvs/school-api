@@ -29,4 +29,10 @@ public class IndexCategoryInsertReqVO{
     @ApiModelProperty(value = "排序号")
     private Integer sort;
 
+     /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注")
+    private String remarks;
+
 }

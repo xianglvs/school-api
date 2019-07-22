@@ -35,6 +35,18 @@ public class IndexCategoryController {
         return new R(list);
     }
 
+    @ApiOperation(value = "查询所有分类列表")
+    @GetMapping(value = "/all")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
+    public R<List<IndexCategoryResVO>> selectList(
+            @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag,
+            @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag
+    ) {
+        List<IndexCategoryResVO> list = service.selectAll(disableFlag,delFlag);
+        return new R(list);
+    }
+
     @ApiOperation(value = "查询单个分类信息")
     @GetMapping(value = "/{id}")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
