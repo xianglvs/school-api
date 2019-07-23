@@ -52,10 +52,10 @@ public class SysUserController {
     @ApiOperation(value = "刷新token")
     @PutMapping(value = "/token")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
     public R<UserTokenResVO> token(
-            @RequestBody UserTokenReqVO userTokenReqVO
     ) {
-        UserTokenResVO vo = sysUserService.refreshToken(userTokenReqVO.getToken());
+        UserTokenResVO vo = sysUserService.refreshToken();
         return new R(vo);
     }
 

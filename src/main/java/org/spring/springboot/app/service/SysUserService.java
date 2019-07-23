@@ -115,7 +115,8 @@ public class SysUserService {
     }
 
 
-    public UserTokenResVO refreshToken(String token) {
+    public UserTokenResVO refreshToken() {
+        String token = ThreadLocalUtil.get(Constants.TOKEN_PARAM_NAME,String.class);
         User user = redisUtils.get(token);
         if (user == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "签名不存在")));
