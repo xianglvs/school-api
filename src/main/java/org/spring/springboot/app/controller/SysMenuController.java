@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.ApiIndex;
-import org.spring.springboot.app.base.Menu;
+import org.spring.springboot.app.domain.vo.SysMenuResVO;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.SysMenuInsertReqVO;
@@ -27,19 +27,19 @@ public class SysMenuController {
 
     @ApiOperation(value = "缓存中查询登录用户菜单")
     @GetMapping(value = "/cache")
-    public R<List<Menu>> selectBySessionUser(
+    public R<List<SysMenuResVO>> selectBySessionUser(
             @RequestParam("token") String token
     ) {
-        List<Menu> list = sysMenuService.selectByCache(token);
+        List<SysMenuResVO> list = sysMenuService.selectByCache(token);
         return new R(list);
     }
 
     @ApiOperation(value = "查询登录用户菜单")
     @GetMapping(value = "/user")
-    public R<List<Menu>> selectByUser(
+    public R<List<SysMenuResVO>> selectByUser(
             @ApiParam(value = "签名") @RequestParam(value = "token") String token
     ) {
-        List<Menu> list = sysMenuService.selectByToken(token);
+        List<SysMenuResVO> list = sysMenuService.selectByToken(token);
         return new R(list);
     }
 
@@ -47,12 +47,12 @@ public class SysMenuController {
     @GetMapping(value = "/role/{roleId}")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
-    public R<List<Menu>> selectByRole(
+    public R<List<SysMenuResVO>> selectByRole(
             @ApiParam(value = "角色id") @PathVariable(value = "roleId") String roleId,
             @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
             @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag
     ) {
-        List<Menu> list = sysMenuService.selectByRoleId(roleId, delFlag, disableFlag);
+        List<SysMenuResVO> list = sysMenuService.selectByRoleId(roleId, delFlag, disableFlag);
         return new R(list);
     }
 
@@ -60,12 +60,12 @@ public class SysMenuController {
     @GetMapping(value = "/user/{userId}")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
-    public R<List<Menu>> selectByUser(
+    public R<List<SysMenuResVO>> selectByUser(
             @ApiParam(value = "用户id") @PathVariable(value = "userId") String userId,
             @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
             @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag
     ) {
-        List<Menu> list = sysMenuService.selectByUserId(userId, delFlag, disableFlag);
+        List<SysMenuResVO> list = sysMenuService.selectByUserId(userId, delFlag, disableFlag);
         return new R(list);
     }
 
@@ -73,11 +73,11 @@ public class SysMenuController {
     @GetMapping(value = "/all")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
-    public R<List<Menu>> selectAll(
+    public R<List<SysMenuResVO>> selectAll(
             @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
             @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag
     ) {
-        List<Menu> list = sysMenuService.selectAll(delFlag, disableFlag);
+        List<SysMenuResVO> list = sysMenuService.selectAll(delFlag, disableFlag);
         return new R(list);
     }
 
@@ -85,11 +85,11 @@ public class SysMenuController {
     @GetMapping(value = "/{menuId}")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
-    public R<Menu> selectById(
+    public R<SysMenuResVO> selectById(
             @ApiParam(value = "菜单ID") @PathVariable("menuId") String menuId
     ) {
-        Menu menu = sysMenuService.selectById(menuId);
-        return new R(menu);
+        SysMenuResVO sysMenuResVO = sysMenuService.selectById(menuId);
+        return new R(sysMenuResVO);
     }
 
     @ApiOperation(value = "创建菜单")

@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.ApiIndex;
-import org.spring.springboot.app.base.Menu;
+import org.spring.springboot.app.domain.vo.SysMenuResVO;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.*;
@@ -76,7 +76,7 @@ public class SysOfficeController {
     @ApiOperation(value = "创建机构")
     @PostMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
-    public R<Menu> insert(
+    public R<SysMenuResVO> insert(
             @ApiParam(value = "添加参数") @Valid @RequestBody SysOfficeInsertReqVO vo
     ) {
         sysOfficeService.insert(vo);
@@ -86,7 +86,7 @@ public class SysOfficeController {
     @ApiOperation(value = "修改机构")
     @PutMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
-    public R<Menu> update(
+    public R<SysMenuResVO> update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysOfficeUpdateReqVO vo
     ) {
         sysOfficeService.update(vo);

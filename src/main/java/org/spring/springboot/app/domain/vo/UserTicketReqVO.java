@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * Created with IntelliJ IDEA.
  * Description:
- * User: eric
+ * UserSesson: eric
  * Date: 2017-11-09
  * Time: 19:37
  */

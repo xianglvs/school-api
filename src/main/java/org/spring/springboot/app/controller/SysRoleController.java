@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.ApiIndex;
-import org.spring.springboot.app.base.Menu;
+import org.spring.springboot.app.domain.vo.SysMenuResVO;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.SysRoleInsertReqVO;
@@ -79,7 +79,7 @@ public class SysRoleController {
     @ApiOperation(value = "创建角色")
     @PostMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
-    public R<Menu> insert(
+    public R<SysMenuResVO> insert(
             @ApiParam(value = "添加参数") @Valid @RequestBody SysRoleInsertReqVO vo
     ) {
         sysRoleService.insert(vo);
@@ -89,7 +89,7 @@ public class SysRoleController {
     @ApiOperation(value = "修改角色")
     @PutMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
-    public R<Menu> update(
+    public R<SysMenuResVO> update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysRoleUpdateReqVO vo
     ) {
         sysRoleService.update(vo);
@@ -99,7 +99,7 @@ public class SysRoleController {
     @ApiOperation(value = "删除角色")
     @DeleteMapping(value = "")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
-    public R<Menu> delete(
+    public R<SysMenuResVO> delete(
             @ApiParam(value = "角色id") @RequestParam(value = "id") String id
     ) {
         sysRoleService.deleteById(id);
