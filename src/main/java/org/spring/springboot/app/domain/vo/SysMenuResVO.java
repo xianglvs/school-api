@@ -1,4 +1,4 @@
-package org.spring.springboot.app.base;
+package org.spring.springboot.app.domain.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 @ApiModel(description = "返回参数")
-public class Menu implements Serializable {
+public class SysMenuResVO implements Serializable {
     private static final long serialVersionUID = 1L;
     @ApiModelProperty(value = "菜单id")
     private String id;

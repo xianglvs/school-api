@@ -3,6 +3,7 @@ package org.spring.springboot.app.base;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
+import org.spring.springboot.app.domain.vo.UserSesson;
 import org.spring.springboot.util.Uuid;
 
 import javax.persistence.Column;
@@ -13,7 +14,7 @@ import java.util.Date;
 /**
  * Created with IntelliJ IDEA.
  * Description:
- * User: eric
+ * UserSesson: eric
  * Date: 2017-11-13
  * Time: 16:23
  */
@@ -47,7 +48,7 @@ public class BaseEntity implements Serializable{
     private Boolean delFlag;
     @ApiModelProperty(hidden = true)
     @JsonIgnore
-    private User user;
+    private UserSesson userSesson;
 
 
     public String getId() {
@@ -114,8 +115,8 @@ public class BaseEntity implements Serializable{
         this.delFlag = delFlag;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserSesson(UserSesson userSesson) {
+        this.userSesson = userSesson;
     }
 
     public BaseEntity() {
@@ -127,10 +128,10 @@ public class BaseEntity implements Serializable{
      */
     public void preInsert() {
         setId(Uuid.getUUID());
-        User user = this.getUser();
-        if (user != null) {
-            this.updateBy = user.getId();
-            this.createBy = user.getId();
+        UserSesson userSesson = this.getUserSesson();
+        if (userSesson != null) {
+            this.updateBy = userSesson.getId();
+            this.createBy = userSesson.getId();
         }
         this.updateDate = new Date();
         this.createDate = this.updateDate;
@@ -144,9 +145,9 @@ public class BaseEntity implements Serializable{
      * 更新之前执行方法，需要手动调用
      */
     public void preUpdate() {
-        User user = this.getUser();
-        if (user != null) {
-            this.updateBy = user.getId();
+        UserSesson userSesson = this.getUserSesson();
+        if (userSesson != null) {
+            this.updateBy = userSesson.getId();
         }
         this.updateDate = new Date();
     }
@@ -156,17 +157,17 @@ public class BaseEntity implements Serializable{
      * 删除之前执行方法，需要手动调用
      */
     public void preDelete() {
-        User user = this.getUser();
-        if (user != null) {
-            this.updateBy = user.getId();
+        UserSesson userSesson = this.getUserSesson();
+        if (userSesson != null) {
+            this.updateBy = userSesson.getId();
         }
         this.updateDate = new Date();
         this.delFlag = Boolean.TRUE;
     }
 
-    public User getUser() {
-        this.user = ThreadLocalUtil.get(Constants.TOKEN_SESSION_NAME, User.class);
-        return user;
+    public UserSesson getUserSesson() {
+        this.userSesson = ThreadLocalUtil.get(Constants.TOKEN_SESSION_NAME, UserSesson.class);
+        return userSesson;
     }
 
 

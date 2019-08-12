@@ -60,7 +60,7 @@
         INNER JOIN sys_user_role b
         ON a.id = b.sys_role_id
         WHERE 1=1
-        b.sys_user_id = #{userId}
+        AND b.sys_user_id = #{userId}
         <if test="delFlag != null">
             AND a.del_flag = #{delFlag}
         </if>

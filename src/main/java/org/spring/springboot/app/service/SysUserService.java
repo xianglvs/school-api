@@ -1,10 +1,12 @@
 package org.spring.springboot.app.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.spring.springboot.app.base.Error;
 import org.spring.springboot.app.base.*;
-import org.spring.springboot.app.dao.SysMenuMapper;
-import org.spring.springboot.app.dao.SysUserMapper;
+import org.spring.springboot.app.dao.*;
+import org.spring.springboot.app.domain.po.SysAreaPO;
+import org.spring.springboot.app.domain.po.SysOfficePO;
 import org.spring.springboot.app.domain.po.SysUserPO;
 import org.spring.springboot.app.domain.vo.*;
 import org.spring.springboot.exception.BusinessException;
@@ -30,6 +32,12 @@ public class SysUserService {
     private SysUserMapper sysUserMapper;
     @Autowired
     private SysMenuMapper sysMenuMapper;
+    @Autowired
+    private SysAreaMapper sysAreaMapper;
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
+    @Autowired
+    private SysOfficeMapper sysOfficeMapper;
     @Autowired
     private RedisUtils redisUtils;
 
@@ -72,12 +80,13 @@ public class SysUserService {
         sysUserPO.setLoginIp(userLoginReqVO.getLoginIp());
         sysUserMapper.updateByPrimaryKeySelective(sysUserPO);
         UserLoginResVO vo = new UserLoginResVO();
-        BeanUtils.copyProperties(sysUserPO, vo);
         vo.setTicket(Uuid.getUUID());
-        long effective_millisecond = 5 * 60 * 1000;//5分钟
+        long effective_millisecond = 24 * 60 * 60 * 1000;//1天
         long expire = System.currentTimeMillis() + effective_millisecond;
         vo.setExpire(expire);
-        redisUtils.set(vo.getTicket(), vo.getId(), effective_millisecond, TimeUnit.MILLISECONDS);
+        vo.setExpireTime(new Date(expire));
+        vo.setEffectiveMillisecond(effective_millisecond);
+        redisUtils.set(vo.getTicket(), sysUserPO.getId(), effective_millisecond, TimeUnit.MILLISECONDS);
         return vo;
     }
 
@@ -97,12 +106,22 @@ public class SysUserService {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户已被禁用")));
         }
         String token = Uuid.getUUID();
-        User userSession = new User();
-        BeanUtils.copyProperties(sysUserPO, userSession);
-        List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
-        userSession.setMenus(menus);
+        UserSesson userSessonSession = new UserSesson();
+        BeanUtils.copyProperties(sysUserPO, userSessonSession);
         UserTokenResVO tokenResVO = new UserTokenResVO();
+        BeanUtils.copyProperties(sysUserPO,tokenResVO);
         tokenResVO.setToken(token);
+        if(StringUtils.isNotBlank(sysUserPO.getSysAreaId())){
+           SysAreaPO areaPO =  sysAreaMapper.selectByPrimaryKey(sysUserPO.getSysAreaId());
+           tokenResVO.setSysAreaName(areaPO.getName());
+           userSessonSession.setSysAreaName(areaPO.getName());
+        }
+        if(StringUtils.isNotBlank(sysUserPO.getSysOfficeId())){
+            SysOfficePO sysOfficePO = sysOfficeMapper.selectByPrimaryKey(sysUserPO.getSysOfficeId());
+            tokenResVO.setSysOfficeName(sysOfficePO.getName());
+        }
+        List<SysRoleResVO> roles =sysRoleMapper.selectRoleByUserId(sysUserPO.getId(),Boolean.FALSE,Boolean.FALSE);
+        userSessonSession.setRoles(roles);
         long effective_millisecond = 60 * 60 * 1000;//60分钟
         long expire = System.currentTimeMillis() + effective_millisecond;
         tokenResVO.setExpireTime(new Date(expire));
@@ -111,50 +130,10 @@ public class SysUserService {
         if (old != null && redisUtils.hasKey(old)) {
             redisUtils.delete(old);
         }
-        redisUtils.delete(ticket);
         ThreadLocalUtil.put(Constants.TOKEN_PARAM_NAME, token);
-        ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, userSession);
-        redisUtils.set(token, userSession, effective_millisecond, TimeUnit.MILLISECONDS);
+        ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, userSessonSession);
+        redisUtils.set(token, userSessonSession, effective_millisecond, TimeUnit.MILLISECONDS);
         return tokenResVO;
-    }
-
-
-    public UserTokenResVO refreshToken() {
-        String token = ThreadLocalUtil.get(Constants.TOKEN_PARAM_NAME, String.class);
-        User user = redisUtils.get(token);
-        if (user == null) {
-            throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "签名不存在")));
-        }
-        SysUserPO sysUserPO = sysUserMapper.selectByPrimaryKey(user.getId());
-        if (sysUserPO == null) {
-            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户不存在")));
-        }
-        if (sysUserPO.isDelFlag()) {
-            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户被删除")));
-        }
-        if (sysUserPO.isDisableFlag()) {
-            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户已被禁用")));
-        }
-        String newToken = Uuid.getUUID();
-        User userSession = new User();
-        BeanUtils.copyProperties(sysUserPO, userSession);
-        List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
-        BeanUtils.copyProperties(menus, menus);
-        UserTokenResVO userTokenResVO = new UserTokenResVO();
-        userTokenResVO.setToken(newToken);
-        long effective_millisecond = 60 * 60 * 1000;//60分钟
-        long expire = System.currentTimeMillis() + effective_millisecond;
-        userTokenResVO.setExpireTime(new Date(expire));
-        userTokenResVO.setEffectiveMillisecond(effective_millisecond);
-        String old = (String) ThreadLocalUtil.get(Constants.TOKEN_PARAM_NAME);
-        if (old != null && redisUtils.hasKey(old)) {
-            redisUtils.delete(old);
-        }
-        ThreadLocalUtil.put(Constants.TOKEN_PARAM_NAME, newToken);
-        ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, userSession);
-        redisUtils.delete(token);
-        redisUtils.set(newToken, userSession, effective_millisecond, TimeUnit.MILLISECONDS);
-        return userTokenResVO;
     }
 
     public void create(SysUserCreateReqVO vo) {

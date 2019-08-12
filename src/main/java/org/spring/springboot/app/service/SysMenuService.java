@@ -4,8 +4,10 @@ import org.spring.springboot.app.base.Error;
 import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.dao.SysMenuMapper;
 import org.spring.springboot.app.domain.po.SysMenuPO;
+import org.spring.springboot.app.domain.vo.SysMenuResVO;
 import org.spring.springboot.app.domain.vo.SysMenuInsertReqVO;
 import org.spring.springboot.app.domain.vo.SysMenuUpdateReqVO;
+import org.spring.springboot.app.domain.vo.UserSesson;
 import org.spring.springboot.exception.BusinessException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,43 +26,43 @@ public class SysMenuService {
     @Autowired
     private RedisUtils redisUtils;
 
-    public Menu selectById(String menuId) {
+    public SysMenuResVO selectById(String menuId) {
         SysMenuPO menuPO = sysMenuMapper.selectByPrimaryKey(menuId);
-        Menu menu = new Menu();
-        BeanUtils.copyProperties(menuPO, menu);
-        return menu;
+        SysMenuResVO sysMenuResVO = new SysMenuResVO();
+        BeanUtils.copyProperties(menuPO, sysMenuResVO);
+        return sysMenuResVO;
     }
 
-    public List<Menu> selectByUserId(String userId, Boolean delFlag, Boolean disableFlag) {
-        List<Menu> list = sysMenuMapper.selectMenuByUserId(userId, delFlag, disableFlag);
+    public List<SysMenuResVO> selectByUserId(String userId, Boolean delFlag, Boolean disableFlag) {
+        List<SysMenuResVO> list = sysMenuMapper.selectMenuByUserId(userId, delFlag, disableFlag);
         return list;
     }
 
-    public List<Menu> selectByRoleId(String roleId, Boolean delFlag, Boolean disableFlag) {
-        List<Menu> list = sysMenuMapper.selectMenuByRoleId(roleId, delFlag, disableFlag);
+    public List<SysMenuResVO> selectByRoleId(String roleId, Boolean delFlag, Boolean disableFlag) {
+        List<SysMenuResVO> list = sysMenuMapper.selectMenuByRoleId(roleId, delFlag, disableFlag);
         return list;
     }
 
-    public List<Menu> selectAll(Boolean delFlag, Boolean disableFlag) {
-        List<Menu> list = sysMenuMapper.selectAllMenu(delFlag, disableFlag);
+    public List<SysMenuResVO> selectAll(Boolean delFlag, Boolean disableFlag) {
+        List<SysMenuResVO> list = sysMenuMapper.selectAllMenu(delFlag, disableFlag);
         return list;
     }
 
-    public List<Menu> selectByToken(String token) {
-        User user = redisUtils.get(token);
-        if (user == null) {
+    public List<SysMenuResVO> selectByToken(String token) {
+        UserSesson userSesson = redisUtils.get(token);
+        if (userSesson == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "token不存在")));
         }
-        List<Menu> list = sysMenuMapper.selectMenuByUserId(user.getId(), Boolean.FALSE, Boolean.FALSE);
+        List<SysMenuResVO> list = sysMenuMapper.selectMenuByUserId(userSesson.getId(), Boolean.FALSE, Boolean.FALSE);
         return list;
     }
 
-    public List<Menu> selectByCache(String token) {
-        User user = redisUtils.get(token);
-        if (user == null) {
+    public List<SysMenuResVO> selectByCache(String token) {
+        UserSesson userSesson = redisUtils.get(token);
+        if (userSesson == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "token不存在")));
         }
-        return user.getMenus();
+        return userSesson.getMenus();
     }
 
     public void insert(SysMenuInsertReqVO vo) {

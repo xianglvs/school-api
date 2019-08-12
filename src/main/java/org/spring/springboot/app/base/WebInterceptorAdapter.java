@@ -3,6 +3,8 @@ package org.spring.springboot.app.base;
 import lombok.extern.slf4j.Slf4j;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.base.annotation.TokenType;
+import org.spring.springboot.app.domain.vo.SysMenuResVO;
+import org.spring.springboot.app.domain.vo.UserSesson;
 import org.spring.springboot.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,10 +14,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 /**
@@ -35,21 +33,21 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
         if (accessToken == null || accessToken.trim().length() == 0) {
             return;
         }
-        User user = null;
+        UserSesson userSesson = null;
         if (accessToken != null && accessToken.trim().length() > 0) {
-            user = redisUtils.get(accessToken);
+            userSesson = redisUtils.get(accessToken);
         }
-        if (user != null) {
-            ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, user);
+        if (userSesson != null) {
+            ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, userSesson);
             ThreadLocalUtil.put(Constants.TOKEN_PARAM_NAME, accessToken);
         }
     }
 
-    private boolean hasMenuPermission(List<Menu> menus, String permission) {
-        if (menus == null || menus.isEmpty()) {
+    private boolean hasMenuPermission(List<SysMenuResVO> sysMenuResVOS, String permission) {
+        if (sysMenuResVOS == null || sysMenuResVOS.isEmpty()) {
             return false;
         }
-        for (Menu m : menus) {
+        for (SysMenuResVO m : sysMenuResVOS) {
             if (m.getPermission() == null || m.getPermission().trim().length() == 0) {
                 continue;
             }
@@ -60,7 +58,7 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
         return false;
     }
 
-    private boolean hasPermissions(User user, String[] permissions) {
+    private boolean hasPermissions(UserSesson userSesson, String[] permissions) {
         for (String permission : permissions) {
             if (permission == null) {
                 continue;
@@ -69,7 +67,7 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
             if (permission.length() == 0) {
                 continue;
             }
-            if (hasMenuPermission(user.getMenus(), permission)) {
+            if (hasMenuPermission(userSesson.getMenus(), permission)) {
                 return true;
             }
         }
@@ -109,8 +107,8 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
                     if (annotation.RequiresPermissions().length == 0) {
                         return true;
                     }
-                    User user = redisUtils.get(accessToken);
-                    if (hasPermissions(user, annotation.RequiresPermissions())) {
+                    UserSesson userSesson = redisUtils.get(accessToken);
+                    if (hasPermissions(userSesson, annotation.RequiresPermissions())) {
                         return true;
                     }
                 }

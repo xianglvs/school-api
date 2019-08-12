@@ -39,23 +39,12 @@ public class SysUserController {
     }
 
 
-    @ApiOperation(value = "创建token")
+    @ApiOperation(value = "创建或者刷新token")
     @PostMapping(value = "/token")
     @ResponseBody
     public R<UserTokenResVO> token(
             @ApiParam(value = "参数") @RequestBody UserTicketReqVO userTicketReqVO) {
         UserTokenResVO vo = sysUserService.token(userTicketReqVO.getTicket());
-        return new R(vo);
-    }
-
-
-    @ApiOperation(value = "刷新token")
-    @PutMapping(value = "/token")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
-    @Token
-    public R<UserTokenResVO> token(
-    ) {
-        UserTokenResVO vo = sysUserService.refreshToken();
         return new R(vo);
     }
 
@@ -106,9 +95,9 @@ public class SysUserController {
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R updateCurrent(
-            @ApiIgnore User user,
+            @ApiIgnore UserSesson userSesson,
             @ApiParam(value = "修改参数") @Valid @RequestBody SysUserUpdateSessionReqVO sysUserUpdateSessionReqVO) {
-        sysUserUpdateSessionReqVO.setId(user.getId());
+        sysUserUpdateSessionReqVO.setId(userSesson.getId());
         SysUserUpdateReqVO vo = new SysUserUpdateReqVO();
         BeanUtils.copyProperties(sysUserUpdateSessionReqVO, vo);
         sysUserService.update(vo);
