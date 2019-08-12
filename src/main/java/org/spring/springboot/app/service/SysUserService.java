@@ -60,7 +60,7 @@ public class SysUserService {
         SysUserPO sysUserQuery = new SysUserPO();
         sysUserQuery.setLoginName(userLoginReqVO.getUsername());
         String password = SecurityUtils.getMD5(userLoginReqVO.getPassword());
-        log.info("当前用户登录账号为:"+userLoginReqVO.getUsername());
+        log.info("当前用户登录账号为:" + userLoginReqVO.getUsername());
         log.info("当前正确的用户密码为:" + password);
         sysUserQuery.setPassword(password);
         sysUserQuery.setLoginIp(null);
@@ -109,19 +109,22 @@ public class SysUserService {
         UserSesson userSesson = new UserSesson();
         BeanUtils.copyProperties(sysUserPO, userSesson);
         UserTokenResVO tokenResVO = new UserTokenResVO();
-        BeanUtils.copyProperties(sysUserPO,tokenResVO);
+        BeanUtils.copyProperties(sysUserPO, tokenResVO);
         tokenResVO.setToken(token);
-        if(StringUtils.isNotBlank(sysUserPO.getSysAreaId())){
-           SysAreaPO areaPO =  sysAreaMapper.selectByPrimaryKey(sysUserPO.getSysAreaId());
-           tokenResVO.setSysAreaName(areaPO.getName());
-           userSesson.setSysAreaName(areaPO.getName());
+        if (StringUtils.isNotBlank(sysUserPO.getSysAreaId())) {
+            SysAreaPO areaPO = sysAreaMapper.selectByPrimaryKey(sysUserPO.getSysAreaId());
+            tokenResVO.setSysAreaName(areaPO.getName());
+            userSesson.setSysAreaName(areaPO.getName());
         }
-        if(StringUtils.isNotBlank(sysUserPO.getSysOfficeId())){
+        if (StringUtils.isNotBlank(sysUserPO.getSysOfficeId())) {
             SysOfficePO sysOfficePO = sysOfficeMapper.selectByPrimaryKey(sysUserPO.getSysOfficeId());
             tokenResVO.setSysOfficeName(sysOfficePO.getName());
         }
-        List<SysRoleResVO> roles =sysRoleMapper.selectRoleByUserId(sysUserPO.getId(),Boolean.FALSE,Boolean.FALSE);
+        List<SysRoleResVO> roles = sysRoleMapper.selectRoleByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
         userSesson.setRoles(roles);
+        List<SysMenuResVO> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
+        userSesson.setMenus(menus);
+
         long effective_millisecond = 60 * 60 * 1000;//60分钟
         long expire = System.currentTimeMillis() + effective_millisecond;
         tokenResVO.setExpireTime(new Date(expire));
