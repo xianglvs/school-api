@@ -1,5 +1,6 @@
 package org.spring.springboot.app.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.spring.springboot.app.base.Error;
 import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.dao.SysMenuMapper;
@@ -7,6 +8,7 @@ import org.spring.springboot.app.dao.SysUserMapper;
 import org.spring.springboot.app.domain.po.SysUserPO;
 import org.spring.springboot.app.domain.vo.*;
 import org.spring.springboot.exception.BusinessException;
+import org.spring.springboot.util.SecurityUtils;
 import org.spring.springboot.util.Uuid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
+@Slf4j
 public class SysUserService {
 
     @Autowired
@@ -47,21 +50,22 @@ public class SysUserService {
     public UserLoginResVO login(UserLoginReqVO userLoginReqVO) {
         Example example = new Example(SysUserPO.class);
         SysUserPO sysUserQuery = new SysUserPO();
-        BeanUtils.copyProperties(userLoginReqVO, sysUserQuery);
+        sysUserQuery.setLoginName(userLoginReqVO.getUsername());
+        String password = SecurityUtils.getMD5(userLoginReqVO.getPassword());
+        log.info("当前用户登录账号为:"+userLoginReqVO.getUsername());
+        log.info("当前正确的用户密码为:" + password);
+        sysUserQuery.setPassword(password);
         sysUserQuery.setLoginIp(null);
         example.and().andEqualTo(sysUserQuery);
         SysUserPO sysUserPO = sysUserMapper.selectOneByExample(example);
         if (sysUserPO == null) {
-            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("loginName", "用户不存在")));
+            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("username", "账号密码错误")));
         }
         if (sysUserPO.isDelFlag()) {
-            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("loginName", "用户被删除")));
+            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("username", "用户被删除")));
         }
         if (sysUserPO.isDisableFlag()) {
-            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("loginName", "用户已被禁用")));
-        }
-        if (!userLoginReqVO.getPassword().equalsIgnoreCase(sysUserPO.getPassword())) {
-            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("password", "密码错误")));
+            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("username", "用户已被禁用")));
         }
         //修改登录时间和ip
         sysUserPO.preUpdate();
@@ -95,7 +99,7 @@ public class SysUserService {
         String token = Uuid.getUUID();
         User userSession = new User();
         BeanUtils.copyProperties(sysUserPO, userSession);
-        List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(),Boolean.FALSE,Boolean.FALSE);
+        List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
         userSession.setMenus(menus);
         UserTokenResVO tokenResVO = new UserTokenResVO();
         tokenResVO.setToken(token);
@@ -116,7 +120,7 @@ public class SysUserService {
 
 
     public UserTokenResVO refreshToken() {
-        String token = ThreadLocalUtil.get(Constants.TOKEN_PARAM_NAME,String.class);
+        String token = ThreadLocalUtil.get(Constants.TOKEN_PARAM_NAME, String.class);
         User user = redisUtils.get(token);
         if (user == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "签名不存在")));
@@ -134,7 +138,7 @@ public class SysUserService {
         String newToken = Uuid.getUUID();
         User userSession = new User();
         BeanUtils.copyProperties(sysUserPO, userSession);
-        List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(),Boolean.FALSE,Boolean.FALSE);
+        List<Menu> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
         BeanUtils.copyProperties(menus, menus);
         UserTokenResVO userTokenResVO = new UserTokenResVO();
         userTokenResVO.setToken(newToken);
@@ -208,8 +212,8 @@ public class SysUserService {
         });
     }
 
-    public void deleteById(String id){
-       sysUserMapper.deleteById(id);
+    public void deleteById(String id) {
+        sysUserMapper.deleteById(id);
     }
 
 

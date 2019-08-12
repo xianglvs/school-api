@@ -13,7 +13,7 @@ public class UserLoginReqVO implements Serializable {
 
     @ApiModelProperty(value = "用户名")
     @NotEmpty(message = "用户名不能为空")
-    private String loginName;
+    private String username;
     @NotEmpty(message = "密码不能为空")
     @Length(min = 6, max = 30, message = "密码应该在6-30个字符之间")
     @ApiModelProperty(value = "密码")
@@ -21,12 +21,12 @@ public class UserLoginReqVO implements Serializable {
     @ApiModelProperty(hidden = true)
     private String loginIp;
 
-    public String getLoginName() {
-        return loginName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName == null ? null : loginName.trim();
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
     }
 
     public String getPassword() {
