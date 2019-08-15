@@ -28,7 +28,7 @@ public class SysUserController {
     private SysUserService sysUserService;
 
 
-    @ApiOperation(value = "用户登录", notes = "登录后取到ticket凭证,调用\"创建token\"接口得到token\n(admin/670b14728ad9902aecba32e22fa4f6bd)")
+    @ApiOperation(value = "用户登录", notes = "登录后取到ticket凭证,调用\"创建token\"接口得到token")
     @PostMapping(value = "/login")
     public R<UserLoginResVO> login(
             HttpServletRequest request,
