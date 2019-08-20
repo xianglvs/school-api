@@ -50,7 +50,7 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "查询当前用户信息")
-    @PutMapping(value = "/info")
+    @GetMapping(value = "/info")
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R<UserTokenResVO> getUser(
             @ApiIgnore UserTokenResVO userSession
