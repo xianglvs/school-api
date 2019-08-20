@@ -3,9 +3,13 @@ package org.spring.springboot.app.domain.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class UserTokenResVO {
+public class UserTokenResVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "token", hidden = false)
     private String token;
@@ -50,7 +54,7 @@ public class UserTokenResVO {
     private String mobile;
 
     @ApiModelProperty(value = "用户类型 1系统 2个人")
-    private String type;
+    private Integer type;
 
     @ApiModelProperty(value = "头像")
     private String photo;
@@ -61,6 +65,11 @@ public class UserTokenResVO {
     @ApiModelProperty(value = "登录时间")
     @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date loginDate;
+
+    @ApiModelProperty(value="角色")
+    private List<SysRoleResVO> roles;
+    @ApiModelProperty(value="菜单")
+    private List<SysMenuResVO> menus;
 
     public String getToken() {
         return token;
@@ -150,11 +159,11 @@ public class UserTokenResVO {
         this.mobile = mobile == null ? null : mobile.trim();
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -208,6 +217,22 @@ public class UserTokenResVO {
 
     public String getSysAreaName() {
         return sysAreaName;
+    }
+
+    public List<SysRoleResVO> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRoleResVO> roles) {
+        this.roles = roles;
+    }
+
+    public List<SysMenuResVO> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<SysMenuResVO> menus) {
+        this.menus = menus;
     }
 
     public void setSysAreaName(String sysAreaName) {

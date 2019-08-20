@@ -1,6 +1,6 @@
 package org.spring.springboot.app.base;
 
-import org.spring.springboot.app.domain.vo.UserSesson;
+import org.spring.springboot.app.domain.vo.UserTokenResVO;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -13,7 +13,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return methodParameter.getParameterType().equals(UserSesson.class) && ThreadLocalUtil.get(Constants.TOKEN_SESSION_NAME) != null;
+        return methodParameter.getParameterType().equals(UserTokenResVO.class) && ThreadLocalUtil.get(Constants.TOKEN_SESSION_NAME) != null;
     }
 
     @Override

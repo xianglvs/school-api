@@ -9,6 +9,7 @@ import org.spring.springboot.app.base.*;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.*;
 import org.spring.springboot.app.service.SysUserService;
+import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.util.IpUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,18 @@ public class SysUserController {
             @ApiParam(value = "参数") @RequestBody UserTicketReqVO userTicketReqVO) {
         UserTokenResVO vo = sysUserService.token(userTicketReqVO.getTicket());
         return new R(vo);
+    }
+
+    @ApiOperation(value = "查询当前用户信息")
+    @PutMapping(value = "/info")
+    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    public R<UserTokenResVO> getUser(
+            @ApiIgnore UserTokenResVO userSession
+    ) {
+        if(userSession == null || userSession.getId() == null){
+            throw new BusinessException(Type.POWER_VALIDATE_FAIL);
+        }
+        return new R(userSession);
     }
 
     @ApiOperation(value = "查询用户信息列表")
@@ -95,7 +108,7 @@ public class SysUserController {
     @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R updateCurrent(
-            @ApiIgnore UserSesson userSesson,
+            @ApiIgnore UserTokenResVO userSesson,
             @ApiParam(value = "修改参数") @Valid @RequestBody SysUserUpdateSessionReqVO sysUserUpdateSessionReqVO) {
         sysUserUpdateSessionReqVO.setId(userSesson.getId());
         SysUserUpdateReqVO vo = new SysUserUpdateReqVO();

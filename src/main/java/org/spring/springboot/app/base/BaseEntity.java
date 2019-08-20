@@ -3,7 +3,7 @@ package org.spring.springboot.app.base;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
-import org.spring.springboot.app.domain.vo.UserSesson;
+import org.spring.springboot.app.domain.vo.UserTokenResVO;
 import org.spring.springboot.util.Uuid;
 
 import javax.persistence.Column;
@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * Created with IntelliJ IDEA.
  * Description:
- * UserSesson: eric
+ * UserTokenResVO: eric
  * Date: 2017-11-13
  * Time: 16:23
  */
@@ -48,7 +48,7 @@ public class BaseEntity implements Serializable{
     private Boolean delFlag;
     @ApiModelProperty(hidden = true)
     @JsonIgnore
-    private UserSesson userSesson;
+    private UserTokenResVO userSession;
 
 
     public String getId() {
@@ -115,8 +115,8 @@ public class BaseEntity implements Serializable{
         this.delFlag = delFlag;
     }
 
-    public void setUserSesson(UserSesson userSesson) {
-        this.userSesson = userSesson;
+    public void setUserSession(UserTokenResVO userSession) {
+        this.userSession = userSession;
     }
 
     public BaseEntity() {
@@ -128,10 +128,10 @@ public class BaseEntity implements Serializable{
      */
     public void preInsert() {
         setId(Uuid.getUUID());
-        UserSesson userSesson = this.getUserSesson();
-        if (userSesson != null) {
-            this.updateBy = userSesson.getId();
-            this.createBy = userSesson.getId();
+        UserTokenResVO userSession = this.getUserSession();
+        if (userSession != null) {
+            this.updateBy = userSession.getId();
+            this.createBy = userSession.getId();
         }
         this.updateDate = new Date();
         this.createDate = this.updateDate;
@@ -145,9 +145,9 @@ public class BaseEntity implements Serializable{
      * 更新之前执行方法，需要手动调用
      */
     public void preUpdate() {
-        UserSesson userSesson = this.getUserSesson();
-        if (userSesson != null) {
-            this.updateBy = userSesson.getId();
+        UserTokenResVO userSession = this.getUserSession();
+        if (userSession != null) {
+            this.updateBy = userSession.getId();
         }
         this.updateDate = new Date();
     }
@@ -157,17 +157,17 @@ public class BaseEntity implements Serializable{
      * 删除之前执行方法，需要手动调用
      */
     public void preDelete() {
-        UserSesson userSesson = this.getUserSesson();
-        if (userSesson != null) {
-            this.updateBy = userSesson.getId();
+        UserTokenResVO userSession = this.getUserSession();
+        if (userSession != null) {
+            this.updateBy = userSession.getId();
         }
         this.updateDate = new Date();
         this.delFlag = Boolean.TRUE;
     }
 
-    public UserSesson getUserSesson() {
-        this.userSesson = ThreadLocalUtil.get(Constants.TOKEN_SESSION_NAME, UserSesson.class);
-        return userSesson;
+    public UserTokenResVO getUserSession() {
+        this.userSession = ThreadLocalUtil.get(Constants.TOKEN_SESSION_NAME, UserTokenResVO.class);
+        return userSession;
     }
 
 

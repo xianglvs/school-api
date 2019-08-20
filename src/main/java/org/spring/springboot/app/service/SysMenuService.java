@@ -7,7 +7,7 @@ import org.spring.springboot.app.domain.po.SysMenuPO;
 import org.spring.springboot.app.domain.vo.SysMenuResVO;
 import org.spring.springboot.app.domain.vo.SysMenuInsertReqVO;
 import org.spring.springboot.app.domain.vo.SysMenuUpdateReqVO;
-import org.spring.springboot.app.domain.vo.UserSesson;
+import org.spring.springboot.app.domain.vo.UserTokenResVO;
 import org.spring.springboot.exception.BusinessException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class SysMenuService {
     }
 
     public List<SysMenuResVO> selectByToken(String token) {
-        UserSesson userSesson = redisUtils.get(token);
+        UserTokenResVO userSesson = redisUtils.get(token);
         if (userSesson == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "token不存在")));
         }
@@ -58,7 +58,7 @@ public class SysMenuService {
     }
 
     public List<SysMenuResVO> selectByCache(String token) {
-        UserSesson userSesson = redisUtils.get(token);
+        UserTokenResVO userSesson = redisUtils.get(token);
         if (userSesson == null) {
             throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("token", "token不存在")));
         }
