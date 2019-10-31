@@ -252,16 +252,16 @@
                                 <resource>
                                     <directory>${basedir}/src/main/resources/config</directory>
                                     <includes>
-                                        <include>*.*</include>
+                                        <include>*</include>
                                     </includes>
-                                    <filtering>true</filtering>
+                                    <filtering>false</filtering>
                                 </resource>
                                 <resource>
                                     <directory>${basedir}/src/main/resources</directory>
                                     <includes>
-                                        <include>*.*</include>
+                                        <include>*</include>
                                     </includes>
-                                    <filtering>true</filtering>
+                                    <filtering>false</filtering>
                                 </resource>
                             </resources>
                         </configuration>
@@ -280,7 +280,7 @@
                                 <resource>
                                     <directory>${basedir}/script</directory>
                                     <includes>
-                                        <include>*.*</include>
+                                        <include>*</include>
                                     </includes>
                                     <filtering>true</filtering>
                                 </resource>
