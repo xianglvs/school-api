@@ -11,12 +11,12 @@ import java.io.Serializable;
 public class UserLoginReqVO implements Serializable {
     private static final long serialVersionUID = -1L;
 
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty(value = "用户名",example = "admin")
     @NotEmpty(message = "用户名不能为空")
     private String username;
     @NotEmpty(message = "密码不能为空")
     @Length(min = 6, max = 30, message = "密码应该在6-30个字符之间")
-    @ApiModelProperty(value = "密码")
+    @ApiModelProperty(value = "密码",example = "000000")
     private String password;
     @ApiModelProperty(hidden = true)
     private String loginIp;

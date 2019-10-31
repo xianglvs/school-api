@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.base.annotation.TokenType;
 import org.spring.springboot.app.domain.vo.SysMenuResVO;
-import org.spring.springboot.app.domain.vo.UserSesson;
+import org.spring.springboot.app.domain.vo.UserTokenResVO;
 import org.spring.springboot.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,12 +33,12 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
         if (accessToken == null || accessToken.trim().length() == 0) {
             return;
         }
-        UserSesson userSesson = null;
+        UserTokenResVO userSession = null;
         if (accessToken != null && accessToken.trim().length() > 0) {
-            userSesson = redisUtils.get(accessToken);
+            userSession = redisUtils.get(accessToken);
         }
-        if (userSesson != null) {
-            ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, userSesson);
+        if (userSession != null) {
+            ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, userSession);
             ThreadLocalUtil.put(Constants.TOKEN_PARAM_NAME, accessToken);
         }
     }
@@ -58,7 +58,7 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
         return false;
     }
 
-    private boolean hasPermissions(UserSesson userSesson, String[] permissions) {
+    private boolean hasPermissions(UserTokenResVO userSession, String[] permissions) {
         for (String permission : permissions) {
             if (permission == null) {
                 continue;
@@ -67,7 +67,7 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
             if (permission.length() == 0) {
                 continue;
             }
-            if (hasMenuPermission(userSesson.getMenus(), permission)) {
+            if (hasMenuPermission(userSession.getMenus(), permission)) {
                 return true;
             }
         }
@@ -107,8 +107,8 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
                     if (annotation.RequiresPermissions().length == 0) {
                         return true;
                     }
-                    UserSesson userSesson = redisUtils.get(accessToken);
-                    if (hasPermissions(userSesson, annotation.RequiresPermissions())) {
+                    UserTokenResVO userSession = redisUtils.get(accessToken);
+                    if (hasPermissions(userSession, annotation.RequiresPermissions())) {
                         return true;
                     }
                 }

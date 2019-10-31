@@ -54,7 +54,6 @@ public class SysUserService {
         return vo;
     }
 
-
     public UserLoginResVO login(UserLoginReqVO userLoginReqVO) {
         Example example = new Example(SysUserPO.class);
         SysUserPO sysUserQuery = new SysUserPO();
@@ -106,24 +105,21 @@ public class SysUserService {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户已被禁用")));
         }
         String token = Uuid.getUUID();
-        UserSesson userSesson = new UserSesson();
-        BeanUtils.copyProperties(sysUserPO, userSesson);
         UserTokenResVO tokenResVO = new UserTokenResVO();
         BeanUtils.copyProperties(sysUserPO, tokenResVO);
         tokenResVO.setToken(token);
         if (StringUtils.isNotBlank(sysUserPO.getSysAreaId())) {
             SysAreaPO areaPO = sysAreaMapper.selectByPrimaryKey(sysUserPO.getSysAreaId());
             tokenResVO.setSysAreaName(areaPO.getName());
-            userSesson.setSysAreaName(areaPO.getName());
         }
         if (StringUtils.isNotBlank(sysUserPO.getSysOfficeId())) {
             SysOfficePO sysOfficePO = sysOfficeMapper.selectByPrimaryKey(sysUserPO.getSysOfficeId());
             tokenResVO.setSysOfficeName(sysOfficePO.getName());
         }
         List<SysRoleResVO> roles = sysRoleMapper.selectRoleByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
-        userSesson.setRoles(roles);
+        tokenResVO.setRoles(roles);
         List<SysMenuResVO> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
-        userSesson.setMenus(menus);
+        tokenResVO.setMenus(menus);
 
         long effective_millisecond = 60 * 60 * 1000;//60分钟
         long expire = System.currentTimeMillis() + effective_millisecond;
@@ -134,8 +130,8 @@ public class SysUserService {
             redisUtils.delete(old);
         }
         ThreadLocalUtil.put(Constants.TOKEN_PARAM_NAME, token);
-        ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, userSesson);
-        redisUtils.set(token, userSesson, effective_millisecond, TimeUnit.MILLISECONDS);
+        ThreadLocalUtil.put(Constants.TOKEN_SESSION_NAME, tokenResVO);
+        redisUtils.set(token, tokenResVO, effective_millisecond, TimeUnit.MILLISECONDS);
         return tokenResVO;
     }
 
