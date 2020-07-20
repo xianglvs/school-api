@@ -7,11 +7,13 @@ import org.apache.commons.logging.LogFactory;
  * Created by pure on 2018-05-06.
  */
 public class DataSourceContextHolder {
+
     private static Log log = LogFactory.getLog(DataSourceContextHolder.class);
+
     /**
      * 默认数据源
      */
-    public static final String DEFAULT_DS = "datasource1";
+    public static final String DEFAULT_DS = "db1";
 
     private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
 

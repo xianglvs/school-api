@@ -1,10 +1,12 @@
 package org.spring.springboot;
 
-import tk.mybatis.spring.annotation.MapperScan;
+import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
+import com.spring4all.swagger.EnableSwagger2Doc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
+import tk.mybatis.spring.annotation.MapperScan;
 
 
 /**
@@ -12,6 +14,8 @@ import org.springframework.cache.annotation.EnableCaching;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @MapperScan("org.spring.springboot.app.dao")
+@EnableSwagger2Doc
+@EnableSwaggerBootstrapUI
 @EnableCaching
 public class Application {
 

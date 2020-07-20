@@ -1,7 +1,8 @@
 package org.spring.springboot.config;
 
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -18,34 +19,37 @@ import java.util.Map;
  */
 @Configuration
 public class DataSourceConfig {
+
+
     //数据源1
-    @Bean(name = "datasource1")
+    @Bean(name = {"db1"})
     @ConfigurationProperties(prefix = "spring.datasource.db1") // application.properteis中对应属性的前缀
-    public DataSource dataSource1() {
-        return DataSourceBuilder.create().build();
+    public DataSource db1() {
+        return DataSourceBuilder.create().type(DruidDataSource.class).build();
     }
 
     //数据源2
-    @Bean(name = "datasource2")
+    @Bean(name = "db2")
     @ConfigurationProperties(prefix = "spring.datasource.db2") // application.properteis中对应属性的前缀
-    public DataSource dataSource2() {
-        return DataSourceBuilder.create().build();
+    public DataSource db2() {
+        return DataSourceBuilder.create().type(DruidDataSource.class).build();
     }
 
     /**
      * 动态数据源: 通过AOP在不同数据源之间动态切换
+     *
      * @return
      */
     @Primary
-    @Bean(name = "dynamicDataSource")
+    @Bean(name = "dataSource")
     public DataSource dynamicDataSource() {
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         // 默认数据源
-        dynamicDataSource.setDefaultTargetDataSource(dataSource1());
+        dynamicDataSource.setDefaultTargetDataSource(db1());
         // 配置多数据源
-        Map<Object, Object> dsMap = new HashMap<>();
-        dsMap.put("datasource1", dataSource1());
-        dsMap.put("datasource2", dataSource2());
+        Map<Object, Object> dsMap = new HashMap();
+        dsMap.put("db1", db1());
+        dsMap.put("db2", db2());
 
         dynamicDataSource.setTargetDataSources(dsMap);
         return dynamicDataSource;
@@ -53,10 +57,12 @@ public class DataSourceConfig {
 
     /**
      * 配置@Transactional注解事物
+     *
      * @return
      */
     @Bean
     public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dynamicDataSource());
     }
+
 }

@@ -27,6 +27,7 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
     @Autowired
     private RedisUtils redisUtils;
 
+
     private void tokenToUser(HttpServletRequest request) {
         ThreadLocalUtil.clear();
         String accessToken = getToken(request);
