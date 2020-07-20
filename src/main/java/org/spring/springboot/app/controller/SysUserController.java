@@ -51,7 +51,6 @@ public class SysUserController {
 
     @ApiOperation(value = "查询当前用户信息")
     @GetMapping(value = "/info")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R<UserTokenResVO> getUser(
             @ApiIgnore UserTokenResVO userSession
     ) {
@@ -63,7 +62,6 @@ public class SysUserController {
 
     @ApiOperation(value = "查询用户信息列表")
     @GetMapping(value = "/list")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R<PageInfo<List<SysUserResVO>>> selectBySearch(
             @ApiParam(value = "查询参数") @ModelAttribute UserSearchVO vo) {
@@ -74,7 +72,6 @@ public class SysUserController {
 
     @ApiOperation(value = "查询单个用户信息")
     @GetMapping(value = "/{userId}")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R<SysUserResVO> selectBySearch(
             @PathVariable("userId") String userId) {
@@ -84,7 +81,6 @@ public class SysUserController {
 
     @ApiOperation(value = "创建用户")
     @PostMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R create(
             @ApiParam(value = "添加参数") @Valid @RequestBody SysUserCreateReqVO sysUserCreateReqVO) {
@@ -95,7 +91,6 @@ public class SysUserController {
 
     @ApiOperation(value = "修改用户")
     @PutMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysUserUpdateReqVO sysUserUpdateReqVO) {
@@ -105,7 +100,6 @@ public class SysUserController {
 
     @ApiOperation(value = "修改当前登录用户")
     @PutMapping(value = "/current")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R updateCurrent(
             @ApiIgnore UserTokenResVO userSesson,
@@ -119,7 +113,7 @@ public class SysUserController {
 
     @ApiOperation(value = "删除用户")
     @DeleteMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+    @Token
     public R delete(
             @ApiParam(value = "用户id") @RequestParam(value = "id") String id
     ) {

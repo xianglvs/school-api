@@ -41,7 +41,6 @@ public class SysRoleController {
 
     @ApiOperation(value = "查询所有角色")
     @GetMapping(value = "/all")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R<List<SysRoleResVO>> selectAll(
             @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
@@ -54,7 +53,6 @@ public class SysRoleController {
 
     @ApiOperation(value = "分页查询角色")
     @GetMapping(value = "/page")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R<PageInfo<SysRoleResVO>> selectPage(
             @ApiParam(value = "查询参数") @ModelAttribute SysRoleSearchReqVO vo
@@ -68,7 +66,6 @@ public class SysRoleController {
 
     @ApiOperation(value = "查询单个角色")
     @GetMapping(value = "/{roleId}")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R<SysRoleResVO> selectById(
             @ApiParam(value = "菜单ID") @PathVariable("roleId") String roleId
     ) {
@@ -78,7 +75,6 @@ public class SysRoleController {
 
     @ApiOperation(value = "创建角色")
     @PostMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R<SysMenuResVO> insert(
             @ApiParam(value = "添加参数") @Valid @RequestBody SysRoleInsertReqVO vo
     ) {
@@ -88,17 +84,15 @@ public class SysRoleController {
 
     @ApiOperation(value = "修改角色")
     @PutMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R<SysMenuResVO> update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysRoleUpdateReqVO vo
     ) {
         sysRoleService.update(vo);
         return new R();
     }
-
     @ApiOperation(value = "删除角色")
     @DeleteMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     public R<SysMenuResVO> delete(
             @ApiParam(value = "角色id") @RequestParam(value = "id") String id
     ) {

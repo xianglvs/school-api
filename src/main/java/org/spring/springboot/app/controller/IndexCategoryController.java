@@ -27,7 +27,7 @@ public class IndexCategoryController {
 
     @ApiOperation(value = "查询分类列表,只查一级")
     @GetMapping(value = "/list")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<List<IndexCategoryResVO>> selectList(
             @ApiParam(value = "父类id") @RequestParam(value = "parentId", required = false) String parentId) {
@@ -37,7 +37,7 @@ public class IndexCategoryController {
 
     @ApiOperation(value = "查询所有分类列表")
     @GetMapping(value = "/all")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<List<IndexCategoryResVO>> selectList(
             @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag,
@@ -49,7 +49,7 @@ public class IndexCategoryController {
 
     @ApiOperation(value = "查询单个分类信息")
     @GetMapping(value = "/{id}")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<IndexCategoryResVO> selectById(
             @ApiParam(value = "分类id") @PathVariable("id") String id) {
@@ -59,7 +59,6 @@ public class IndexCategoryController {
 
     @ApiOperation(value = "创建分类")
     @PostMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R insert(
             @ApiParam(value = "参数") @Valid @RequestBody IndexCategoryInsertReqVO vo) {
@@ -69,7 +68,6 @@ public class IndexCategoryController {
 
     @ApiOperation(value = "修改分类")
     @PutMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R update(
             @ApiParam(value = "参数") @Valid @RequestBody IndexCategoryUpdateReqVO vo) {
@@ -79,7 +77,6 @@ public class IndexCategoryController {
 
     @ApiOperation(value = "删除分类")
     @DeleteMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R delete(
             @ApiParam(value = "区域id") @RequestParam(value = "id") String id
     ) {

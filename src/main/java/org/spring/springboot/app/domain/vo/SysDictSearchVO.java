@@ -37,4 +37,10 @@ public class SysDictSearchVO extends Page {
     @ApiModelProperty(value="禁用标志")
     private Boolean disableFlag;
 
+    /**
+     * 删除标志
+     */
+    @ApiModelProperty(value="删除标志")
+    private Boolean delFlag;
+
 }

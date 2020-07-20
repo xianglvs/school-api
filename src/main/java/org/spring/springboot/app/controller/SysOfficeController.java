@@ -20,6 +20,7 @@ import java.util.List;
 @Api(tags = ApiIndex.OFFICE)
 @RequestMapping(value = "/api/office")
 @RestController
+@Token
 public class SysOfficeController {
 
     @Autowired
@@ -38,8 +39,6 @@ public class SysOfficeController {
 
     @ApiOperation(value = "查询所有机构")
     @GetMapping(value = "/all")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
-    @Token
     public R<List<SysOfficeResVO>> selectAll(
             @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
             @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag
@@ -51,8 +50,6 @@ public class SysOfficeController {
 
     @ApiOperation(value = "分页查询机构")
     @GetMapping(value = "/page")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
-    @Token
     public R<PageInfo<SysOfficeResVO>> selectPage(
             @ApiParam(value = "查询参数") @ModelAttribute SysOfficeSearchReqVO vo
             ) {
@@ -65,7 +62,6 @@ public class SysOfficeController {
 
     @ApiOperation(value = "查询单个机构")
     @GetMapping(value = "/{officeId}")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R<SysOfficeResVO> selectById(
             @ApiParam(value = "菜单ID") @PathVariable("officeId") String officeId
     ) {
@@ -75,7 +71,6 @@ public class SysOfficeController {
 
     @ApiOperation(value = "创建机构")
     @PostMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R<SysMenuResVO> insert(
             @ApiParam(value = "添加参数") @Valid @RequestBody SysOfficeInsertReqVO vo
     ) {
@@ -85,7 +80,6 @@ public class SysOfficeController {
 
     @ApiOperation(value = "修改机构")
     @PutMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R<SysMenuResVO> update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysOfficeUpdateReqVO vo
     ) {
@@ -95,7 +89,6 @@ public class SysOfficeController {
 
     @ApiOperation(value = "删除机构")
     @DeleteMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     public R delete(
             @ApiParam(value = "机构id") @RequestParam(value = "id") String id
     ) {

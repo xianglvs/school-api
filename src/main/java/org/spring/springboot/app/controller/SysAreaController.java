@@ -27,7 +27,7 @@ public class SysAreaController {
 
     @ApiOperation(value = "查询区域列表")
     @GetMapping(value = "/list")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<List<SysAreaResVO>> selectList(
             @ApiParam(value = "父类id") @RequestParam(value = "parentId", required = false) String parentId) {
@@ -37,7 +37,7 @@ public class SysAreaController {
 
     @ApiOperation(value = "查询单个区域信息")
     @GetMapping(value = "/{id}")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<SysAreaResVO> selectById(
             @ApiParam(value = "文章id") @PathVariable("id") String id) {
@@ -47,7 +47,7 @@ public class SysAreaController {
 
     @ApiOperation(value = "创建新区域")
     @PostMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R insert(
             @ApiParam(value = "参数") @Valid @RequestBody SysAreaInsertReqVO vo) {
@@ -57,7 +57,7 @@ public class SysAreaController {
 
     @ApiOperation(value = "修改区域")
     @PutMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R update(
             @ApiParam(value = "参数") @Valid @RequestBody SysAreaUpdateReqVO vo) {
@@ -67,7 +67,7 @@ public class SysAreaController {
 
     @ApiOperation(value = "删除区域")
     @DeleteMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     public R delete(
             @ApiParam(value = "区域id") @RequestParam(value = "id") String id
     ) {

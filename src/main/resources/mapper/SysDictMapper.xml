@@ -48,13 +48,13 @@
             AND label like '%${label}%'
         </if>
         <if test=" value != null">
-            AND a.value like '%${value}%'
+            AND value like '%${value}%'
         </if>
         <if test="disableFlag != null">
-            AND a.disable_flag = #{disableFlag}
+            AND disable_flag = #{disableFlag}
         </if>
         <if test="delFlag != null">
-            AND a.del_flag = #{delFlag}
+            AND del_flag = #{delFlag}
         </if>
     </select>
      <update id="deleteById">

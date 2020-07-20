@@ -30,7 +30,7 @@ public class SysDictController {
 
     @ApiOperation(value = "分页查询字典")
     @GetMapping(value = "/list")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<PageInfo<List<SysDictResVO>>> selectPage(
             @ApiParam(value = "查询参数") @ModelAttribute SysDictSearchVO vo) {
@@ -41,7 +41,7 @@ public class SysDictController {
 
     @ApiOperation(value = "查询单个字典信息")
     @GetMapping(value = "/{id}")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<SysDictResVO> selectById(
             @ApiParam(value = "字典id") @PathVariable("id") String id) {
@@ -51,7 +51,7 @@ public class SysDictController {
 
     @ApiOperation(value = "创建字典")
     @PostMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R insert(
             @ApiParam(value = "参数") @Valid @RequestBody SysDictInsertReqVO vo) {
@@ -61,7 +61,6 @@ public class SysDictController {
 
     @ApiOperation(value = "修改字典")
     @PutMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R update(
             @ApiParam(value = "参数") @Valid @RequestBody SysDictUpdateReqVO vo) {
@@ -71,7 +70,7 @@ public class SysDictController {
 
     @ApiOperation(value = "删除字典")
     @DeleteMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     public R delete(
             @ApiParam(value = "字典id") @RequestParam(value = "id") String id
     ) {

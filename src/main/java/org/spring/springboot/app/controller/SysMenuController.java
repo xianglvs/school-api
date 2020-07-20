@@ -13,6 +13,7 @@ import org.spring.springboot.app.domain.vo.SysMenuUpdateReqVO;
 import org.spring.springboot.app.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 @Api(tags = ApiIndex.MENU)
 @RequestMapping(value = "/api/menu")
 @RestController
+@Token
 public class SysMenuController {
 
     @Autowired
@@ -37,7 +39,7 @@ public class SysMenuController {
     @ApiOperation(value = "查询登录用户菜单")
     @GetMapping(value = "/user")
     public R<List<SysMenuResVO>> selectByUser(
-            @ApiParam(value = "签名") @RequestParam(value = "token") String token
+           @ApiIgnore String token
     ) {
         List<SysMenuResVO> list = sysMenuService.selectByToken(token);
         return new R(list);
@@ -45,10 +47,9 @@ public class SysMenuController {
 
     @ApiOperation(value = "查询角色菜单")
     @GetMapping(value = "/role/{roleId}")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R<List<SysMenuResVO>> selectByRole(
-            @ApiParam(value = "角色id") @PathVariable(value = "roleId") String roleId,
+            @ApiParam(value = "角色id", required = true) @PathVariable(value = "roleId") String roleId,
             @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
             @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag
     ) {
@@ -58,10 +59,9 @@ public class SysMenuController {
 
     @ApiOperation(value = "查询用户菜单")
     @GetMapping(value = "/user/{userId}")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
     @Token
     public R<List<SysMenuResVO>> selectByUser(
-            @ApiParam(value = "用户id") @PathVariable(value = "userId") String userId,
+            @ApiParam(value = "用户id",required = true) @PathVariable(value = "userId") String userId,
             @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
             @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag
     ) {
@@ -71,7 +71,7 @@ public class SysMenuController {
 
     @ApiOperation(value = "查询所有菜单")
     @GetMapping(value = "/all")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<List<SysMenuResVO>> selectAll(
             @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
@@ -83,7 +83,7 @@ public class SysMenuController {
 
     @ApiOperation(value = "查询单个菜单")
     @GetMapping(value = "/{menuId}")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<SysMenuResVO> selectById(
             @ApiParam(value = "菜单ID") @PathVariable("menuId") String menuId
@@ -94,7 +94,7 @@ public class SysMenuController {
 
     @ApiOperation(value = "创建菜单")
     @PostMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R insert(
             @ApiParam(value = "添加参数") @Valid @RequestBody SysMenuInsertReqVO vo
@@ -105,7 +105,7 @@ public class SysMenuController {
 
     @ApiOperation(value = "修改菜单")
     @PutMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysMenuUpdateReqVO vo
@@ -116,7 +116,7 @@ public class SysMenuController {
 
     @ApiOperation(value = "删除菜单")
     @DeleteMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     public R delete(
             @ApiParam(value = "菜单id") @RequestParam(value = "id") String id
     ) {

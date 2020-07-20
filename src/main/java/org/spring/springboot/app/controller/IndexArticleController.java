@@ -30,7 +30,7 @@ public class IndexArticleController {
 
     @ApiOperation(value = "分页查询文章")
     @GetMapping(value = "/list")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<PageInfo<List<IndexArticleResVO>>> selectPage(
             @ApiParam(value = "查询参数") @ModelAttribute IndexArticleSearchReqVO vo) {
@@ -41,7 +41,7 @@ public class IndexArticleController {
 
     @ApiOperation(value = "查询单个文章信息")
     @GetMapping(value = "/{id}")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R<IndexArticleResVO> selectById(
             @ApiParam(value = "文章id") @PathVariable("id") String id) {
@@ -51,7 +51,7 @@ public class IndexArticleController {
 
     @ApiOperation(value = "创建文章")
     @PostMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R insert(
             @ApiParam(value = "参数") @Valid @RequestBody IndexArticleInsertReqVO vo) {
@@ -61,7 +61,7 @@ public class IndexArticleController {
 
     @ApiOperation(value = "修改文章")
     @PutMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     @Token
     public R update(
             @ApiParam(value = "参数") @Valid @RequestBody IndexArticleUpdateReqVO vo) {
@@ -71,7 +71,7 @@ public class IndexArticleController {
 
     @ApiOperation(value = "删除文章")
     @DeleteMapping(value = "")
-    @ApiImplicitParam(name = "token", value = "签名", paramType = "query", dataType = "String")
+
     public R delete(
             @ApiParam(value = "文章id") @RequestParam(value = "id") String id
     ) {
