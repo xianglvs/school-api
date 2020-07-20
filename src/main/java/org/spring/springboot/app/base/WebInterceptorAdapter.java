@@ -78,13 +78,18 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
     private String getToken(HttpServletRequest request) {
         String token = request.getParameter(Constants.TOKEN_PARAM_NAME);
         if (token == null || token.length() == 0) {
-            if(request.getCookies() == null){
-                return null;
-            }
-            for (Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equalsIgnoreCase(Constants.TOKEN_PARAM_NAME)) {
-                    token = cookie.getValue();
+            if (request.getCookies() != null) {
+                for (Cookie cookie : request.getCookies()) {
+                    if (cookie.getName().equalsIgnoreCase(Constants.TOKEN_PARAM_NAME)) {
+                        token = cookie.getValue();
+                    }
                 }
+            }
+        }
+
+        if (token == null || token.length() == 0) {
+            if (request.getHeader(Constants.TOKEN_PARAM_NAME) != null) {
+                token = request.getHeader(Constants.TOKEN_PARAM_NAME);
             }
         }
         return token;

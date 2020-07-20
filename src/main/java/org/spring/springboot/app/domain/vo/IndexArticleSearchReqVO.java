@@ -25,7 +25,7 @@ public class IndexArticleSearchReqVO extends Page {
      * 文章所属分类
      */
     @ApiModelProperty(value = "文章所属分类id")
-    private String indexCategoryId;
+    private String categoryId;
 
     /**
      * 禁用标志

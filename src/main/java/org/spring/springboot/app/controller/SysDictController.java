@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(description = "字典管理接口", tags = ApiIndex.DICT)
+@Api(tags = ApiIndex.DICT)
 @RequestMapping(value = "/api/dict")
 @RestController
 public class SysDictController {

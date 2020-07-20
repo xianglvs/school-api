@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(description = "区域管理接口", tags = ApiIndex.AREA)
+@Api(tags = ApiIndex.AREA)
 @RequestMapping(value = "/api/area")
 @RestController
 public class SysAreaController {

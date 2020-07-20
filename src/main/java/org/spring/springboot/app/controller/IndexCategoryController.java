@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(description = "文章分类管理接口", tags = ApiIndex.CATEGORY)
+@Api(tags = ApiIndex.CATEGORY)
 @RequestMapping(value = "/api/cate")
 @RestController
 public class IndexCategoryController {

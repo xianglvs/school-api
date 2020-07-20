@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(description = "文章管理接口", tags = ApiIndex.ARTICLE)
+@Api(tags = ApiIndex.ARTICLE)
 @RequestMapping(value = "/api/article")
 @RestController
 public class IndexArticleController {

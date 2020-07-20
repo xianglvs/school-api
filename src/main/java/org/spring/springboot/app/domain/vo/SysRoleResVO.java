@@ -4,10 +4,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @ApiModel(description = "返回参数")
 @Data
-public class SysRoleResVO {
+public class SysRoleResVO implements Serializable {
 
+    private static final long serialVersionUID = 5844901892821141989L;
     @ApiModelProperty(value = "角色id")
     private String id;
 

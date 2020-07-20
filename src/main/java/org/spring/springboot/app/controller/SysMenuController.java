@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(description = "菜单管理接口", tags = ApiIndex.MENU)
+@Api(tags = ApiIndex.MENU)
 @RequestMapping(value = "/api/menu")
 @RestController
 public class SysMenuController {

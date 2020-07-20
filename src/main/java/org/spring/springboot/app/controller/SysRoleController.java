@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(description = "角色管理接口", tags = ApiIndex.ROLE)
+@Api(tags = ApiIndex.ROLE)
 @RequestMapping(value = "/api/role")
 @RestController
 public class SysRoleController {

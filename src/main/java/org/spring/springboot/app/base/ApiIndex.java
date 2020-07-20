@@ -12,35 +12,35 @@ public class ApiIndex {
     /*
      * 用户管理接口
      */
-    public static final String USER = "1.0.0";
+    public static final String USER = "用户管理接口";
     /*
      * 角色管理接口
      */
-    public static final String ROLE = "1.0.1";
+    public static final String ROLE = "角色管理接口";
     /*
      * 菜单管理接口
      */
-    public static final String MENU = "1.0.2";
+    public static final String MENU = "菜单管理接口";
     /*
      * 机构管理接口
      */
-    public static final String OFFICE = "1.0.3";
+    public static final String OFFICE = "机构管理接口";
     /*
      * 文章管理接口
      */
-    public static final String ARTICLE = "1.0.4";
+    public static final String ARTICLE = "文章管理接口";
     /*
      * 区域管理接口
      */
-    public static final String AREA = "1.0.5";
+    public static final String AREA = "区域管理接口";
     /*
      * 字典管理接口
      */
-    public static final String DICT = "1.0.6";
+    public static final String DICT = "字典管理接口";
     /*
      * 文章分类管理接口
      */
-    public static final String CATEGORY = "1.0.7";
+    public static final String CATEGORY = "文章分类管理接口";
 
 
 }

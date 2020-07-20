@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(description = "机构管理接口", tags = ApiIndex.OFFICE)
+@Api(tags = ApiIndex.OFFICE)
 @RequestMapping(value = "/api/office")
 @RestController
 public class SysOfficeController {

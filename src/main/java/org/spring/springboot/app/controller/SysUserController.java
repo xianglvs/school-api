@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(description = "用户管理接口", tags = ApiIndex.USER)
+@Api(tags = ApiIndex.USER)
 @RequestMapping(value = "/api/user")
 @RestController
 public class SysUserController {
