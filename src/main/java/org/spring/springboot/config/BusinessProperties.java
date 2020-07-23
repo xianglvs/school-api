@@ -1,6 +1,7 @@
 package org.spring.springboot.config;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -10,11 +11,6 @@ import org.springframework.stereotype.Component;
 @Data
 @PropertySource(value = {"classpath:config/business.properties", "file:config/business.properties"}, ignoreResourceNotFound = true, encoding = "UTF-8")
 public class BusinessProperties {
-    private String ftpUsername;
-    private String ftpPassword;
-    private Integer ftpPort;
-    private String ftpHost;
-    private String ftpEncoding;
-    private String ftpClientTimeout;
-    private String ftpPath;
+    @Value("${file.path}")
+    private String filePath;
 }
