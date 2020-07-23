@@ -41,6 +41,10 @@ public class ApiIndex {
      * 文章分类管理接口
      */
     public static final String CATEGORY = "文章分类管理接口";
+    /*
+     * 文件管理接口
+     */
+    public static final String FILE = "文件管理接口";
 
 
 }

@@ -66,6 +66,10 @@ public class UserTokenResVO implements Serializable {
     @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date loginDate;
 
+    @ApiModelProperty(value = "创建时间")
+    @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createDate;
+
     @ApiModelProperty(value="角色")
     private List<SysRoleResVO> roles;
     @ApiModelProperty(value="菜单")
@@ -191,6 +195,14 @@ public class UserTokenResVO implements Serializable {
         this.loginDate = loginDate;
     }
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
     public String getSysOfficeName() {
         return sysOfficeName;
     }
@@ -238,4 +250,5 @@ public class UserTokenResVO implements Serializable {
     public void setSysAreaName(String sysAreaName) {
         this.sysAreaName = sysAreaName == null ? null : sysAreaName.trim();
     }
+
 }
