@@ -2,7 +2,6 @@ package org.spring.springboot.app.controller;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.ApiIndex;
@@ -30,8 +29,6 @@ public class IndexArticleController {
 
     @ApiOperation(value = "分页查询文章")
     @GetMapping(value = "/list")
-
-    @Token
     public R<PageInfo<List<IndexArticleResVO>>> selectPage(
             @ApiParam(value = "查询参数") @ModelAttribute IndexArticleSearchReqVO vo) {
         List<IndexArticleResVO> list = service.selectPage(vo);
@@ -41,8 +38,6 @@ public class IndexArticleController {
 
     @ApiOperation(value = "查询单个文章信息")
     @GetMapping(value = "/{id}")
-
-    @Token
     public R<IndexArticleResVO> selectById(
             @ApiParam(value = "文章id") @PathVariable("id") String id) {
         IndexArticleResVO vo = service.selectById(id);
@@ -51,7 +46,6 @@ public class IndexArticleController {
 
     @ApiOperation(value = "创建文章")
     @PostMapping(value = "")
-
     @Token
     public R insert(
             @ApiParam(value = "参数") @Valid @RequestBody IndexArticleInsertReqVO vo) {
@@ -61,7 +55,6 @@ public class IndexArticleController {
 
     @ApiOperation(value = "修改文章")
     @PutMapping(value = "")
-
     @Token
     public R update(
             @ApiParam(value = "参数") @Valid @RequestBody IndexArticleUpdateReqVO vo) {
@@ -71,7 +64,7 @@ public class IndexArticleController {
 
     @ApiOperation(value = "删除文章")
     @DeleteMapping(value = "")
-
+    @Token
     public R delete(
             @ApiParam(value = "文章id") @RequestParam(value = "id") String id
     ) {

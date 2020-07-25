@@ -96,6 +96,9 @@ public class WebInterceptorAdapter extends HandlerInterceptorAdapter {
     }
 
     private boolean validateAccessToken(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if(!(handler instanceof  HandlerMethod)){
+            return true;
+        }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Token annotation = handlerMethod.getMethodAnnotation(Token.class);
         HandlerMethod method = (HandlerMethod) handler;

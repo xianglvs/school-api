@@ -2,7 +2,6 @@ package org.spring.springboot.app.controller;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.ApiIndex;
@@ -30,8 +29,6 @@ public class SysDictController {
 
     @ApiOperation(value = "分页查询字典")
     @GetMapping(value = "/list")
-
-    @Token
     public R<PageInfo<List<SysDictResVO>>> selectPage(
             @ApiParam(value = "查询参数") @ModelAttribute SysDictSearchVO vo) {
         List<SysDictResVO> list = service.selectPage(vo);
@@ -41,8 +38,6 @@ public class SysDictController {
 
     @ApiOperation(value = "查询单个字典信息")
     @GetMapping(value = "/{id}")
-
-    @Token
     public R<SysDictResVO> selectById(
             @ApiParam(value = "字典id") @PathVariable("id") String id) {
         SysDictResVO vo = service.selectById(id);
@@ -51,7 +46,6 @@ public class SysDictController {
 
     @ApiOperation(value = "创建字典")
     @PostMapping(value = "")
-
     @Token
     public R insert(
             @ApiParam(value = "参数") @Valid @RequestBody SysDictInsertReqVO vo) {
@@ -70,7 +64,7 @@ public class SysDictController {
 
     @ApiOperation(value = "删除字典")
     @DeleteMapping(value = "")
-
+    @Token
     public R delete(
             @ApiParam(value = "字典id") @RequestParam(value = "id") String id
     ) {

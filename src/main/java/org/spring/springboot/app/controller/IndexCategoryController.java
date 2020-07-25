@@ -1,16 +1,15 @@
 package org.spring.springboot.app.controller;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.ApiIndex;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
-import org.spring.springboot.app.domain.vo.*;
+import org.spring.springboot.app.domain.vo.IndexCategoryInsertReqVO;
 import org.spring.springboot.app.domain.vo.IndexCategoryResVO;
+import org.spring.springboot.app.domain.vo.IndexCategoryUpdateReqVO;
 import org.spring.springboot.app.service.IndexCategoryService;
-import org.spring.springboot.app.service.SysAreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +24,10 @@ public class IndexCategoryController {
     @Autowired
     private IndexCategoryService service;
 
+
+
     @ApiOperation(value = "查询分类列表,只查一级")
     @GetMapping(value = "/list")
-
-    @Token
     public R<List<IndexCategoryResVO>> selectList(
             @ApiParam(value = "父类id") @RequestParam(value = "parentId", required = false) String parentId) {
         List<IndexCategoryResVO> list = service.selectListByParent(parentId);
@@ -37,8 +36,6 @@ public class IndexCategoryController {
 
     @ApiOperation(value = "查询所有分类列表")
     @GetMapping(value = "/all")
-
-    @Token
     public R<List<IndexCategoryResVO>> selectList(
             @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag,
             @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag
@@ -49,8 +46,6 @@ public class IndexCategoryController {
 
     @ApiOperation(value = "查询单个分类信息")
     @GetMapping(value = "/{id}")
-
-    @Token
     public R<IndexCategoryResVO> selectById(
             @ApiParam(value = "分类id") @PathVariable("id") String id) {
         IndexCategoryResVO vo = service.selectById(id);
@@ -77,6 +72,7 @@ public class IndexCategoryController {
 
     @ApiOperation(value = "删除分类")
     @DeleteMapping(value = "")
+    @Token
     public R delete(
             @ApiParam(value = "区域id") @RequestParam(value = "id") String id
     ) {

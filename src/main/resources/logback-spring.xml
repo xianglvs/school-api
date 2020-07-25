@@ -97,15 +97,39 @@
         </filter>-->
     </appender>
 
+    <!-- DEBUG级别日志 appender -->
+    <appender name="TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${LOG_HOME}/trace-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 过滤器，只记录DEBUG级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>-->
+    </appender>
+
 
     <!--控制台打印资源加载信息-->
-    <root level="INFO">
+    <root level="ERROR">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="INFO"/>
+        <appender-ref ref="TRACE"/>
         <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
         <appender-ref ref="ERROR"/>
         <appender-ref ref="WARN"/>
     </root>
 
-    <logger name="org.spring.springboot" level="DEBUG"></logger>
+    <logger name="org.spring.springboot" level="TRACE" additivity="true"></logger>
 </configuration>

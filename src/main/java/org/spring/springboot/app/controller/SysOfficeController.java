@@ -2,11 +2,9 @@ package org.spring.springboot.app.controller;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.ApiIndex;
-import org.spring.springboot.app.domain.vo.SysMenuResVO;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.*;
@@ -20,7 +18,6 @@ import java.util.List;
 @Api(tags = ApiIndex.OFFICE)
 @RequestMapping(value = "/api/office")
 @RestController
-@Token
 public class SysOfficeController {
 
     @Autowired
@@ -71,6 +68,7 @@ public class SysOfficeController {
 
     @ApiOperation(value = "创建机构")
     @PostMapping(value = "")
+    @Token
     public R<SysMenuResVO> insert(
             @ApiParam(value = "添加参数") @Valid @RequestBody SysOfficeInsertReqVO vo
     ) {
@@ -80,6 +78,7 @@ public class SysOfficeController {
 
     @ApiOperation(value = "修改机构")
     @PutMapping(value = "")
+    @Token
     public R<SysMenuResVO> update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysOfficeUpdateReqVO vo
     ) {
@@ -89,6 +88,7 @@ public class SysOfficeController {
 
     @ApiOperation(value = "删除机构")
     @DeleteMapping(value = "")
+    @Token
     public R delete(
             @ApiParam(value = "机构id") @RequestParam(value = "id") String id
     ) {

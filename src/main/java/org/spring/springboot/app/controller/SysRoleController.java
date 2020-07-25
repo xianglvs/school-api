@@ -2,17 +2,12 @@ package org.spring.springboot.app.controller;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.spring.springboot.app.base.ApiIndex;
-import org.spring.springboot.app.domain.vo.SysMenuResVO;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
-import org.spring.springboot.app.domain.vo.SysRoleInsertReqVO;
-import org.spring.springboot.app.domain.vo.SysRoleResVO;
-import org.spring.springboot.app.domain.vo.SysRoleSearchReqVO;
-import org.spring.springboot.app.domain.vo.SysRoleUpdateReqVO;
+import org.spring.springboot.app.domain.vo.*;
 import org.spring.springboot.app.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +36,6 @@ public class SysRoleController {
 
     @ApiOperation(value = "查询所有角色")
     @GetMapping(value = "/all")
-    @Token
     public R<List<SysRoleResVO>> selectAll(
             @ApiParam(value = "删除标志") @RequestParam(value = "delFlag", required = false) Boolean delFlag,
             @ApiParam(value = "禁用标志") @RequestParam(value = "disableFlag", required = false) Boolean disableFlag
@@ -53,7 +47,6 @@ public class SysRoleController {
 
     @ApiOperation(value = "分页查询角色")
     @GetMapping(value = "/page")
-    @Token
     public R<PageInfo<SysRoleResVO>> selectPage(
             @ApiParam(value = "查询参数") @ModelAttribute SysRoleSearchReqVO vo
             ) {
@@ -75,6 +68,7 @@ public class SysRoleController {
 
     @ApiOperation(value = "创建角色")
     @PostMapping(value = "")
+    @Token
     public R<SysMenuResVO> insert(
             @ApiParam(value = "添加参数") @Valid @RequestBody SysRoleInsertReqVO vo
     ) {
@@ -84,6 +78,7 @@ public class SysRoleController {
 
     @ApiOperation(value = "修改角色")
     @PutMapping(value = "")
+    @Token
     public R<SysMenuResVO> update(
             @ApiParam(value = "修改参数") @Valid @RequestBody SysRoleUpdateReqVO vo
     ) {
@@ -92,7 +87,7 @@ public class SysRoleController {
     }
     @ApiOperation(value = "删除角色")
     @DeleteMapping(value = "")
-
+    @Token
     public R<SysMenuResVO> delete(
             @ApiParam(value = "角色id") @RequestParam(value = "id") String id
     ) {
