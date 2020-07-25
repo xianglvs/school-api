@@ -46,7 +46,7 @@ public class FileController {
         FileUtils.writeByteArrayToFile(new File(systemPath + targetPath + "/" + fileName), file.getBytes());
         FileResVO fileResVO = new FileResVO();
         fileResVO.setName(originalName);
-        fileResVO.setPath("/" + fileName);
+        fileResVO.setPath(targetPath + "/" + fileName);
         return new R(fileResVO);
     }
 
