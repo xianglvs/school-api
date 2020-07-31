@@ -48,14 +48,14 @@
             AND c.del_flag = FALSE
             AND c.disable_flag = FALSE
         WHERE 1=1
-            <if test="title != null">
+            <if test="title != null and title != ''">
                 AND a.title like '%${title}%'
             </if>
-            <if test="description != null">
+            <if test="description != null and description != ''">
                 AND a.description like '%${description}%'
             </if>
-            <if test="categoryId != null">
-                AND c.category_id = #{categoryId}
+            <if test="categoryId != null and categoryId != ''">
+                AND b.category_id = #{categoryId}
             </if>
             <if test="delFlag != null">
                 AND a.del_flag = #{delFlag}
