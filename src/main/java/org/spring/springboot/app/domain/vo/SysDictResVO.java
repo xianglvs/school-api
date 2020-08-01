@@ -47,6 +47,6 @@ public class SysDictResVO {
      * 禁用标志
      */
     @ApiModelProperty(value="禁用标志")
-    private Boolean disableFlag;
+    private boolean disableFlag;
 
 }

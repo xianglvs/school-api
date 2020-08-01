@@ -61,13 +61,13 @@ public class IndexArticleResVO {
      * 禁用标志 0.否 1.是
      */
     @ApiModelProperty(value = "禁用标志 否.false 是.true")
-    private Boolean disableFlag;
+    private boolean disableFlag;
 
     /**
      * 逻辑删除标志 0.正常 1.删除
      */
     @ApiModelProperty(value = "逻辑删除标志,否.false 是.true")
-    private Boolean delFlag;
+    private boolean delFlag;
 
     /**
      * 文章内容

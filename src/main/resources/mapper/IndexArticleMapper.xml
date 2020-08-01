@@ -7,6 +7,7 @@
         <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="sort" jdbcType="INTEGER" property="sort"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
@@ -63,6 +64,7 @@
             <if test="disableFlag != null">
                 AND a.disable_flag = #{disableFlag}
             </if>
+            ORDER BY if(a.sort=0,1,0), a.sort ASC
     </select>
 
     <update id="deleteById">

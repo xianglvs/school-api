@@ -25,7 +25,7 @@ public class SysMenuResVO implements Serializable {
     @ApiModelProperty(value = "菜单图标")
     private String icon;
     @ApiModelProperty(value = "隐藏标志 0.否 1.是")
-    private Boolean hiddenFlag;
+    private boolean hiddenFlag;
     @ApiModelProperty(value = "权限标识")
     private String permission;
 
@@ -93,11 +93,11 @@ public class SysMenuResVO implements Serializable {
         this.icon = icon == null ? null : icon.trim();
     }
 
-    public Boolean getHiddenFlag() {
+    public boolean getHiddenFlag() {
         return hiddenFlag;
     }
 
-    public void setHiddenFlag(Boolean hiddenFlag) {
+    public void setHiddenFlag(boolean hiddenFlag) {
         this.hiddenFlag = hiddenFlag;
     }
 

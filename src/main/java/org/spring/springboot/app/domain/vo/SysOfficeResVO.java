@@ -84,7 +84,7 @@ public class SysOfficeResVO {
      * 禁用标志
      */
     @ApiModelProperty(value = "禁用标志,1.false 否, 2.true 是")
-    private Byte disableFlag;
+    private boolean disableFlag;
 
 
 }

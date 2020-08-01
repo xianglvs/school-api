@@ -30,7 +30,7 @@ public class SysRoleResVO implements Serializable {
     private String enName;
 
     @ApiModelProperty(value = "禁用标志,1.false 否, 2.true 是")
-    private Boolean disableFlag;
+    private boolean disableFlag;
 
     @ApiModelProperty(value = "备注")
     private String remarks;
