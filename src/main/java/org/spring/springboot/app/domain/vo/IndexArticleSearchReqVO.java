@@ -21,6 +21,9 @@ public class IndexArticleSearchReqVO extends Page {
     @ApiModelProperty(value = "文章概述")
     private String description;
 
+    @ApiModelProperty(value = "列表样式0.纯文字1.左文字右图2.上文字下图3.单图4.三图并排")
+    private String listType;
+
     /**
      * 文章所属分类
      */

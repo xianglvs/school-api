@@ -31,4 +31,20 @@ public class IndexArticlePO extends BaseEntity {
      */
     private String content;
 
+
+    /**
+     * 列表图片
+     */
+    private String listImage;
+
+    /**
+     * 列表样式
+     * 0.纯文字
+     * 1.左文字右图
+     * 2.上文字下图
+     * 3.单图
+     * 4.3图并排
+     */
+    private String listType;
+
 }

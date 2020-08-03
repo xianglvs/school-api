@@ -6,6 +6,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @ApiModel(description = "参数")
@@ -15,7 +16,7 @@ public class IndexArticleUpdateReqVO {
     /**
      * 文章id
      */
-    @NotBlank(message = "文章id不能为空")
+    @NotEmpty(message = "文章id不能为空")
     private String id;
 
     /**
@@ -30,6 +31,23 @@ public class IndexArticleUpdateReqVO {
      */
     @ApiModelProperty(value = "文章概述")
     private String description;
+
+    /**
+     * 列表图片
+     */
+    @ApiModelProperty(value = "列表图片")
+    private String listImage;
+
+    /**
+     * 列表样式
+     * 0.纯文字
+     * 1.左文字右图
+     * 2.上文字下图
+     * 3.单图
+     * 4.3图并排
+     */
+    @ApiModelProperty(value = "列表样式0.纯文字1.左文字右图2.上文字下图3.单图4.三图并排")
+    private String listType;
 
     /**
      * 文章所属分类

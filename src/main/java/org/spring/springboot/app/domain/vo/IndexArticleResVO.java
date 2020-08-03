@@ -28,6 +28,23 @@ public class IndexArticleResVO {
     private String description;
 
     /**
+     * 列表图片
+     */
+    @ApiModelProperty(value = "列表图片")
+    private String listImage;
+
+    /**
+     * 列表样式
+     * 0.纯文字
+     * 1.左文字右图
+     * 2.上文字下图
+     * 3.单图
+     * 4.3图并排
+     */
+    @ApiModelProperty(value = "列表样式0.纯文字1.左文字右图2.上文字下图3.单图4.三图并排")
+    private String listType;
+
+    /**
      * 排序号
      */
     @ApiModelProperty(value = "排序号")
@@ -74,6 +91,5 @@ public class IndexArticleResVO {
      */
     @ApiModelProperty(value = "文章内容")
     private String content;
-
 
 }
