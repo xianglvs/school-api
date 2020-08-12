@@ -49,8 +49,7 @@ public class IndexArticleController {
     @Token
     public R insert(
             @ApiParam(value = "参数") @Valid @RequestBody IndexArticleInsertReqVO vo) {
-        service.insert(vo);
-        return new R();
+        return new R(service.insert(vo));
     }
 
     @ApiOperation(value = "修改文章")

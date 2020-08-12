@@ -37,7 +37,7 @@ public class IndexArticleService {
         return list;
     }
 
-    public void insert(IndexArticleInsertReqVO vo) {
+    public String insert(IndexArticleInsertReqVO vo) {
         IndexArticlePO po = new IndexArticlePO();
         BeanUtils.copyProperties(vo, po);
         po.preInsert();
@@ -46,7 +46,7 @@ public class IndexArticleService {
             throw new BusinessException(Type.EXCEPTION_FAIL);
         }
         if (vo.getIndexCategoryIds() == null || vo.getIndexCategoryIds().isEmpty()) {
-            return;
+            return po.getId();
         }
         vo.getIndexCategoryIds().forEach((id) -> {
             try {
@@ -55,6 +55,7 @@ public class IndexArticleService {
                 throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("roles", "分类Id不存在,分类id为:" + id)));
             }
         });
+        return po.getId();
     }
 
 
