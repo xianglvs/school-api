@@ -54,6 +54,20 @@ public class SysUserService {
         return vo;
     }
 
+    public void password(UserPasswordReqVO userPasswordReqVO) {
+        UserTokenResVO userSession = ThreadLocalUtil.get(Constants.TOKEN_SESSION_NAME, UserTokenResVO.class);
+        SysUserPO sysUserPO = sysUserMapper.selectByPrimaryKey(userSession.getId());
+        String old = userPasswordReqVO.getOldPassword();
+        String password = SecurityUtils.getMD5(old);
+        if (!sysUserPO.getPassword().equalsIgnoreCase(password)) {
+            throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("oldPassword", "原密码错误")));
+        }
+        SysUserPO po = new SysUserPO();
+        po.setId(userSession.getId());
+        po.setPassword(SecurityUtils.getMD5(userPasswordReqVO.getPassword()));
+        sysUserMapper.updateByPrimaryKeySelective(po);
+    }
+
     public UserLoginResVO login(UserLoginReqVO userLoginReqVO) {
         Example example = new Example(SysUserPO.class);
         SysUserPO sysUserQuery = new SysUserPO();

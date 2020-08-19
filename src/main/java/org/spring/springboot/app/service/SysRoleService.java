@@ -69,6 +69,15 @@ public class SysRoleService {
         if (i == 0) {
             throw new BusinessException(Type.EXCEPTION_FAIL);
         }
+        if (vo.getMenuIds() != null) {
+            vo.getMenuIds().forEach(menuId -> {
+                try {
+                    sysRoleMapper.insertRoleMenu(po.getId(), menuId);
+                } catch (DataIntegrityViolationException e) {
+                    throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("roles", "菜单不存在,菜单ID为:" + menuId)));
+                }
+            });
+        }
     }
 
     private void updateRole(SysRolePO po) {
@@ -90,6 +99,17 @@ public class SysRoleService {
         if (vo.getParentId() == null || vo.getParentId().equalsIgnoreCase(sysRolePO.getParentId())) {
             updateRole(po);
             return;
+        }
+        //更新角色菜单
+        if (vo.getMenuIds() != null) {
+            sysRoleMapper.deleteRoleMenus(po.getId());
+            vo.getMenuIds().forEach(menuId -> {
+                try {
+                    sysRoleMapper.insertRoleMenu(po.getId(), menuId);
+                } catch (DataIntegrityViolationException e) {
+                    throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("roles", "菜单不存在,菜单ID为:" + menuId)));
+                }
+            });
         }
         //查询父类
         SysRolePO parentPo = sysRoleMapper.selectByPrimaryKey(vo.getParentId());
@@ -113,17 +133,6 @@ public class SysRoleService {
         int i = sysRoleMapper.updateByPrimaryKeySelective(po);
         if (i == 0) {
             throw new BusinessException(Type.EXCEPTION_FAIL);
-        }
-        //更新角色菜单
-        if (vo.getMenuIds() != null) {
-            sysRoleMapper.deleteRoleMenus(po.getId());
-            vo.getMenuIds().forEach(menuId -> {
-                try {
-                    sysRoleMapper.insertRoleMenu(po.getId(), menuId);
-                } catch (DataIntegrityViolationException e) {
-                    throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("roles", "菜单不存在,菜单ID为:" + menuId)));
-                }
-            });
         }
     }
 

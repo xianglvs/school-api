@@ -40,6 +40,16 @@ public class SysUserController {
         return new R(userLoginResVO);
     }
 
+    @ApiOperation(value = "修改密码接口")
+    @PutMapping(value = "/password")
+    @Token
+    public R<UserLoginResVO> password(
+            HttpServletRequest request,
+            @ApiParam(value = "参数") @RequestBody UserPasswordReqVO userPasswordReqVO) {
+        sysUserService.password(userPasswordReqVO);
+        return new R();
+    }
+
 
     @ApiOperation(value = "创建或者刷新token")
     @PostMapping(value = "/token")
@@ -55,7 +65,7 @@ public class SysUserController {
     public R<UserTokenResVO> getUser(
             @ApiIgnore UserTokenResVO userSession
     ) {
-        if(userSession == null || userSession.getId() == null){
+        if (userSession == null || userSession.getId() == null) {
             throw new BusinessException(Type.POWER_VALIDATE_FAIL);
         }
         return new R(userSession);

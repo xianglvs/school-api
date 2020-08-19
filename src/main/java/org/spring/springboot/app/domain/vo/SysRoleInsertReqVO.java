@@ -3,7 +3,9 @@ package org.spring.springboot.app.domain.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @ApiModel(description = "参数")
 @Data
@@ -46,6 +48,10 @@ public class SysRoleInsertReqVO {
      */
     @ApiModelProperty(value = "禁用标志,false:否,true:是")
     private Boolean disableFlag;
+
+
+    @ApiModelProperty(value = "角色菜单ID列表")
+    private List<String> menuIds;
 
     public Boolean getDisableFlag() {
         if(disableFlag == null){
