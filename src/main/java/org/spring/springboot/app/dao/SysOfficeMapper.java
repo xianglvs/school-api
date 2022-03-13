@@ -4,10 +4,12 @@ import org.apache.ibatis.annotations.Param;
 import org.spring.springboot.app.domain.po.SysOfficePO;
 import org.spring.springboot.app.domain.vo.SysOfficeResVO;
 import org.spring.springboot.app.domain.vo.SysOfficeSearchReqVO;
+import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
+@Repository
 public interface SysOfficeMapper extends Mapper<SysOfficePO> {
     List<SysOfficeResVO> selectAllOffice(@Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);
 

@@ -51,7 +51,6 @@
         LEFT JOIN index_category c ON
             b.category_id = c.id
             AND c.del_flag = FALSE
-            AND c.disable_flag = FALSE
         WHERE 1=1
             <if test="title != null and title != ''">
                 AND a.title like '%${title}%'

@@ -4,10 +4,12 @@ import org.apache.ibatis.annotations.Param;
 import org.spring.springboot.app.domain.po.SysDictPO;
 import org.spring.springboot.app.domain.vo.SysDictResVO;
 import org.spring.springboot.app.domain.vo.SysDictSearchVO;
+import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
+@Repository
 public interface SysDictMapper extends Mapper<SysDictPO> {
 
     List<SysDictResVO> selectPage(SysDictSearchVO vo);

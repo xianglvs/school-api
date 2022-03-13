@@ -1,0 +1,87 @@
+spring:
+  datasource:
+    db1:
+      url: jdbc:mysql://127.0.0.1:3306/school?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      initial-size: 5
+      max-active: 10
+      max-wait: 10000
+      test-on-borrow: false
+      test-while-idle: true
+      validation-query: SELECT 1
+      min-idle: 5
+      log-abandoned: true
+      remove-abandoned: true
+      remove-abandoned-timeout: 1800
+      time-between-eviction-runs-millis: 300000
+      min-evictable-idle-time-millis: 1800000
+    db2:
+      url: jdbc:mysql://127.0.0.1:3306/school?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      initial-size: 5
+      max-active: 10
+      max-wait: 10000
+      test-on-borrow: false
+      test-while-idle: true
+      validation-query: SELECT 1
+      min-idle: 5
+      log-abandoned: true
+      remove-abandoned: true
+      remove-abandoned-timeout: 1800
+      time-between-eviction-runs-millis: 300000
+      min-evictable-idle-time-millis: 1800000
+  redis:
+    host: 127.0.0.1
+    port: '6379'
+    jedis:
+      pool:
+        max-idle: 8
+        max-active: 8
+        min-idle: 0
+        max-wait: -1
+      timeout: 1000
+    ## Redis数据库索引（默认为0）
+    database: 0
+    password: ''
+    key-prefix: shool-api
+  resources:
+    ##自定义静态资源路劲，多个用“,”分隔
+    static-locations: classpath:/META-INF/resources/
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+  message:
+    encoding: UTF-8
+pagehelper:
+  params: pageNum=pageNum;pageSize=pageSize;
+  support-methods-arguments: true
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+#api页面设置
+swagger:
+  enabled: true
+  base-package: org.spring.springboot.app.controller
+  version: 1.0
+  title: school-api
+  description: <div>&nbsp;</div><div>&nbsp;</div><div>重要说明</div><div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div><div>签名token获取：&nbsp;&nbsp;以用户账号密码作为参数请求\用户登录\接口,拿到用户信息和ticket，</div><div>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;然后用ticket作为参数调用\创建token\接口来取到token,token有效期1个小时，</div><div>&nbsp;</div><div>&nbsp;</div>token读取规则：&nbsp;&nbsp;所有需要token的接口,系统读取token流程为：如果请求url中有token参数，<div>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;则用url参数中的token,如果url中没有取到token,则在cookie中读取token参数。</div><div>&nbsp;</div><div>&nbsp;</div><div>接口返回说明：&nbsp;&nbsp;&nbsp;&nbsp;在返回数据中,为空或者为NULL的字段将不会出现在返回列表中。</div><div>&nbsp;</div>
+  Authorization:
+    keyName: token
+#日志设置
+logging:
+  level:
+    org:
+      springframework: error
+      spring:
+        springboot:
+          app:
+            dao: debug
+server:
+  port: 9998
+#文件上传目录相对jar执行目录路径
+file:
+  path: /files

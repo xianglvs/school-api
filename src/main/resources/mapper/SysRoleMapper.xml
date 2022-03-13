@@ -51,6 +51,9 @@
         <if test="disableFlag != null">
             AND disable_flag = #{disableFlag}
         </if>
+        <if test="delFlag != null">
+            AND del_flag = #{delFlag}
+        </if>
     </select>
 
     <select id="selectRoleByUserId" resultMap="BaseResultMap">

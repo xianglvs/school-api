@@ -16,7 +16,7 @@ import java.util.List;
 public class SysUserCreateReqVO implements Serializable {
     private static final long serialVersionUID = -1L;
 
-    @ApiModelProperty(value = "1.系统用户 2.网站用户", allowableValues = "1,2")
+    @ApiModelProperty(value = "1.系统用户 2.个人用户", allowableValues = "1,2")
     @NotNull(message = "用户类型必须选择")
     private Integer type;
 
@@ -45,8 +45,7 @@ public class SysUserCreateReqVO implements Serializable {
     private String no;
 
     @ApiModelProperty(value = "姓名")
-    @NotNull(message = "姓名不能为空")
-    @Length(min = 1, max = 50, message = "姓名为1-50个字符之间")
+    @Length(max = 50, message = "姓名最多50个字符之间")
     private String name;
 
     @ApiModelProperty(value = "邮编")

@@ -51,9 +51,6 @@ public class IndexArticleSearchReqVO extends Page {
     }
 
     public Boolean getDisableFlag() {
-        if (disableFlag == null) {
-            disableFlag = Boolean.FALSE;
-        }
         return disableFlag;
     }
 

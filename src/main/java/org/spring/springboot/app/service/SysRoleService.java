@@ -95,14 +95,9 @@ public class SysRoleService {
         }
         SysRolePO po = new SysRolePO();
         BeanUtils.copyProperties(vo, po);
-        //是否修改了父级,如果修改了父级则需要更新索引字段
-        if (vo.getParentId() == null || vo.getParentId().equalsIgnoreCase(sysRolePO.getParentId())) {
-            updateRole(po);
-            return;
-        }
+        sysRoleMapper.deleteRoleMenus(po.getId());
         //更新角色菜单
         if (vo.getMenuIds() != null) {
-            sysRoleMapper.deleteRoleMenus(po.getId());
             vo.getMenuIds().forEach(menuId -> {
                 try {
                     sysRoleMapper.insertRoleMenu(po.getId(), menuId);
@@ -110,6 +105,11 @@ public class SysRoleService {
                     throw new BusinessException(Type.NOT_FOUND_ERROR, ErrorTools.ErrorAsArrayList(new Error("roles", "菜单不存在,菜单ID为:" + menuId)));
                 }
             });
+        }
+        //是否修改了父级,如果修改了父级则需要更新索引字段
+        if (vo.getParentId() == null || vo.getParentId().equalsIgnoreCase(sysRolePO.getParentId())) {
+            updateRole(po);
+            return;
         }
         //查询父类
         SysRolePO parentPo = sysRoleMapper.selectByPrimaryKey(vo.getParentId());

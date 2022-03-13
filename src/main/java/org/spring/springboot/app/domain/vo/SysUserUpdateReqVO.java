@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -19,8 +20,13 @@ public class SysUserUpdateReqVO implements Serializable {
     @NotNull(message = "用户ID不能为空")
     private String id;
 
-    @ApiModelProperty(value = "1.系统用户 2.网站用户",allowableValues = "1,2")
+    @ApiModelProperty(value = "1.系统用户 2.网站用户", allowableValues = "1,2")
+    @Range(min = 1, max = 2, message = "用户类型为1或者2")
+    @NotNull(message = "用户类型不能为空")
     private Integer type;
+
+    @ApiModelProperty(value = "密码(必传),6-50个字符,传入md5加密后的值")
+    private String password;
 
     @ApiModelProperty(value = "经度")
     private Double longitude;
@@ -38,7 +44,7 @@ public class SysUserUpdateReqVO implements Serializable {
     private String sysOfficeId;
 
     @ApiModelProperty(value = "姓名")
-    @Length(min = 1, max = 50, message = "姓名为1-50个字符之间")
+    @Length(max = 50, message = "姓名最多50个字符之间")
     private String name;
 
     @ApiModelProperty(value = "邮编")

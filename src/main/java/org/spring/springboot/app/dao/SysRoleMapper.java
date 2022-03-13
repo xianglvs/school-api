@@ -4,10 +4,12 @@ import org.apache.ibatis.annotations.Param;
 import org.spring.springboot.app.domain.po.SysRolePO;
 import org.spring.springboot.app.domain.vo.SysRoleResVO;
 import org.spring.springboot.app.domain.vo.SysRoleSearchReqVO;
+import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
+@Repository
 public interface SysRoleMapper extends Mapper<SysRolePO> {
 
     List<SysRoleResVO> selectAllRole(@Param("delFlag") Boolean delFlag, @Param("disableFlag") Boolean disableFlag);

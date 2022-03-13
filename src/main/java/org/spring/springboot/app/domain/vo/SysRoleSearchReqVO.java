@@ -24,6 +24,9 @@ public class SysRoleSearchReqVO extends Page {
     @ApiModelProperty(value = "禁用标志,1.false 否, 2.true 是")
     private Boolean disableFlag;
 
+    @ApiModelProperty(value = "删除标志,1.false 否, 2.true 是")
+    private Boolean delFlag;
+
     @ApiModelProperty(value = "备注")
     private String remarks;
 

@@ -46,5 +46,10 @@ public class ApiIndex {
      */
     public static final String FILE = "文件管理接口";
 
+    /*
+     * 首页管理接口
+     */
+    public static final String INDEX = "首页管理接口";
+
 
 }

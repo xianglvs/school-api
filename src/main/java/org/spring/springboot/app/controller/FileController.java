@@ -10,9 +10,8 @@ import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
 import org.spring.springboot.app.domain.vo.FileResVO;
 import org.spring.springboot.app.domain.vo.UserTokenResVO;
-import org.spring.springboot.config.BusinessProperties;
 import org.spring.springboot.util.FTPClientUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.system.ApplicationHome;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +28,8 @@ import java.io.IOException;
 @Token
 public class FileController {
 
-    @Autowired
-    private BusinessProperties businessProperties;
+    @Value("${file.path}")
+    private String filePath;
 
     @ApiOperation(value = "上传文件")
     @PostMapping(value = "/upload")
@@ -40,7 +39,7 @@ public class FileController {
         String originalName = file.getOriginalFilename();
         String fileName = FTPClientUtil.fileNameConvert(file.getOriginalFilename());
         String systemPath = new ApplicationHome(getClass()).getSource().getParentFile().toString();
-        String targetPath = businessProperties.getFilePath()
+        String targetPath = filePath
                 + "/" + DateFormatUtils.format(userTokenResVO.getCreateDate(), "yyyy/MM/dd")
                 + "/" + userTokenResVO.getId();
         FileUtils.writeByteArrayToFile(new File(systemPath + targetPath + "/" + fileName), file.getBytes());
