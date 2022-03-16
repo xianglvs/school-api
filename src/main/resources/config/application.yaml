@@ -1,87 +1,94 @@
 spring:
   datasource:
     db1:
-      url: jdbc:mysql://127.0.0.1:3306/school?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3306/website?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
       password: root
-      driver-class-name: com.mysql.cj.jdbc.Driver
       initial-size: 5
       max-active: 10
       max-wait: 10000
-      test-on-borrow: false
-      test-while-idle: true
-      validation-query: SELECT 1
+      min-evictable-idle-time-millis: 1800000
       min-idle: 5
       log-abandoned: true
       remove-abandoned: true
       remove-abandoned-timeout: 1800
+      test-on-borrow: false
+      test-while-idle: true
       time-between-eviction-runs-millis: 300000
-      min-evictable-idle-time-millis: 1800000
+      validation-query: SELECT 1
     db2:
-      url: jdbc:mysql://127.0.0.1:3306/school?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3306/website?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
       password: root
-      driver-class-name: com.mysql.cj.jdbc.Driver
       initial-size: 5
       max-active: 10
       max-wait: 10000
-      test-on-borrow: false
-      test-while-idle: true
-      validation-query: SELECT 1
+      min-evictable-idle-time-millis: 1800000
       min-idle: 5
       log-abandoned: true
       remove-abandoned: true
       remove-abandoned-timeout: 1800
+      test-on-borrow: false
+      test-while-idle: true
       time-between-eviction-runs-millis: 300000
-      min-evictable-idle-time-millis: 1800000
-  redis:
-    host: 127.0.0.1
-    port: '6379'
-    jedis:
-      pool:
-        max-idle: 8
-        max-active: 8
-        min-idle: 0
-        max-wait: -1
-      timeout: 1000
-    ## Redis数据库索引（默认为0）
-    database: 0
-    password: ''
-    key-prefix: shool-api
-  resources:
-    ##自定义静态资源路劲，多个用“,”分隔
-    static-locations: classpath:/META-INF/resources/
+      validation-query: SELECT 1
   jackson:
-    time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
     default-property-inclusion: non_null
+    time-zone: GMT+8
   message:
     encoding: UTF-8
-pagehelper:
-  params: pageNum=pageNum;pageSize=pageSize;
-  support-methods-arguments: true
-mybatis:
-  mapper-locations: classpath:mapper/**/*.xml
-#api页面设置
-swagger:
-  enabled: true
-  base-package: org.spring.springboot.app.controller
-  version: 1.0
-  title: school-api
-  description: <div>&nbsp;</div><div>&nbsp;</div><div>重要说明</div><div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div><div>签名token获取：&nbsp;&nbsp;以用户账号密码作为参数请求\用户登录\接口,拿到用户信息和ticket，</div><div>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;然后用ticket作为参数调用\创建token\接口来取到token,token有效期1个小时，</div><div>&nbsp;</div><div>&nbsp;</div>token读取规则：&nbsp;&nbsp;所有需要token的接口,系统读取token流程为：如果请求url中有token参数，<div>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;则用url参数中的token,如果url中没有取到token,则在cookie中读取token参数。</div><div>&nbsp;</div><div>&nbsp;</div><div>接口返回说明：&nbsp;&nbsp;&nbsp;&nbsp;在返回数据中,为空或者为NULL的字段将不会出现在返回列表中。</div><div>&nbsp;</div>
-  Authorization:
-    keyName: token
-#日志设置
+  redis:
+    database: 0
+    host: 127.0.0.1
+    jedis:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 8 # 连接池中的最大空闲连接
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        min-idle: 0 # 连接池中的最小空闲连接
+      timeout: 1000
+    key-prefix: shool-api
+    password: ''
+    port: 6379
+  resources:
+    static-locations: classpath:/META-INF/resources/
+  servlet:
+    multipart:
+      maxFileSize: 10MB #文件上传大小限制
+      maxRequestSize: 10MB #文件上传大小限制
 logging:
   level:
     org:
-      springframework: error
       spring:
         springboot:
           app:
             dao: debug
+      springframework: error
+multipart:
+  maxFileSize: 10Mb #文件上传大小限制
+  maxRequestSize: 10Mb #文件上传大小限制
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+pagehelper:
+  params: pageNum=pageNum;pageSize=pageSize;
+  support-methods-arguments: true
 server:
   port: 9998
+  #正式服务器才需要设置，防止使用默认零时目录
+  #tomcat:
+    #basedir: /tmp/tomcat
+swagger:
+  Authorization:
+    keyName: token
+  base-package: org.spring.springboot.app.controller
+  description: <div>&nbsp;</div><div>&nbsp;</div><div>重要说明</div><div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div><div>签名token获取：&nbsp;&nbsp;以用户账号密码作为参数请求\用户登录\接口,拿到用户信息和ticket，</div><div>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;然后用ticket作为参数调用\创建token\接口来取到token,token有效期1个小时，</div><div>&nbsp;</div><div>&nbsp;</div>token读取规则：&nbsp;&nbsp;所有需要token的接口,系统读取token流程为：如果请求url中有token参数，<div>&nbsp;</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;则用url参数中的token,如果url中没有取到token,则在cookie中读取token参数。</div><div>&nbsp;</div><div>&nbsp;</div><div>接口返回说明：&nbsp;&nbsp;&nbsp;&nbsp;在返回数据中,为空或者为NULL的字段将不会出现在返回列表中。</div><div>&nbsp;</div>
+  enabled: true
+  host: /admin
+  title: school-api
+  version: 1.0
 #文件上传目录相对jar执行目录路径
 file:
   path: /files
