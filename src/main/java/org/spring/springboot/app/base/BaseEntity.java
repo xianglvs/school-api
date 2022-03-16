@@ -99,7 +99,7 @@ public class BaseEntity implements Serializable{
         this.remarks = remarks;
     }
 
-    public Boolean isDisableFlag() {
+    public Boolean getDisableFlag() {
         return disableFlag;
     }
 
@@ -107,7 +107,7 @@ public class BaseEntity implements Serializable{
         this.disableFlag = disableFlag;
     }
 
-    public Boolean isDelFlag() {
+    public Boolean getDelFlag() {
         return delFlag;
     }
 

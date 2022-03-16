@@ -82,10 +82,10 @@ public class SysUserService {
         if (sysUserPO == null) {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("username", "账号密码错误")));
         }
-        if (sysUserPO.isDelFlag()) {
+        if (sysUserPO.getDelFlag()) {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("username", "用户被删除")));
         }
-        if (sysUserPO.isDisableFlag()) {
+        if (sysUserPO.getDisableFlag()) {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("username", "用户已被禁用")));
         }
         //修改登录时间和ip
@@ -112,10 +112,10 @@ public class SysUserService {
         if (sysUserPO == null) {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户不存在")));
         }
-        if (sysUserPO.isDelFlag()) {
+        if (sysUserPO.getDelFlag()) {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户被删除")));
         }
-        if (sysUserPO.isDisableFlag()) {
+        if (sysUserPO.getDisableFlag()) {
             throw new BusinessException(Type.PARAM_VALIDATE_FAIL, ErrorTools.ErrorAsArrayList(new Error("token", "用户已被禁用")));
         }
         String token = Uuid.getUUID();
