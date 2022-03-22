@@ -104,6 +104,15 @@ public class IndexArticleService {
             }
             return;
         }
+        /*如果一直是禁用状态*/
+        if (source.getDisableFlag() && (po.getDisableFlag() || po.getDisableFlag() == null)) {
+            return;
+        }
+        /*如果开启排序*/
+        if (po.getSort() != null && source.getSort() == 0 && po.getSort() > 0) {
+            indexArticleMapper.updateAdd(po.getSort());
+            return;
+        }
         /*如果取消排序*/
         if (po.getSort() != null && source.getSort() > 0 && po.getSort() == 0) {
             indexArticleMapper.updateSub(source.getSort());
