@@ -70,11 +70,31 @@
             <if test="disableFlag != null">
                 AND a.disable_flag = #{disableFlag}
             </if>
-            ORDER BY if(a.sort=0,1,0), a.sort ASC
+            ORDER BY if(a.sort=0,1,0), a.disable_flag ASC, a.sort ASC
     </select>
 
-    <update id="deleteById">
-        UPDATE index_article SET del_flag = true WHERE id = #{id}
+    <select id="selectMaxSort" resultType="Integer">
+        select ifnull(max(sort),0) from index_article ia where ia.sort != 0 and disable_flag = false and del_flag = false
+    </select>
+
+    <select id="selectMaxSortExcludeSelf" resultType="Integer">
+        select ifnull(max(sort),0) from index_article ia where ia.sort != 0 and id != #{id} and disable_flag = false and del_flag = false
+    </select>
+
+    <update id="updateAdd">
+        update index_article set sort = sort + 1 where sort >= #{start} and sort != 0 and disable_flag = false and del_flag = false
+    </update>
+
+    <update id="updateSub">
+        update index_article set sort = sort - 1 where sort >= #{start} and sort != 0 and disable_flag = false and del_flag = false
+    </update>
+
+    <update id="updateBetweenSub">
+        update index_article set sort = sort - 1 where sort between #{start} and #{end} and sort != 0 and disable_flag = false and del_flag = false
+    </update>
+
+    <update id="updateBetweenAdd">
+        update index_article set sort = sort + 1 where sort between #{start} and #{end} and sort != 0 and disable_flag = false and del_flag = false
     </update>
 
 </mapper>

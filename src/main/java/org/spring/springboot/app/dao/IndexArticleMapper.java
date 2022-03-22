@@ -18,6 +18,16 @@ public interface IndexArticleMapper extends Mapper<IndexArticlePO> {
 
     List<IndexArticleResVO> selectPage(IndexArticleSearchReqVO vo);
 
-    int deleteById(@Param("id") String id);
+    int selectMaxSort();
+
+    int selectMaxSortExcludeSelf(@Param("id") String id);
+
+    int updateAdd(@Param("start") int start);
+
+    int updateSub(@Param("start") int start);
+
+    int updateBetweenSub(@Param("start") int start, @Param("end") int end);
+
+    int updateBetweenAdd(@Param("start") int start, @Param("end") int end);
 
 }

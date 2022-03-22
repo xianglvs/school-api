@@ -14,6 +14,7 @@ import org.spring.springboot.util.FTPClientUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.system.ApplicationHome;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Api(tags = ApiIndex.FILE)
 @RequestMapping(value = "/api/file")
@@ -32,6 +35,7 @@ public class FileController {
     private String filePath;
 
     @ApiOperation(value = "上传文件")
+    @Token
     @PostMapping(value = "/upload")
     public R<FileResVO> upload(
             @ApiParam(value = "文件") MultipartFile file,
@@ -47,6 +51,26 @@ public class FileController {
         fileResVO.setName(originalName);
         fileResVO.setPath(targetPath + "/" + fileName);
         return new R(fileResVO);
+    }
+
+    @ApiOperation(value = "清理未使用的图片")
+    @Token
+    @PostMapping(value = "/clear")
+    public R clearImage(
+            @ApiParam(value = "使用图片的地址列表") @RequestBody List<String> imageNames,
+            @ApiIgnore UserTokenResVO userTokenResVO) {
+        String systemPath = new ApplicationHome(getClass()).getSource().getParentFile().toString();
+        String targetPath = filePath
+                + "/" + DateFormatUtils.format(userTokenResVO.getCreateDate(), "yyyy/MM/dd")
+                + "/" + userTokenResVO.getId();
+        File file = new File(systemPath + targetPath);
+        File[] files = file.listFiles();
+        Arrays.stream(files).forEach((f) -> {
+            if (f.isFile() && (imageNames == null || imageNames.size() == 0 || !imageNames.contains(f.getName()))) {
+                f.delete();
+            }
+        });
+        return new R();
     }
 
 }
