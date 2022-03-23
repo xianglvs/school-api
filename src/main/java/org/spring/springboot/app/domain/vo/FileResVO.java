@@ -7,6 +7,9 @@ import lombok.Data;
 @ApiModel(description = "文件信息")
 @Data
 public class FileResVO {
+
+    @ApiModelProperty(value = "保存图片ID")
+    private String id;
     /**
      * 文章标题
      */

@@ -105,7 +105,7 @@ public class IndexArticleService {
             return;
         }
         /*如果一直是禁用状态*/
-        if (source.getDisableFlag() && (po.getDisableFlag() || po.getDisableFlag() == null)) {
+        if (source.getDisableFlag() && (po.getDisableFlag() == null || po.getDisableFlag())) {
             return;
         }
         /*如果开启排序*/

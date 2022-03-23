@@ -8,22 +8,24 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.spring.springboot.app.base.ApiIndex;
 import org.spring.springboot.app.base.R;
 import org.spring.springboot.app.base.annotation.Token;
+import org.spring.springboot.app.domain.po.IndexImagesPO;
+import org.spring.springboot.app.domain.vo.FileArticleReqVO;
 import org.spring.springboot.app.domain.vo.FileResVO;
 import org.spring.springboot.app.domain.vo.UserTokenResVO;
+import org.spring.springboot.app.service.FileService;
 import org.spring.springboot.util.FTPClientUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.system.ApplicationHome;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
 
 @Api(tags = ApiIndex.FILE)
 @RequestMapping(value = "/api/file")
@@ -34,6 +36,9 @@ public class FileController {
     @Value("${file.path}")
     private String filePath;
 
+    @Autowired
+    private FileService fileService;
+
     @ApiOperation(value = "上传文件")
     @Token
     @PostMapping(value = "/upload")
@@ -42,34 +47,44 @@ public class FileController {
             @ApiIgnore UserTokenResVO userTokenResVO) throws IOException {
         String originalName = file.getOriginalFilename();
         String fileName = FTPClientUtil.fileNameConvert(file.getOriginalFilename());
+        BufferedImage image = ImageIO.read(file.getInputStream());
+        long size = file.getSize();
+        int width = image.getWidth();
+        int height = image.getHeight();
         String systemPath = new ApplicationHome(getClass()).getSource().getParentFile().toString();
         String targetPath = filePath
-                + "/" + DateFormatUtils.format(userTokenResVO.getCreateDate(), "yyyy/MM/dd")
+                + "/" + DateFormatUtils.format(new Date(), "yyyyMMdd")
                 + "/" + userTokenResVO.getId();
         FileUtils.writeByteArrayToFile(new File(systemPath + targetPath + "/" + fileName), file.getBytes());
+        IndexImagesPO po = new IndexImagesPO();
+        po.setImageName(originalName);
+        po.setImagePath(systemPath + targetPath + "/" + fileName);
+        po.setImageAccessPath(targetPath + "/" + fileName);
+        po.setImageSize(size);
+        po.setImageWidth(width);
+        po.setImageHeight(height);
+        String id = fileService.insert(po);
         FileResVO fileResVO = new FileResVO();
+        fileResVO.setId(id);
         fileResVO.setName(originalName);
         fileResVO.setPath(targetPath + "/" + fileName);
         return new R(fileResVO);
     }
 
-    @ApiOperation(value = "清理未使用的图片")
+    @ApiOperation(value = "设置文章使用的图片")
+    @Token
+    @PutMapping(value = "/set/paths")
+    public R setIds(
+            @ApiParam(value = "使用图片的ID列表") @RequestBody FileArticleReqVO vo) {
+        fileService.updateImageArticleIdByPaths(vo);
+        return new R();
+    }
+
+    @ApiOperation(value = "马上清理未使用的图片")
     @Token
     @PostMapping(value = "/clear")
-    public R clearImage(
-            @ApiParam(value = "使用图片的地址列表") @RequestBody List<String> imageNames,
-            @ApiIgnore UserTokenResVO userTokenResVO) {
-        String systemPath = new ApplicationHome(getClass()).getSource().getParentFile().toString();
-        String targetPath = filePath
-                + "/" + DateFormatUtils.format(userTokenResVO.getCreateDate(), "yyyy/MM/dd")
-                + "/" + userTokenResVO.getId();
-        File file = new File(systemPath + targetPath);
-        File[] files = file.listFiles();
-        Arrays.stream(files).forEach((f) -> {
-            if (f.isFile() && (imageNames == null || imageNames.size() == 0 || !imageNames.contains(f.getName()))) {
-                f.delete();
-            }
-        });
+    public R clear() {
+        fileService.autoClearImages();
         return new R();
     }
 

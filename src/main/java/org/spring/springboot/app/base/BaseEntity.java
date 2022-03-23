@@ -12,11 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- * UserTokenResVO: eric
  * Date: 2017-11-13
- * Time: 16:23
  */
 public class BaseEntity implements Serializable{
 
