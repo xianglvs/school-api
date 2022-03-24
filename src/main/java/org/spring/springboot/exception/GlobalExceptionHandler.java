@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
     @ResponseBody
     public R httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
-        return new R(Type.Content_TYPE_ERROR);
+        return new R(Type.CONTENT_TYPE_ERROR);
     }
 
 

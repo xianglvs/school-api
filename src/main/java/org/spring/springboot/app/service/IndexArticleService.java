@@ -70,11 +70,7 @@ public class IndexArticleService {
         return po.getId();
     }
 
-    private void updateSort(IndexArticlePO po) {
-        if (po.getSort() < 0) {
-            po.setSort(0);
-        }
-        IndexArticlePO source = indexArticleMapper.selectByPrimaryKey(po.getId());
+    private int setMax(IndexArticlePO po, IndexArticlePO source) {
         int max = indexArticleMapper.selectMaxSortExcludeSelf(po.getId());
         /*如果超过最大值*/
         if ((po.getDisableFlag() == null && !source.getDisableFlag()) ||
@@ -83,8 +79,17 @@ public class IndexArticleService {
                 po.setSort(max + 1);
             }
         }
+        return max;
+    }
+
+    private void updateSort(IndexArticlePO po) {
+        if (po.getSort() < 0) {
+            po.setSort(0);
+        }
+        IndexArticlePO source = indexArticleMapper.selectByPrimaryKey(po.getId());
         /*如果启用*/
         if (po.getDisableFlag() != null && !po.getDisableFlag() && source.getDisableFlag()) {
+            int max = this.setMax(po, source);
             if (po.getSort() != null && po.getSort() > 0) {
                 indexArticleMapper.updateAdd(po.getSort());
             }
@@ -110,6 +115,7 @@ public class IndexArticleService {
         }
         /*如果开启排序*/
         if (po.getSort() != null && source.getSort() == 0 && po.getSort() > 0) {
+            this.setMax(po, source);
             indexArticleMapper.updateAdd(po.getSort());
             return;
         }
@@ -120,12 +126,14 @@ public class IndexArticleService {
         }
         /*如果排序号变小*/
         if (po.getSort() != null && po.getSort() < source.getSort()) {
+            this.setMax(po, source);
             indexArticleMapper.updateBetweenAdd(po.getSort(), source.getSort());
             return;
         }
         /*如果排序号变大*/
         if (po.getSort() != null && po.getSort() > source.getSort()) {
             indexArticleMapper.updateBetweenSub(source.getSort(), po.getSort());
+            this.setMax(po, source);
             return;
         }
     }

@@ -13,10 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -37,7 +35,7 @@ public class FileService {
     public void updateImageArticleIdByPaths(FileArticleReqVO vo) {
         if (StringUtils.isNotEmpty(vo.getArticleId())) {
             mapper.clearArticleId(vo.getArticleId());
-            if(vo.getImagePaths() != null && !vo.getImagePaths().isEmpty()){
+            if (vo.getImagePaths() != null && !vo.getImagePaths().isEmpty()) {
                 mapper.updateImageArticleIdByPaths(vo.getArticleId(), vo.getImagePaths());
             }
         }
@@ -50,7 +48,7 @@ public class FileService {
         cal.add(Calendar.DATE, -1);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.MILLISECOND,0);
+        cal.set(Calendar.MILLISECOND, 0);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         Date end = new Date(cal.getTimeInMillis());
         cal.add(Calendar.DATE, -6);
@@ -62,11 +60,21 @@ public class FileService {
         List<IndexImagesPO> list = mapper.selectByExample(example);
         list.forEach(po -> {
             if (StringUtils.isNotEmpty(po.getImagePath())) {
-                File file = new File(po.getImagePath());
-                if (file.exists() && file.isFile()) {
-                    file.delete();
-                    mapper.deleteByPrimaryKey(po.getId());
+                List<String> paths = Arrays.asList(po.getImagePath().split("/"));
+                paths = new ArrayList<>(paths);
+                String fileName = paths.remove(paths.size() - 1);
+                String path = paths.stream().collect(Collectors.joining("/"));
+                File[] listFile = new File(path).listFiles();
+                if(listFile != null){
+                    Arrays.stream(listFile).forEach(f -> {
+                        if (f.isFile()) {
+                            if (f.getName().contains(fileName)) {
+                                f.delete();
+                            }
+                        }
+                    });
                 }
+                mapper.deleteByPrimaryKey(po.getId());
             }
         });
     }

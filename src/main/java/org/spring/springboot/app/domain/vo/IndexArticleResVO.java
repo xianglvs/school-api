@@ -4,11 +4,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @ApiModel(description = "请求结果")
 @Data
-public class IndexArticleResVO {
+public class IndexArticleResVO implements Serializable {
+    private static final long serialVersionUID = -6829433111580900201L;
     /**
      * 唯一编码
      */

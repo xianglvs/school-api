@@ -13,10 +13,11 @@ public enum Type {
     PARAM_VALIDATE_FAIL(400001, "参数验证失败"), 
     EXIST_ERROR(400002, "信息已存在"),
     POWER_VALIDATE_FAIL(400003, "登录已失效,请重新登录"), 
-    DATA_DEL_ERROR(400004, "信息已删除"), 
+    DATA_DEL_ERROR(400004, "信息已删除"),
     NOT_FOUND_ERROR(400005, "信息未找到"),
     PARAM_LENGTH_ERROR(400006, "参数太长"),
-    Content_TYPE_ERROR(400007, "header信息中的Content-Type不正确,请确认该参数和API文档中的一致"),
+    CONTENT_TYPE_ERROR(400007, "header信息中的Content-Type不正确,请确认该参数和API文档中的一致"),
+    CACHE_VALIDATE_FAIL(400008, "缓存已失效"),
 
     PERMISSIONS_VALIDATE_FAIL(401000, "没有权限访问此接口"), 
     ACCESS_TOKEN_VERFIY_FAIL(401005, "安全签名验证失败"),
