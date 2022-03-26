@@ -1,4 +1,5 @@
 #!/bin/sh
+source /etc/profile
 rm -f tpid
 APP_JAR=`ls -l $pwd | grep .*\.jar | awk '{print $9}'`
 APP_NAME=`echo ${APP_JAR%.jar}`
