@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 source /etc/profile
 APP_NAME=`ls -l $pwd | grep '.\+\.jar$' | awk '{print $9}'`
 

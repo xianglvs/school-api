@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 source /etc/profile
 APP_NAME=`ls -l $pwd | grep '.\+\.jar$' | awk '{print $9}'`
 tpid=`ps -ef|grep $APP_NAME|grep -v grep|grep -v kill|awk '{print $2}'`
