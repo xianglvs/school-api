@@ -26,9 +26,9 @@ import java.util.Set;
 /**
  * @description redis配置  配置序列化方式以及缓存管理器
  */
-//@EnableCaching // 开启缓存
-//@Configuration
-//@AutoConfigureAfter(RedisAutoConfiguration.class)
+@EnableCaching // 开启缓存
+@Configuration
+@AutoConfigureAfter(RedisAutoConfiguration.class)
 public class RedisConfig {
 
     /**
