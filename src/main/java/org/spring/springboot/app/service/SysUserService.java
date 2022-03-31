@@ -135,7 +135,7 @@ public class SysUserService {
         List<SysMenuResVO> menus = sysMenuMapper.selectMenuByUserId(sysUserPO.getId(), Boolean.FALSE, Boolean.FALSE);
         tokenResVO.setMenus(menus);
 
-        long effective_millisecond = 60 * 60 * 1000;//60分钟
+        long effective_millisecond = 20 * 60 * 1000;//20分钟
         long expire = System.currentTimeMillis() + effective_millisecond;
         tokenResVO.setExpireTime(new Date(expire));
         tokenResVO.setEffectiveMillisecond(effective_millisecond);

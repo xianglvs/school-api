@@ -26,9 +26,9 @@ public class RedisUtils {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    public <T> void set(String key, T value, long times, TimeUnit timeUtnit) {
+    public <T> void set(String key, T value, long times, TimeUnit timeUnit) {
         ValueOperations<String, T> operations = redisTemplate.opsForValue();
-        operations.set(getKey(key), value, times, timeUtnit);
+        operations.set(getKey(key), value, times, timeUnit);
     }
 
     public <T> T get(String key) {
