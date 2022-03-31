@@ -9,8 +9,7 @@ import java.util.List;
 
 public class UserTokenResVO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -5204210937596470691L;
     @ApiModelProperty(value = "token", hidden = false)
     private String token;
     @ApiModelProperty(value = "过期时间", hidden = false)

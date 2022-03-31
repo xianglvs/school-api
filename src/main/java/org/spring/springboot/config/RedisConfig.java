@@ -41,11 +41,10 @@ public class RedisConfig {
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
-        template.setValueSerializer(RedisSerializer.java());
-        //使用StringRedisSerializer来序列化和反序列化redis的key值
-        template.setKeySerializer(RedisSerializer.string());
-        template.setHashKeySerializer(RedisSerializer.string());
-        template.setHashValueSerializer(RedisSerializer.java());
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
         template.afterPropertiesSet();
         return template;
     }

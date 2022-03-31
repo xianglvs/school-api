@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.spring.springboot.app.dao.SysRoleMapper">
-    <resultMap id="BaseResultMap" type="org.spring.springboot.app.domain.po.SysRolePO">
+    <resultMap id="SysRolePO" type="org.spring.springboot.app.domain.po.SysRolePO">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="office_id" jdbcType="VARCHAR" property="officeId"/>
         <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
@@ -17,7 +17,18 @@
         <result column="del_flag" jdbcType="BIT" property="delFlag"/>
     </resultMap>
 
-    <select id="selectAllRole" resultMap="BaseResultMap">
+    <resultMap id="SysRoleResVO" type="org.spring.springboot.app.domain.vo.SysRoleResVO">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="office_id" jdbcType="VARCHAR" property="officeId"/>
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
+        <result column="parent_ids" jdbcType="VARCHAR" property="parentIds"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="en_name" jdbcType="VARCHAR" property="enName"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="disable_flag" jdbcType="BIT" property="disableFlag"/>
+    </resultMap>
+
+    <select id="selectAllRole" resultMap="SysRoleResVO">
         SELECT id, office_id, parent_id, parent_ids, name, en_name, create_by, create_date, update_by, update_date,
         remarks, disable_flag, del_flag
         FROM sys_role
@@ -31,7 +42,7 @@
     </select>
 
 
-    <select id="selectPageRole" resultMap="BaseResultMap">
+    <select id="selectPageRole" resultMap="SysRoleResVO">
         SELECT id, office_id, parent_id, parent_ids, name, en_name, create_by, create_date, update_by, update_date,
         remarks, disable_flag, del_flag
         FROM sys_role
@@ -56,7 +67,7 @@
         </if>
     </select>
 
-    <select id="selectRoleByUserId" resultMap="BaseResultMap">
+    <select id="selectRoleByUserId" resultMap="SysRoleResVO">
         SELECT id, office_id, parent_id, parent_ids, name, en_name, create_by, create_date, update_by, update_date,
         remarks, disable_flag, del_flag
         FROM sys_role a
@@ -72,7 +83,7 @@
         </if>
     </select>
 
-    <select id="selectAllChildren" resultMap="BaseResultMap">
+    <select id="selectAllChildren" resultMap="SysRolePO">
         SELECT id, office_id, parent_id, parent_ids, name, en_name, create_by, create_date, update_by, update_date,
         remarks, disable_flag, del_flag
         FROM sys_role

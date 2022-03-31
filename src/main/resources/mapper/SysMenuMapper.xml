@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.spring.springboot.app.dao.SysMenuMapper">
-  <resultMap id="BaseResultMap" type="org.spring.springboot.app.domain.po.SysMenuPO">
+  <resultMap id="SysMenuPO" type="org.spring.springboot.app.domain.po.SysMenuPO">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
     <result column="parent_ids" jdbcType="VARCHAR" property="parentIds" />
@@ -21,7 +21,20 @@
     <result column="del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
 
-  <select id="selectMenuByUserId" resultMap="BaseResultMap">
+  <resultMap id="SysMenuResVO" type="org.spring.springboot.app.domain.vo.SysMenuResVO">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="parent_ids" jdbcType="VARCHAR" property="parentIds" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sort" jdbcType="DECIMAL" property="sort" />
+    <result column="href" jdbcType="VARCHAR" property="href" />
+    <result column="target" jdbcType="VARCHAR" property="target" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="hidden_flag" jdbcType="BIT" property="hiddenFlag" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+  </resultMap>
+
+  <select id="selectMenuByUserId" resultMap="SysMenuResVO">
     SELECT a.id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
     FROM sys_menu a
     INNER JOIN sys_role_menu b ON
@@ -37,7 +50,7 @@
     </if>
   </select>
 
-  <select id="selectMenuByRoleId" resultMap="BaseResultMap">
+  <select id="selectMenuByRoleId" resultMap="SysMenuResVO">
     SELECT a.id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
     FROM sys_menu a
     INNER JOIN sys_role_menu b ON
@@ -51,7 +64,7 @@
     </if>
   </select>
 
-  <select id="selectAllMenu" resultMap="BaseResultMap">
+  <select id="selectAllMenu" resultMap="SysMenuResVO">
     SELECT a.id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
     FROM sys_menu a
     WHERE
@@ -65,7 +78,7 @@
   </select>
 
 
-  <select id="selectAllChildren" resultMap="BaseResultMap">
+  <select id="selectAllChildren" resultMap="SysMenuPO">
     SELECT id, a.parent_id, a.parent_ids, a.name, a.sort, a.href, a.target, a.icon, a.hidden_flag, a.permission, a.create_by, a.create_date, a.update_by, a.update_date, a.remarks, a.disable_flag, a.del_flag
     FROM sys_menu a
     WHERE
