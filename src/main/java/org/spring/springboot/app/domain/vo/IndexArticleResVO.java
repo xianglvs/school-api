@@ -3,6 +3,7 @@ package org.spring.springboot.app.domain.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -45,6 +46,12 @@ public class IndexArticleResVO implements Serializable {
      */
     @ApiModelProperty(value = "列表样式0.纯文字1.左文字右图2.上文字下图3.单图4.三图并排")
     private String listType;
+
+    /**
+     * 显示原图
+     */
+    @ApiModelProperty(value = "显示原图,true.是 ,false.否")
+    private Boolean originalImage;
 
     /**
      * 排序号

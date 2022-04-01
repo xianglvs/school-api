@@ -5,7 +5,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
@@ -64,16 +66,21 @@ public class IndexArticleInsertReqVO {
     @ApiModelProperty(value = "列表样式0.纯文字1.左文字右图2.上文字下图3.单图4.三图并排")
     private String listType;
 
+    /**
+     * 显示原图
+     */
+    @ApiModelProperty(value = "显示原图,true.是 ,false.否")
+    private Boolean originalImage;
 
 
     /**
      * 禁用标志
      */
-    @ApiModelProperty(value = "禁用标志,1.false 否, 2.true 是")
+    @ApiModelProperty(value = "禁用标志,0.false 否, 1.true 是")
     private Boolean disableFlag;
 
     public Boolean getDisableFlag() {
-        if(disableFlag == null){
+        if (disableFlag == null) {
             disableFlag = false;
         }
         return disableFlag;

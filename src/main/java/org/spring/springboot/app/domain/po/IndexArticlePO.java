@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.spring.springboot.app.base.BaseEntity;
 
+import javax.persistence.Column;
 import javax.persistence.Table;
 
 @Table(name = "index_article")
@@ -15,6 +16,12 @@ public class IndexArticlePO extends BaseEntity {
      * 文章标题
      */
     private String title;
+
+    /**
+     * 显示原图
+     */
+    @Column(name = "original_image")
+    private Boolean originalImage;
 
     /**
      * 文章概述
@@ -35,6 +42,7 @@ public class IndexArticlePO extends BaseEntity {
     /**
      * 列表图片
      */
+    @Column(name = "list_image")
     private String listImage;
 
     /**
@@ -45,6 +53,7 @@ public class IndexArticlePO extends BaseEntity {
      * 3.单图
      * 4.3图并排
      */
+    @Column(name = "list_type")
     private String listType;
 
 }

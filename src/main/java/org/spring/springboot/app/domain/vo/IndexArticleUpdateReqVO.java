@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
@@ -67,6 +68,12 @@ public class IndexArticleUpdateReqVO {
      */
     @ApiModelProperty(value = "文章内容")
     private String content;
+
+    /**
+     * 显示原图
+     */
+    @ApiModelProperty(value = "显示原图,true.是 ,false.否")
+    private Boolean originalImage;
 
 
     /**
