@@ -62,6 +62,7 @@ public class SysUserController {
 
     @ApiOperation(value = "查询当前用户信息")
     @GetMapping(value = "/info")
+    @Token
     public R<UserTokenResVO> getUser(
             @ApiIgnore UserTokenResVO userSession
     ) {
